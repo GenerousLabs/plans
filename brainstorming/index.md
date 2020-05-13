@@ -1,85 +1,76 @@
-Plans
----
+# Plans
 
-Stack
+At first, we're launching with a "pod" model. This means that one person must
+create and deploy a "pod", and then other people can use the pod to share
+plans.
 
-* Git
-* Markdown
-* GPG
+The file format / layout is therefore specific to this use case. Hopefully it
+also applies to a multi-pod use case...
 
-Folder layout
+## File structure
 
-* `/plans`
-* `/plans/index.md`
-* `/plans/offers/netflix.md`
-* `/plans/seeks/hulu.md`
+- `/index.md`
+  - Pod info, including updates
+- `/userId/index.md`
+  - User info for the user with user ID = `userId`
+- `/userId/plans/spotify.md`
+  - User's spotify plan
+- `/userId/plans/planId/index.md`
+  - The plan details
+- `/userId/plans/planId/secondUserId/index.md`
+  - The conversation between `userId` and `secondUserId` about `planId`
+- `/userId/plans/planId/secondUserId.md`
+  - The conversation between `userId` and `secondUserId` about `planId`
+  - Alternative to the above
 
-Peers
+## Encryption
 
-In order for two peers to share, they need to establish a shared repository. Alice and Betty.
+One simple approach would be to use a pod wide symmetric encryption key. The
+git host is not able to see the content, but everybody in the pod can see
+everything.
 
-* Alice and Betty establish a new repo to share
-* `/plans/alice/offers/netflix.md`
-  - Alice offers to share netflix with Betty
-* `/plans/alice/seeks/hulu.md`
-  - Alice seeks a share of Hulu
+An even simpler approach would be to skip encryption altogether. Only concern
+here is, how likely are we to add it later?
 
-> Idea: Start out without any seeking, only sharing.
+Thinking...
 
-***
+- What **needs** to be encrypted?
+  - At the very least, the login credentials.
+    - Who can access these? Ideally only account holder and sharers.
+    - The act of granting a share could be the act of adding a new GPG key to
+      the encryption target of this. So you can tell who has access according
+      to who can decrypt the text.
+      - This might work as a starting point.
+      - What kind of encryption???
+- Ideally, we'd encrypt everything. In a sort of "git-remote-gcrypt" way.
+  - https://spwhitton.name/tech/code/git-remote-gcrypt/
+  - This could be added later, it doesn't currently exist in isomorphic-git.
+    - https://github.com/isomorphic-git/isomorphic-git/issues/97
 
-# Round 2
+What data are we storing?
 
-Folder layout
+- User profiles (name, maybe email, phone numbers, etc)
+- Service details (name, description)
+- Access credentials (text field)
+- Conversation messages (between 2 users about a service)
+- Pod updates (each one a markdown block)
 
-* `/plans`
-* `/plans/index.md`
-* `/plans/netflix.md`
-* `/plans/netflix/betty/index.md`
-  - Alice shares Netflix with Betty
+## API
 
-Betty
+How do we get data?
 
-* `/plans/netflix/alice/index.md`
+- With isomorphic-git we can clone the whole repo
+- Then the UI can somehow access the filesystem
+  - Potentially via a local GraphQL API
+    - This might make it easier to separate "local" later
+    - Might also be a headache to build
+    - Potentially apollo-link-state could support this in some way, it allows
+      for the `@client` directive to tell apollo-client to resolve the query
+      locally. Unclear if it works for mutations.
+    - Hasura example here https://github.com/hasura/client-side-graphql
+  - Pushing the data into a redux store might be easier
+    - Could also be done server side
+    - If the entire pod's state is one tree, could be cached server side
+    -
 
-Why one folder per service? Better one per user.
-
-* `/plans/betty/index.md`
-* `/plans/betty/netflix.md`
-  - Netflix is shared between Alice and Betty
-
-Then Alice has her own plans?
-
-* `/plans/me/index.md`
-* `/plans/me/netflix.md`
-
-Where does this netflix plan info go? Who is it shared with? Is it copied into every shared folder by default? Do I share it with everybody, or maybe later only with some people?
-
-* `/plans/index.md`
-* `/plans/netflix.md`
-  - Copied to `/plans/betty/netflix.md`
-  - Kept in sync by the tool
-
-## UI
-
-What do I want as a user?
-
-First, I want to see a list of the plans that are available to me. Maybe I'm willing to connect to some friends to do that. Then I want to see all the juicy shit that's on offer.
-
-I guess I'm also ready to input some of my own "stuff".
-
-So that might break out into segments like:
-
-* My plans
-  - List of the stuff I have in the system and am therefore, by default, offering to my network
-  - Who am I "sharing" this with
-  - Maybe some kind of update stream, or list of events
-* Shared plans
-  - Plans that are shared with me
-  - Update stream
-* Sharing offers
-  - Plans that are offered in my network
-
-# Round 3
-
-What about one repo per plan? I create a plan, and then I create a new repo. When I connect to somebody, I share that repo with them. Sharing is at the repo level. We all post updates to the plan, and the "host" merges those changes if they pass some test.
+Question? Use gundb? Answer, no. After considering this, let's stick with isomorphic git.
