@@ -59,6 +59,9 @@ Perhaps the first question is where do we store this stuff?
 
 - Easiest option, GitHub, GitLab, or Bitbucket
 
+NOTE: Keybase offers encrypted git. Likely doesn't work in the browser though.
+Maybe on some kind of server. Gets complicated pretty fast...
+
 ## API
 
 How do we get data?
