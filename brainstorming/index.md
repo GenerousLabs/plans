@@ -32,7 +32,7 @@ everything.
 An even simpler approach would be to skip encryption altogether. Only concern
 here is, how likely are we to add it later?
 
-Thinking...
+### Thinking...
 
 - What **needs** to be encrypted?
   - At the very least, the login credentials.
@@ -62,6 +62,11 @@ Perhaps the first question is where do we store this stuff?
 NOTE: Keybase offers encrypted git. Likely doesn't work in the browser though.
 Maybe on some kind of server. Gets complicated pretty fast...
 
+### Decisions
+
+- Trust the host for now
+- Encrypt the credentials for each user that can read them
+
 ## API
 
 How do we get data?
@@ -78,6 +83,26 @@ How do we get data?
   - Pushing the data into a redux store might be easier
     - Could also be done server side
     - If the entire pod's state is one tree, could be cached server side
-    -
 
 Question? Use gundb? Answer, no. After considering this, let's stick with isomorphic git.
+
+We need a reactive data source on top of isomorphic-git.
+
+Options?
+
+- Redux
+  - Seems like an unlikely fit
+  - Might not fit well with ASTs which are usually mutable
+- RxJS
+  - Don't see obvious react support
+  - Seems to push data into local react state
+  - We could theoretically do this directly with isomorphic-git
+- Apollo state link
+  - Add quite some complexity
+  - How much sense does GraphQL make when data model is reasonably fixed and
+    data is client side?
+
+Goals
+
+- Some kind of predictable shape to the data coming from git
+- A predictable API to push new data
