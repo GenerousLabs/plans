@@ -55,6 +55,10 @@ What data are we storing?
 - Conversation messages (between 2 users about a service)
 - Pod updates (each one a markdown block)
 
+Perhaps the first question is where do we store this stuff?
+
+- Easiest option, GitHub, GitLab, or Bitbucket
+
 ## API
 
 How do we get data?
