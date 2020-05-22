@@ -1,3 +1,16 @@
+# Plans
+
+Work In Progress
+
+## Redux Devtools
+
+It's possible to link redux-devtools to this package.
+
+- `yarn redux-devtools` starts the devtools server on `localhost:8000`
+- Then run the package code
+
+---
+
 # TSDX Bootstrap
 
 This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
