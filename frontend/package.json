@@ -16,7 +16,8 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "~3.8.2"
+    "typescript": "~3.8.2",
+    "yaml": "^1.10.0"
   },
   "scripts": {
     "start": "react-scripts start",
