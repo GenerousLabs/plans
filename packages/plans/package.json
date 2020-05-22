@@ -15,7 +15,8 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "prepare": "tsdx build",
+    "redux-devtools": "redux-devtools --hostname=localhost --port=8000"
   },
   "peerDependencies": {},
   "husky": {
@@ -33,7 +34,10 @@
   "author": "Callum Macdonald",
   "module": "dist/plans.esm.js",
   "devDependencies": {
+    "@types/remote-redux-devtools": "^0.5.4",
     "husky": "^4.2.5",
+    "redux-devtools-cli": "^0.0.1-1",
+    "remote-redux-devtools": "^0.5.16",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
