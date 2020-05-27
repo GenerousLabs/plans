@@ -62,12 +62,12 @@ describe('plans service', () => {
           messages: [
             {
               ...f.aliceMessage.data,
-              content: f.aliceMessage.markdown,
+              contentMarkdown: f.aliceMessage.markdown,
               slug: `message-${f.aliceMessage.data.dateTimestampSeconds}.md`,
             },
             {
               ...f.charlieMessage.data,
-              content: f.charlieMessage.markdown,
+              contentMarkdown: f.charlieMessage.markdown,
               slug: `message-${f.charlieMessage.data.dateTimestampSeconds}.md`,
             },
           ],

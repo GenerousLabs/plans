@@ -7,6 +7,19 @@ type FS = {
   readFile: typeof fsNode.readFile;
 };
 
+export type Message = {
+  slug: string;
+  sender: string;
+  contentMarkdown: string;
+};
+
+export type Plan = {
+  slug: string;
+  name: string;
+  descriptionMarkdown: string;
+  messages: Message[];
+};
+
 type PlanFrontMatter = {
   name: string;
 };
@@ -48,7 +61,7 @@ export const parseMessageFromMarkdown = async (input: string) => {
   const parsed = matter(input);
   const { content } = parsed;
   const data = parseMessageDataFromFrontmatter(parsed.data);
-  return { content, ...data };
+  return { contentMarkdown: content, ...data };
 };
 
 export const readPlansFromUserPlansDirectory = async ({
@@ -57,7 +70,7 @@ export const readPlansFromUserPlansDirectory = async ({
 }: {
   fs: FS;
   directoryPath: string;
-}) => {
+}): Promise<Plan[]> => {
   const dir = await fs.readdir(directoryPath, { withFileTypes: true });
   const subDirectories = dir.filter(entry => entry.isDirectory());
   const plans = await Promise.all(
