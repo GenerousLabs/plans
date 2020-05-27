@@ -31,7 +31,7 @@ name: NordVPN
 };
 
 describe('plans service', () => {
-  describe('readPlans()', () => {
+  describe('readPlansFileContents()', () => {
     beforeEach(() => {
       mockFs({
         'alice/bob/plans': {
