@@ -6,7 +6,7 @@ type FS = {
   readFile: typeof fsNode.readFile;
 };
 
-export const readPlans = async ({
+export const readPlansFileContents = async ({
   fs,
   directoryPath,
 }: {

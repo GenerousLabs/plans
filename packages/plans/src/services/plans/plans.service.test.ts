@@ -9,7 +9,7 @@ import {
   afterEach,
 } from 'jest-without-globals';
 
-import { readPlans } from './plans.service';
+import { readPlansFileContents } from './plans.service';
 
 const spotifyMarkdown = `---
 name: Spotify
@@ -41,7 +41,7 @@ describe('plans service', () => {
       expect(
         // NOTE: We need to await the test otherwise the `afterAll()` will
         // destroy our mock filesystem while the async code is still running.
-        await readPlans({
+        await readPlansFileContents({
           fs,
           directoryPath: join(process.cwd(), 'alice/bob/plans/'),
         })
