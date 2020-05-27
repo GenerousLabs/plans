@@ -11,6 +11,23 @@ import {
 
 import { readPlansFileContents } from './plans.service';
 
+const bob = {
+  slug: 'bob',
+  data: { name: 'Bob' },
+  frontmatter: `---
+name: Bob
+---`,
+  markdown: '',
+};
+const charlie = {
+  slug: 'charlie',
+  data: { name: 'Charlie' },
+  frontmatter: `---
+name: Charlie
+---`,
+  markdown: '',
+};
+
 const spotify = {
   slug: 'spotify',
   data: { name: 'Spotify' },
@@ -29,17 +46,49 @@ name: NordVPN
   markdown: `I can use 6 devices at the same time
 `,
 };
+const omgyes = {
+  slug: 'omgyes',
+  data: { name: 'OMG Yes' },
+  frontmatter: `---
+name: OMG Yes
+---`,
+  markdown: `OMG Yes subscription
+`,
+};
+
+const joinFrontmatter = ({
+  frontmatter,
+  markdown,
+}: {
+  frontmatter: string;
+  markdown: string;
+}) => {
+  return `${frontmatter}\n${markdown}`;
+};
 
 describe('plans service', () => {
   describe('readPlansFileContents()', () => {
     beforeEach(() => {
       mockFs({
-        'alice/bob/plans': {
-          [spotify.slug]: {
-            'index.md': `${spotify.frontmatter}\n${spotify.markdown}`,
+        'alice/': {
+          [bob.slug]: {
+            'index.md': joinFrontmatter(bob),
+            plans: {
+              [spotify.slug]: {
+                'index.md': joinFrontmatter(spotify),
+              },
+              [nordvpn.slug]: {
+                'index.md': joinFrontmatter(nordvpn),
+              },
+            },
           },
-          [nordvpn.slug]: {
-            'index.md': `${nordvpn.frontmatter}\n${nordvpn.markdown}`,
+          charlie: {
+            'index.md': joinFrontmatter(charlie),
+            plans: {
+              [omgyes.slug]: {
+                'index.md': joinFrontmatter(omgyes),
+              },
+            },
           },
         },
       });
