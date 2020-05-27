@@ -1,11 +1,22 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from '@reduxjs/toolkit';
 import devToolsEnhancer from 'remote-redux-devtools';
 
 import storage from './services/storage/storage.service';
 
+const REDUX_ROOT_KEY = '__plans' as const;
+
+const reducer = combineReducers({
+  storage,
+});
+
 export const store = configureStore({
   reducer: {
-    storage,
+    [REDUX_ROOT_KEY]: reducer,
   },
   devTools: false,
   enhancers: [
@@ -20,3 +31,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export const getPlansState = (state: RootState) => state[REDUX_ROOT_KEY];
