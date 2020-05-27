@@ -41,7 +41,7 @@ export const readPlansFileContents = async ({
       const planFiles = await fs.readdir(subDirectoryPath, {
         withFileTypes: true,
       });
-      const index = planFiles.find(file => file.name.endsWith('index.md'));
+      const index = planFiles.find(file => file.name === 'index.md');
       if (typeof index === 'undefined') {
         throw new Error(
           `#es01Hl Failed to find index.md for directory ${name}`
