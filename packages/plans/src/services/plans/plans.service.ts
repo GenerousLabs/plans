@@ -12,7 +12,11 @@ type FrontMatter = {
 };
 
 export const _castToData = (input: { [key: string]: any }): FrontMatter => {
-  return input as FrontMatter;
+  const { name } = input;
+  if (typeof name !== 'string') {
+    throw new Error('Failed to find name for plan. #6utWPT');
+  }
+  return { name };
 };
 
 export const planMarkdownToData = (markdownWithFrontmatter: string) => {
