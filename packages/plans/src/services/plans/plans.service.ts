@@ -84,7 +84,12 @@ export const readPlansFromUserPlansDirectory = async ({
             .readFile(join(subDirectoryPath, message.name), {
               encoding: 'utf-8',
             })
-            .then(parseMessageFromMarkdown);
+            .then(async markdown => {
+              return {
+                slug: message.name,
+                ...(await parseMessageFromMarkdown(markdown)),
+              };
+            });
         })
       );
 

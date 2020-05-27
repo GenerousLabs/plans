@@ -60,8 +60,16 @@ describe('plans service', () => {
           slug: f.omgyes.slug,
           descriptionMarkdown: f.omgyes.markdown,
           messages: [
-            { ...f.aliceMessage.data, content: f.aliceMessage.markdown },
-            { ...f.charlieMessage.data, content: f.charlieMessage.markdown },
+            {
+              ...f.aliceMessage.data,
+              content: f.aliceMessage.markdown,
+              slug: `message-${f.aliceMessage.data.dateTimestampSeconds}.md`,
+            },
+            {
+              ...f.charlieMessage.data,
+              content: f.charlieMessage.markdown,
+              slug: `message-${f.charlieMessage.data.dateTimestampSeconds}.md`,
+            },
           ],
         },
       ]);
