@@ -7,11 +7,11 @@ type FS = {
   readFile: typeof fsNode.readFile;
 };
 
-type FrontMatter = {
+type PlanFrontMatter = {
   name: string;
 };
 
-export const _castToData = (input: { [key: string]: any }): FrontMatter => {
+export const _castToData = (input: { [key: string]: any }): PlanFrontMatter => {
   const { name } = input;
   if (typeof name !== 'string') {
     throw new Error('Failed to find name for plan. #6utWPT');
@@ -24,6 +24,31 @@ export const planMarkdownToData = (markdownWithFrontmatter: string) => {
   const { content } = parsed;
   const data = _castToData(parsed.data);
   return { content, data };
+};
+
+type MessageFrontmatter = {
+  sender: string;
+  dateTimestampSeconds: number;
+};
+
+const parseMessageDataFromFrontmatter = (input: {
+  [key: string]: any;
+}): MessageFrontmatter => {
+  const { sender, dateTimestampSeconds } = input;
+  if (typeof sender !== 'string') {
+    throw new Error('Failed to find sender for message. #gtNSF1');
+  }
+  if (typeof dateTimestampSeconds !== 'number') {
+    throw new Error('Failed to find dateTimestampSeconds for message. #qD6aB3');
+  }
+  return { sender, dateTimestampSeconds };
+};
+
+export const parseMessageFromMarkdown = async (input: string) => {
+  const parsed = matter(input);
+  const { content } = parsed;
+  const data = parseMessageDataFromFrontmatter(parsed.data);
+  return { content, ...data };
 };
 
 export const readPlansFromUserPlansDirectory = async ({
@@ -47,27 +72,29 @@ export const readPlansFromUserPlansDirectory = async ({
           `#es01Hl Failed to find index.md for directory ${name}`
         );
       }
-      const messages = planFiles.filter(
-        file => !file.name.endsWith('index.md')
-      );
+      const messageFiles = planFiles.filter(file => file.name !== 'index.md');
       const indexContent = await fs.readFile(
         join(subDirectoryPath, index.name),
         { encoding: 'utf-8' }
       );
-      const messagesContent = await Promise.all(
-        messages.map(async message => {
-          return fs.readFile(join(subDirectoryPath, message.name), {
-            encoding: 'utf-8',
-          });
+
+      const messages = await Promise.all(
+        messageFiles.map(async message => {
+          return fs
+            .readFile(join(subDirectoryPath, message.name), {
+              encoding: 'utf-8',
+            })
+            .then(parseMessageFromMarkdown);
         })
       );
 
-      const plan = planMarkdownToData(indexContent);
+      const { content, data } = planMarkdownToData(indexContent);
 
       return {
         slug: name,
-        ...plan,
-        messagesContent,
+        descriptionMarkdown: content,
+        ...data,
+        messages,
       };
     })
   );

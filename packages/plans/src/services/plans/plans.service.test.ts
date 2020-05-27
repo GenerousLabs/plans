@@ -62,16 +62,16 @@ describe('plans service', () => {
         })
       ).toEqual([
         {
+          ...nordvpn.data,
           slug: nordvpn.slug,
-          data: nordvpn.data,
-          content: nordvpn.markdown,
-          messagesContent: [],
+          descriptionMarkdown: nordvpn.markdown,
+          messages: [],
         },
         {
+          ...spotify.data,
           slug: spotify.slug,
-          data: spotify.data,
-          content: spotify.markdown,
-          messagesContent: [],
+          descriptionMarkdown: spotify.markdown,
+          messages: [],
         },
       ]);
     });
