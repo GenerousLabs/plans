@@ -10,7 +10,7 @@ import {
 
 import { readPlansFromUserPlansDirectory } from './plans.service';
 
-import * as f from './plans.fixtures';
+import * as f from '../../fixtures';
 
 describe('plans service', () => {
   describe('readPlansFromUserPlansDirectory()', () => {
