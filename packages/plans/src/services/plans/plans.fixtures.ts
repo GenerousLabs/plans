@@ -1,3 +1,5 @@
+import mockFs from 'mock-fs';
+
 export const bob = {
   slug: 'bob',
   data: { name: 'Bob' },
@@ -13,6 +15,22 @@ export const charlie = {
 name: Charlie
 ---`,
   markdown: '',
+};
+export const aliceMessage = {
+  data: { sender: 'alice', dateTimestampSeconds: 1590595620 },
+  frontmatter: `---
+sender: alice
+dateTimestampSeconds: 1590595620
+---`,
+  markdown: 'Are you up for sharing this with me?',
+};
+export const charlieMessage = {
+  data: { sender: 'charlie', dateTimestampSeconds: 1590595860 },
+  frontmatter: `---
+sender: charlie
+dateTimestampSeconds: 1590595860
+---`,
+  markdown: "Would love to share this with you if you're interested.",
 };
 
 export const spotify = {
@@ -51,4 +69,40 @@ export const joinFrontmatter = ({
   markdown: string;
 }) => {
   return `${frontmatter}\n${markdown}`;
+};
+
+export const mockFilesystem = () => {
+  mockFs({
+    'alice/': {
+      [bob.slug]: {
+        'index.md': joinFrontmatter(bob),
+        plans: {
+          [spotify.slug]: {
+            'index.md': joinFrontmatter(spotify),
+          },
+          [nordvpn.slug]: {
+            'index.md': joinFrontmatter(nordvpn),
+          },
+        },
+      },
+      charlie: {
+        'index.md': joinFrontmatter(charlie),
+        plans: {
+          [omgyes.slug]: {
+            'index.md': joinFrontmatter(omgyes),
+            [`message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+              aliceMessage
+            ),
+            [`message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+              charlieMessage
+            ),
+          },
+        },
+      },
+    },
+  });
+};
+
+export const mockFilesystemRestore = () => {
+  mockFs.restore();
 };

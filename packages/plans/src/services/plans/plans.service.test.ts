@@ -1,4 +1,3 @@
-import mockFs from 'mock-fs';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import {
@@ -11,45 +10,16 @@ import {
 
 import { readPlansFromUserPlansDirectory } from './plans.service';
 
-import {
-  joinFrontmatter,
-  bob,
-  charlie,
-  nordvpn,
-  spotify,
-  omgyes,
-} from './plans.fixtures';
+import * as f from './plans.fixtures';
 
 describe('plans service', () => {
   describe('readPlansFromUserPlansDirectory()', () => {
     beforeEach(() => {
-      mockFs({
-        'alice/': {
-          [bob.slug]: {
-            'index.md': joinFrontmatter(bob),
-            plans: {
-              [spotify.slug]: {
-                'index.md': joinFrontmatter(spotify),
-              },
-              [nordvpn.slug]: {
-                'index.md': joinFrontmatter(nordvpn),
-              },
-            },
-          },
-          charlie: {
-            'index.md': joinFrontmatter(charlie),
-            plans: {
-              [omgyes.slug]: {
-                'index.md': joinFrontmatter(omgyes),
-              },
-            },
-          },
-        },
-      });
+      f.mockFilesystem();
     });
 
     afterEach(() => {
-      mockFs.restore();
+      f.mockFilesystemRestore();
     });
 
     it('Reads a directory #BiRYi7', async () => {
@@ -62,16 +32,37 @@ describe('plans service', () => {
         })
       ).toEqual([
         {
-          ...nordvpn.data,
-          slug: nordvpn.slug,
-          descriptionMarkdown: nordvpn.markdown,
+          ...f.nordvpn.data,
+          slug: f.nordvpn.slug,
+          descriptionMarkdown: f.nordvpn.markdown,
           messages: [],
         },
         {
-          ...spotify.data,
-          slug: spotify.slug,
-          descriptionMarkdown: spotify.markdown,
+          ...f.spotify.data,
+          slug: f.spotify.slug,
+          descriptionMarkdown: f.spotify.markdown,
           messages: [],
+        },
+      ]);
+    });
+
+    it('Reads a directory with messages #WOK5tu', async () => {
+      expect(
+        // NOTE: We need to await the test otherwise the `afterAll()` will
+        // destroy our mock filesystem while the async code is still running.
+        await readPlansFromUserPlansDirectory({
+          fs,
+          directoryPath: join(process.cwd(), 'alice/charlie/plans/'),
+        })
+      ).toEqual([
+        {
+          ...f.omgyes.data,
+          slug: f.omgyes.slug,
+          descriptionMarkdown: f.omgyes.markdown,
+          messages: [
+            { ...f.aliceMessage.data, content: f.aliceMessage.markdown },
+            { ...f.charlieMessage.data, content: f.charlieMessage.markdown },
+          ],
         },
       ]);
     });
