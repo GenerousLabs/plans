@@ -32,4 +32,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export const getPlansState = (state: RootState) => state[REDUX_ROOT_KEY];
+/**
+ * Get the state for this package from a top level redux store
+ */
+export const getPackageState = (state: RootState) => state[REDUX_ROOT_KEY];
