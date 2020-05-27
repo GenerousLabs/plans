@@ -26,7 +26,7 @@ export const planMarkdownToData = (markdownWithFrontmatter: string) => {
   return { content, data };
 };
 
-export const readPlansFileContents = async ({
+export const readPlansFromUserPlansDirectory = async ({
   fs,
   directoryPath,
 }: {

@@ -9,7 +9,7 @@ import {
   afterEach,
 } from 'jest-without-globals';
 
-import { readPlansFileContents } from './plans.service';
+import { readPlansFromUserPlansDirectory } from './plans.service';
 
 import {
   joinFrontmatter,
@@ -21,7 +21,7 @@ import {
 } from './plans.fixtures';
 
 describe('plans service', () => {
-  describe('readPlansFileContents()', () => {
+  describe('readPlansFromUserPlansDirectory()', () => {
     beforeEach(() => {
       mockFs({
         'alice/': {
@@ -56,7 +56,7 @@ describe('plans service', () => {
       expect(
         // NOTE: We need to await the test otherwise the `afterAll()` will
         // destroy our mock filesystem while the async code is still running.
-        await readPlansFileContents({
+        await readPlansFromUserPlansDirectory({
           fs,
           directoryPath: join(process.cwd(), 'alice/bob/plans/'),
         })
