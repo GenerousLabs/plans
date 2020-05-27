@@ -43,6 +43,7 @@ export const readPlansFileContents = async ({
       );
 
       return {
+        slug: name,
         indexContent,
         messagesContent,
       };

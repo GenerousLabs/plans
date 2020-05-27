@@ -11,24 +11,30 @@ import {
 
 import { readPlansFileContents } from './plans.service';
 
-const spotifyMarkdown = `---
+const spotify = {
+  slug: 'spotify',
+  markdown: `---
 name: Spotify
 ---
 I have two spots on my family plan.
-`;
-const nordvpnMarkdown = `---
+`,
+};
+const nordvpn = {
+  slug: 'nordvpn',
+  markdown: `---
 name: NordVPN
 ---
 I can use 6 devices at the same time
-`;
+`,
+};
 
 describe('plans service', () => {
   describe('readPlans()', () => {
     beforeEach(() => {
       mockFs({
         'alice/bob/plans': {
-          sptofy: { 'index.md': spotifyMarkdown },
-          nordvpn: { 'index.md': nordvpnMarkdown },
+          [spotify.slug]: { 'index.md': spotify.markdown },
+          [nordvpn.slug]: { 'index.md': nordvpn.markdown },
         },
       });
     });
@@ -46,8 +52,16 @@ describe('plans service', () => {
           directoryPath: join(process.cwd(), 'alice/bob/plans/'),
         })
       ).toEqual([
-        { indexContent: nordvpnMarkdown, messagesContent: [] },
-        { indexContent: spotifyMarkdown, messagesContent: [] },
+        {
+          slug: nordvpn.slug,
+          indexContent: nordvpn.markdown,
+          messagesContent: [],
+        },
+        {
+          slug: spotify.slug,
+          indexContent: spotify.markdown,
+          messagesContent: [],
+        },
       ]);
     });
   });
