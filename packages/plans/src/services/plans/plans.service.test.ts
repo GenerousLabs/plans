@@ -14,19 +14,19 @@ import { readPlansFileContents } from './plans.service';
 const spotify = {
   slug: 'spotify',
   data: { name: 'Spotify' },
-  markdown: `---
+  frontmatter: `---
 name: Spotify
----
-I have two spots on my family plan.
+---`,
+  markdown: `I have two spots on my family plan.
 `,
 };
 const nordvpn = {
   slug: 'nordvpn',
   data: { name: 'NordVPN' },
-  markdown: `---
+  frontmatter: `---
 name: NordVPN
----
-I can use 6 devices at the same time
+---`,
+  markdown: `I can use 6 devices at the same time
 `,
 };
 
@@ -35,8 +35,12 @@ describe('plans service', () => {
     beforeEach(() => {
       mockFs({
         'alice/bob/plans': {
-          [spotify.slug]: { 'index.md': spotify.markdown },
-          [nordvpn.slug]: { 'index.md': nordvpn.markdown },
+          [spotify.slug]: {
+            'index.md': `${spotify.frontmatter}\n${spotify.markdown}`,
+          },
+          [nordvpn.slug]: {
+            'index.md': `${nordvpn.frontmatter}\n${nordvpn.markdown}`,
+          },
         },
       });
     });
@@ -57,19 +61,13 @@ describe('plans service', () => {
         {
           slug: nordvpn.slug,
           data: nordvpn.data,
-          content: nordvpn.markdown
-            .split('\n')
-            .slice(3)
-            .join('\n'),
+          content: nordvpn.markdown,
           messagesContent: [],
         },
         {
           slug: spotify.slug,
           data: spotify.data,
-          content: spotify.markdown
-            .split('\n')
-            .slice(3)
-            .join('\n'),
+          content: spotify.markdown,
           messagesContent: [],
         },
       ]);
