@@ -11,60 +11,14 @@ import {
 
 import { readPlansFileContents } from './plans.service';
 
-const bob = {
-  slug: 'bob',
-  data: { name: 'Bob' },
-  frontmatter: `---
-name: Bob
----`,
-  markdown: '',
-};
-const charlie = {
-  slug: 'charlie',
-  data: { name: 'Charlie' },
-  frontmatter: `---
-name: Charlie
----`,
-  markdown: '',
-};
-
-const spotify = {
-  slug: 'spotify',
-  data: { name: 'Spotify' },
-  frontmatter: `---
-name: Spotify
----`,
-  markdown: `I have two spots on my family plan.
-`,
-};
-const nordvpn = {
-  slug: 'nordvpn',
-  data: { name: 'NordVPN' },
-  frontmatter: `---
-name: NordVPN
----`,
-  markdown: `I can use 6 devices at the same time
-`,
-};
-const omgyes = {
-  slug: 'omgyes',
-  data: { name: 'OMG Yes' },
-  frontmatter: `---
-name: OMG Yes
----`,
-  markdown: `OMG Yes subscription
-`,
-};
-
-const joinFrontmatter = ({
-  frontmatter,
-  markdown,
-}: {
-  frontmatter: string;
-  markdown: string;
-}) => {
-  return `${frontmatter}\n${markdown}`;
-};
+import {
+  joinFrontmatter,
+  bob,
+  charlie,
+  nordvpn,
+  spotify,
+  omgyes,
+} from './plans.fixtures';
 
 describe('plans service', () => {
   describe('readPlansFileContents()', () => {
