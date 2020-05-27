@@ -1,9 +1,25 @@
 import fsNode from 'fs/promises';
 import { join } from 'path';
+import matter from 'gray-matter';
 
 type FS = {
   readdir: typeof fsNode.readdir;
   readFile: typeof fsNode.readFile;
+};
+
+type FrontMatter = {
+  name: string;
+};
+
+export const _castToData = (input: { [key: string]: any }): FrontMatter => {
+  return input as FrontMatter;
+};
+
+export const planMarkdownToData = (markdownWithFrontmatter: string) => {
+  const parsed = matter(markdownWithFrontmatter);
+  const { content } = parsed;
+  const data = _castToData(parsed.data);
+  return { content, data };
 };
 
 export const readPlansFileContents = async ({
@@ -42,9 +58,11 @@ export const readPlansFileContents = async ({
         })
       );
 
+      const plan = planMarkdownToData(indexContent);
+
       return {
         slug: name,
-        indexContent,
+        ...plan,
         messagesContent,
       };
     })

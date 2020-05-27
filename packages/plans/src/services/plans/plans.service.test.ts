@@ -13,6 +13,7 @@ import { readPlansFileContents } from './plans.service';
 
 const spotify = {
   slug: 'spotify',
+  data: { name: 'Spotify' },
   markdown: `---
 name: Spotify
 ---
@@ -21,6 +22,7 @@ I have two spots on my family plan.
 };
 const nordvpn = {
   slug: 'nordvpn',
+  data: { name: 'NordVPN' },
   markdown: `---
 name: NordVPN
 ---
@@ -54,12 +56,20 @@ describe('plans service', () => {
       ).toEqual([
         {
           slug: nordvpn.slug,
-          indexContent: nordvpn.markdown,
+          data: nordvpn.data,
+          content: nordvpn.markdown
+            .split('\n')
+            .slice(3)
+            .join('\n'),
           messagesContent: [],
         },
         {
           slug: spotify.slug,
-          indexContent: spotify.markdown,
+          data: spotify.data,
+          content: spotify.markdown
+            .split('\n')
+            .slice(3)
+            .join('\n'),
           messagesContent: [],
         },
       ]);
