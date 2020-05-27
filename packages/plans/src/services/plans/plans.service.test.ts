@@ -11,13 +11,24 @@ import {
 
 import { readPlans } from './plans.service';
 
+const spotifyMarkdown = `---
+name: Spotify
+---
+I have two spots on my family plan.
+`;
+const nordvpnMarkdown = `---
+name: NordVPN
+---
+I can use 6 devices at the same time
+`;
+
 describe('plans service', () => {
   describe('readPlans()', () => {
     beforeEach(() => {
       mockFs({
         'alice/bob/plans': {
-          sptofy: { 'index.md': 'Spotify' },
-          nordvpn: { 'index.md': 'NordVPN' },
+          sptofy: { 'index.md': spotifyMarkdown },
+          nordvpn: { 'index.md': nordvpnMarkdown },
         },
       });
     });
@@ -35,8 +46,8 @@ describe('plans service', () => {
           directoryPath: join(process.cwd(), 'alice/bob/plans/'),
         })
       ).toEqual([
-        { indexContent: 'NordVPN', messagesContent: [] },
-        { indexContent: 'Spotify', messagesContent: [] },
+        { indexContent: nordvpnMarkdown, messagesContent: [] },
+        { indexContent: spotifyMarkdown, messagesContent: [] },
       ]);
     });
   });
