@@ -7,11 +7,13 @@ import {
 import devToolsEnhancer from 'remote-redux-devtools';
 
 import storage from './services/storage/storage.service';
+import plans from './services/plans/plans.state';
 
 const REDUX_ROOT_KEY = '__plans' as const;
 
 const reducer = combineReducers({
   storage,
+  plans,
 });
 
 export const store = configureStore({
