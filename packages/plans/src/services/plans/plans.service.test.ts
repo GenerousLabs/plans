@@ -64,6 +64,15 @@ describe('plans service', () => {
         })
       ).toMatchSnapshot();
     });
+
+    it('Throws on empty file', async () => {
+      await expect(
+        getMessageDataFromPath({
+          fs,
+          path: 'elena/index.md',
+        })
+      ).rejects.toThrow();
+    });
   });
 
   describe('readPlansFromUserPlansDirectory()', () => {
