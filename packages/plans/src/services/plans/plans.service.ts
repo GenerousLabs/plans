@@ -2,22 +2,28 @@ import fsNode from 'fs/promises';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-type FS = {
+const PLANS_FOLDER_NAME = 'plans';
+
+export type FS = {
   readdir: typeof fsNode.readdir;
   readFile: typeof fsNode.readFile;
+  stat: typeof fsNode.stat;
 };
 
 export type Message = {
+  id: string;
+  planId: string;
   slug: string;
   sender: string;
   contentMarkdown: string;
 };
 
 export type Plan = {
+  id: string;
+  userId: string;
   slug: string;
   name: string;
   descriptionMarkdown: string;
-  messages: Message[];
 };
 
 type PlanFrontMatter = {
@@ -64,13 +70,14 @@ export const parseMessageFromMarkdown = async (input: string) => {
   return { contentMarkdown: content, ...data };
 };
 
+// DEPRECATED
 export const readPlansFromUserPlansDirectory = async ({
   fs,
   directoryPath,
 }: {
   fs: FS;
   directoryPath: string;
-}): Promise<Plan[]> => {
+}) => {
   const dir = await fs.readdir(directoryPath, { withFileTypes: true });
   const subDirectories = dir.filter(entry => entry.isDirectory());
   const plans = await Promise.all(
@@ -118,4 +125,94 @@ export const readPlansFromUserPlansDirectory = async ({
   );
 
   return plans;
+};
+
+export const addPlansFolderToPath = ({ path }: { path: string }): string => {
+  return join(path, PLANS_FOLDER_NAME);
+};
+
+export const doesDirectoryExist = async ({
+  fs,
+  path,
+}: {
+  fs: FS;
+  path: string;
+}) => {
+  const stat = await fs.stat(path);
+  return stat.isDirectory();
+};
+
+export const getPlanPathsFromUserDirectory = async ({
+  fs,
+  path,
+}: {
+  fs: FS;
+  path: string;
+}) => {
+  const dir = await fs.readdir(path, {
+    encoding: 'utf-8',
+    withFileTypes: true,
+  });
+
+  const plansPaths = dir
+    .filter(plan => plan.isDirectory())
+    .map(plan => ({ path: join(path, plan.name), slug: plan.name }));
+
+  return plansPaths;
+};
+
+export const getPlanFilesFromDirectory = async ({
+  fs,
+  path,
+}: {
+  fs: FS;
+  path: string;
+}) => {
+  const planFiles = await fs.readdir(path, {
+    withFileTypes: true,
+  });
+
+  const index = planFiles.find(file => file.name === 'index.md');
+
+  if (typeof index === 'undefined') {
+    throw new Error(`Plan does not have index file. #yJtokv`);
+  }
+
+  const indexFile = { path: join(path, index.name), slug: index.name };
+
+  const messageFiles = planFiles
+    .filter(file => file.name !== 'index.md')
+    .map(file => ({ path: join(path, file.name), slug: file.name }));
+
+  return { indexFile, messageFiles };
+};
+
+export const getPlanDataFromIndexFilePath = async ({
+  fs,
+  path,
+}: {
+  fs: FS;
+  path: string;
+}) => {
+  const text = await fs.readFile(path, { encoding: 'utf-8' });
+
+  const planData = planMarkdownToData(text);
+
+  return planData;
+};
+
+export const getMessageDataFromPath = async ({
+  fs,
+  path,
+}: {
+  fs: FS;
+  path: string;
+}) => {
+  const markdown = await fs.readFile(path, {
+    encoding: 'utf-8',
+  });
+
+  const data = await parseMessageFromMarkdown(markdown);
+
+  return data;
 };
