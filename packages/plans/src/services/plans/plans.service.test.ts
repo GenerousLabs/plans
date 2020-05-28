@@ -6,13 +6,11 @@ import {
   expect,
   it,
 } from 'jest-without-globals';
-import { join } from 'path';
 import * as f from '../../fixtures';
 import {
   getPlanFilesFromDirectory,
   getPlanDataFromIndexFilePath,
   getMessageDataFromPath,
-  readPlansFromUserPlansDirectory,
 } from './plans.service';
 
 describe('plans service', () => {
@@ -72,61 +70,6 @@ describe('plans service', () => {
           path: 'elena/index.md',
         })
       ).rejects.toThrow();
-    });
-  });
-
-  describe('readPlansFromUserPlansDirectory()', () => {
-    it('Reads a directory #BiRYi7', async () => {
-      expect(
-        // NOTE: We need to await the test otherwise the `afterAll()` will
-        // destroy our mock filesystem while the async code is still running.
-        await readPlansFromUserPlansDirectory({
-          fs,
-          directoryPath: join(process.cwd(), 'alice/bob/plans/'),
-        })
-      ).toEqual([
-        {
-          ...f.nordvpn.data,
-          slug: f.nordvpn.slug,
-          descriptionMarkdown: f.nordvpn.markdown,
-          messages: [],
-        },
-        {
-          ...f.spotify.data,
-          slug: f.spotify.slug,
-          descriptionMarkdown: f.spotify.markdown,
-          messages: [],
-        },
-      ]);
-    });
-
-    it('Reads a directory with messages #WOK5tu', async () => {
-      expect(
-        // NOTE: We need to await the test otherwise the `afterAll()` will
-        // destroy our mock filesystem while the async code is still running.
-        await readPlansFromUserPlansDirectory({
-          fs,
-          directoryPath: join(process.cwd(), 'alice/charlie/plans/'),
-        })
-      ).toEqual([
-        {
-          ...f.omgyes.data,
-          slug: f.omgyes.slug,
-          descriptionMarkdown: f.omgyes.markdown,
-          messages: [
-            {
-              ...f.aliceMessage.data,
-              contentMarkdown: f.aliceMessage.markdown,
-              slug: `message-${f.aliceMessage.data.dateTimestampSeconds}.md`,
-            },
-            {
-              ...f.charlieMessage.data,
-              contentMarkdown: f.charlieMessage.markdown,
-              slug: `message-${f.charlieMessage.data.dateTimestampSeconds}.md`,
-            },
-          ],
-        },
-      ]);
     });
   });
 });
