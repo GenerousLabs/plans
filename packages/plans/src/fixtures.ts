@@ -73,7 +73,7 @@ export const joinFrontmatter = ({
 
 export const mockFilesystem = () => {
   mockFs({
-    'alice/': {
+    alice: {
       [bob.slug]: {
         'index.md': joinFrontmatter(bob),
         plans: {
@@ -100,6 +100,7 @@ export const mockFilesystem = () => {
         },
       },
     },
+    'daniella/plans/empty': {},
   });
 };
 
