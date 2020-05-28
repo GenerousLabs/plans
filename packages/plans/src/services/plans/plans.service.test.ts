@@ -8,20 +8,43 @@ import {
   afterEach,
 } from 'jest-without-globals';
 
-import { readPlansFromUserPlansDirectory } from './plans.service';
+import {
+  getPlanFilesFromDirectory,
+  readPlansFromUserPlansDirectory,
+} from './plans.service';
 
 import * as f from '../../fixtures';
 
 describe('plans service', () => {
+  beforeEach(() => {
+    f.mockFilesystem();
+  });
+
+  afterEach(() => {
+    f.mockFilesystemRestore();
+  });
+
+  describe('getPlanFilesFromDirectory()', () => {
+    it('Retrieves correct file list #O3ztrx', async () => {
+      expect(
+        await getPlanFilesFromDirectory({
+          fs,
+          path: 'alice/charlie/plans/omgyes',
+        })
+      ).toMatchSnapshot();
+    });
+
+    it('Throws when directory does not contain index.md', async () => {
+      await expect(
+        getPlanFilesFromDirectory({
+          fs,
+          path: 'daniella/plans/empty',
+        })
+      ).rejects.toThrow();
+    });
+  });
+
   describe('readPlansFromUserPlansDirectory()', () => {
-    beforeEach(() => {
-      f.mockFilesystem();
-    });
-
-    afterEach(() => {
-      f.mockFilesystemRestore();
-    });
-
     it('Reads a directory #BiRYi7', async () => {
       expect(
         // NOTE: We need to await the test otherwise the `afterAll()` will

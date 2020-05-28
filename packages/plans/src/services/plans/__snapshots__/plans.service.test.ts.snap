@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plans service getPlanFilesFromDirectory() Retrieves correct file list #O3ztrx 1`] = `
+Object {
+  "indexFile": Object {
+    "path": "alice/charlie/plans/omgyes/index.md",
+    "slug": "index.md",
+  },
+  "messageFiles": Array [
+    Object {
+      "path": "alice/charlie/plans/omgyes/message-1590595620.md",
+      "slug": "message-1590595620.md",
+    },
+    Object {
+      "path": "alice/charlie/plans/omgyes/message-1590595860.md",
+      "slug": "message-1590595860.md",
+    },
+  ],
+}
+`;
