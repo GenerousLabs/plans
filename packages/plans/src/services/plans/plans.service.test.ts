@@ -11,6 +11,7 @@ import * as f from '../../fixtures';
 import {
   getPlanFilesFromDirectory,
   getPlanDataFromIndexFilePath,
+  getMessageDataFromPath,
   readPlansFromUserPlansDirectory,
 } from './plans.service';
 
@@ -49,6 +50,17 @@ describe('plans service', () => {
         await getPlanDataFromIndexFilePath({
           fs,
           path: 'alice/charlie/plans/omgyes/index.md',
+        })
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe('getMessageDataFromPath()', () => {
+    it('Fetches message data correctly #OtOeRY', async () => {
+      expect(
+        await getMessageDataFromPath({
+          fs,
+          path: 'alice/charlie/plans/omgyes/message-1590595620.md',
         })
       ).toMatchSnapshot();
     });
