@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`plans service getPlanDataFromIndexFilePath() Fetches data from plan index file #DakdZI 1`] = `
+Object {
+  "content": "OMG Yes subscription
+",
+  "data": Object {
+    "name": "OMG Yes",
+  },
+}
+`;
+
 exports[`plans service getPlanFilesFromDirectory() Retrieves correct file list #O3ztrx 1`] = `
 Object {
   "indexFile": Object {

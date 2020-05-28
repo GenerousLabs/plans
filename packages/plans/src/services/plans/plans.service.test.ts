@@ -1,19 +1,18 @@
 import { promises as fs } from 'fs';
-import { join } from 'path';
 import {
-  describe,
-  it,
-  expect,
-  beforeEach,
   afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
 } from 'jest-without-globals';
-
+import { join } from 'path';
+import * as f from '../../fixtures';
 import {
   getPlanFilesFromDirectory,
+  getPlanDataFromIndexFilePath,
   readPlansFromUserPlansDirectory,
 } from './plans.service';
-
-import * as f from '../../fixtures';
 
 describe('plans service', () => {
   beforeEach(() => {
@@ -41,6 +40,17 @@ describe('plans service', () => {
           path: 'daniella/plans/empty',
         })
       ).rejects.toThrow();
+    });
+  });
+
+  describe('getPlanDataFromIndexFilePath()', () => {
+    it('Fetches data from plan index file #DakdZI', async () => {
+      expect(
+        await getPlanDataFromIndexFilePath({
+          fs,
+          path: 'alice/charlie/plans/omgyes/index.md',
+        })
+      ).toMatchSnapshot();
     });
   });
 
