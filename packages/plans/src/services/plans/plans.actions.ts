@@ -51,7 +51,7 @@ export const loadMessageFromPath = ({
 
   const message: Message = { id: path, planId, ...data, slug };
 
-  dispatch(upsertOneMessage(message));
+  await dispatch(upsertOneMessage(message));
 };
 
 export const loadPlanFromPath = ({
@@ -121,11 +121,11 @@ export const loadPlanFromPath = ({
     slug,
   };
 
-  dispatch(upsertOnePlan(plan));
+  await dispatch(upsertOnePlan(plan));
 
   await Bluebird.each(messageFiles, async messageFile => {
     const { slug, path } = messageFile;
-    dispatch(
+    await dispatch(
       loadMessageFromPath({
         fs,
         path,
@@ -181,7 +181,7 @@ export const loadPlansFromUserPath = ({
   });
 
   await Bluebird.each(plansPaths, async ({ path, slug }) => {
-    dispatch(
+    await dispatch(
       loadPlanFromPath({
         fs,
         path,
