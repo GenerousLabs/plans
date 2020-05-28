@@ -1,14 +1,8 @@
-import fsNode from 'fs/promises';
 import { join } from 'path';
 import matter from 'gray-matter';
+import { FS } from '../../shared.types';
 
 const PLANS_FOLDER_NAME = 'plans';
-
-export type FS = {
-  readdir: typeof fsNode.readdir;
-  readFile: typeof fsNode.readFile;
-  stat: typeof fsNode.stat;
-};
 
 export type Message = {
   id: string;

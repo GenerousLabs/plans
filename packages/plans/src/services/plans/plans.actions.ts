@@ -1,10 +1,10 @@
 import Bluebird from 'bluebird';
+import { FS } from '../../shared.types';
 import { AppThunk } from '../../store';
 import { to } from '../../utils/to.util';
 import {
   addPlansFolderToPath,
   doesDirectoryExist,
-  FS,
   getMessageDataFromPath,
   getPlanDataFromIndexFilePath,
   getPlanFilesFromDirectory,
