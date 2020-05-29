@@ -4,6 +4,8 @@ import { loadPlansFromUserPath } from './services/plans/plans.actions';
 import { init as initStorage } from './services/storage/storage.service';
 import { AppThunk, createStore } from './store';
 
+export { reducer } from './store';
+
 export const start = ({
   rootPath,
 }: {

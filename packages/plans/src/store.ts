@@ -12,7 +12,7 @@ import storage from './services/storage/storage.service';
 
 export const REDUX_ROOT_KEY = '__plans' as const;
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
   storage,
   plans,
 });
