@@ -1,17 +1,17 @@
+import Bluebird from 'bluebird';
 import { GitParams } from '../../shared.types';
 import { AppThunk } from '../../store';
-import { noop, upsertOne } from './repos.state';
-import {
-  rootPathToMeRepoPath,
-  updateRepo,
-  getConnectionsFromRepo,
-  rootPathToUserRepoPath,
-  Connection,
-} from './repos.service';
-import { to } from '../../utils/to.util';
-import Bluebird from 'bluebird';
-import { loadPlansFromUserPath } from '../plans/plans.actions';
 import { getSerializableError } from '../../utils/errors.utils';
+import { to } from '../../utils/to.util';
+import { loadPlansFromUserPath } from '../plans/plans.actions';
+import {
+  Connection,
+  getConnectionsFromRepo,
+  rootPathToMeRepoPath,
+  rootPathToUserRepoPath,
+  updateRepo,
+} from './repos.service';
+import { noop, upsertOne } from './repos.state';
 
 export const updateUserRepo = ({
   fs,
