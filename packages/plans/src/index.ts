@@ -8,7 +8,7 @@ import { getSerializableError } from './utils/errors.utils';
 
 export { reducer } from './store';
 
-export const start = ({
+export const startWithExistingMeRepo = ({
   fs,
   http,
   headers,
@@ -43,7 +43,7 @@ export const startWithPackageStore = ({
   rootPath: string;
 }) => {
   const store = createStore();
-  store.dispatch(start({ fs, http, headers, rootPath }));
+  store.dispatch(startWithExistingMeRepo({ fs, http, headers, rootPath }));
 };
 
 if (process.env.NODE_ENV === 'development') {
