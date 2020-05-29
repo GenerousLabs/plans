@@ -52,14 +52,6 @@ export const init = ({
     })
   );
 
-  dispatch(
-    noop({
-      code: '#ndfImo',
-      message: 'Me repo updated',
-      params: { ...result },
-    })
-  );
-
   /**
    * - Load the me repo
    * - Pull it
