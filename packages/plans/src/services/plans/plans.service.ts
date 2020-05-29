@@ -75,7 +75,7 @@ export const doesDirectoryExist = async ({
   fs: FS;
   path: string;
 }) => {
-  const stat = await fs.stat(path);
+  const stat = await fs.promises.stat(path);
   return stat.isDirectory();
 };
 
@@ -86,7 +86,7 @@ export const getPlanPathsFromUserDirectory = async ({
   fs: FS;
   path: string;
 }) => {
-  const dir = await fs.readdir(path, {
+  const dir = await fs.promises.readdir(path, {
     encoding: 'utf-8',
     withFileTypes: true,
   });
@@ -105,7 +105,7 @@ export const getPlanFilesFromDirectory = async ({
   fs: FS;
   path: string;
 }) => {
-  const planFiles = await fs.readdir(path, {
+  const planFiles = await fs.promises.readdir(path, {
     withFileTypes: true,
   });
 
@@ -131,7 +131,7 @@ export const getPlanDataFromIndexFilePath = async ({
   fs: FS;
   path: string;
 }) => {
-  const text = await fs.readFile(path, { encoding: 'utf-8' });
+  const text = await fs.promises.readFile(path, { encoding: 'utf-8' });
 
   const planData = planMarkdownToData(text);
 
@@ -145,7 +145,7 @@ export const getMessageDataFromPath = async ({
   fs: FS;
   path: string;
 }) => {
-  const markdown = await fs.readFile(path, {
+  const markdown = await fs.promises.readFile(path, {
     encoding: 'utf-8',
   });
 
