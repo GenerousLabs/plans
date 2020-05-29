@@ -5,6 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 
 type Repo = {
+  id: string;
+  path: string;
   lastFetchTimestampSeconds: number;
   currentHeadCommitHash: string;
 };

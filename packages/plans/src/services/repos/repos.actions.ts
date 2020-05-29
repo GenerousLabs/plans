@@ -1,6 +1,6 @@
 import { GitParams } from '../../shared.types';
 import { AppThunk } from '../../store';
-import { noop } from './repos.state';
+import { noop, upsertOne } from './repos.state';
 import { rootPathToMeRepoPath, updateRepo } from './repos.service';
 import { to } from '../../utils/to.util';
 
@@ -42,6 +42,15 @@ export const init = ({
   }
 
   const { result } = updateResponse;
+
+  dispatch(
+    upsertOne({
+      id: 'root',
+      path: mePath,
+      currentHeadCommitHash: result.commitOidAfter,
+      lastFetchTimestampSeconds: Math.round(Date.now() / 1e3),
+    })
+  );
 
   dispatch(
     noop({
