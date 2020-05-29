@@ -1,5 +1,7 @@
 import { FS } from '../shared.types';
 
+const NOT_FOUND_ERROR_CODE = 'ENOENT';
+
 export const doesDirectoryExist = async ({
   fs,
   path,
@@ -7,11 +9,29 @@ export const doesDirectoryExist = async ({
   fs: FS;
   path: string;
 }) => {
-  const stat = await fs.promises.stat(path);
-  return stat.isDirectory();
+  return fs.promises.stat(path).then(
+    stat => {
+      return stat.isDirectory();
+    },
+    error => {
+      if (error.code === NOT_FOUND_ERROR_CODE) {
+        return false;
+      }
+      throw error;
+    }
+  );
 };
 
 export const doesFileExist = async ({ fs, path }: { fs: FS; path: string }) => {
-  const stat = await fs.promises.stat(path);
-  return stat.isFile();
+  return await fs.promises.stat(path).then(
+    stat => {
+      return stat.isFile();
+    },
+    error => {
+      if (error.code === NOT_FOUND_ERROR_CODE) {
+        return false;
+      }
+      throw error;
+    }
+  );
 };
