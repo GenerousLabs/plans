@@ -17,7 +17,12 @@ export type FS = {
   };
 };
 
+export type Headers = {
+  [x: string]: string;
+};
+
 export type GitParams = {
   fs: FS;
   http: HttpClient;
+  headers?: Headers;
 };
