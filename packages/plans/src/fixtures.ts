@@ -101,6 +101,9 @@ export const mockFilesystem = () => {
       },
     },
     'daniella/plans/empty': {},
+    elena: {
+      'index.md': '',
+    },
   });
 };
 
