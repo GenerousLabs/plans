@@ -91,7 +91,7 @@ export const getConnectionsFromRepo = async ({
     throw new Error('Connections file not found. #jQrd0p');
   }
 
-  const contents = await fs.promises.readFile(path, { encoding: 'utf-8' });
+  const contents = await fs.promises.readFile(path, { encoding: 'utf8' });
 
   const data: Connection[] = yaml.safeLoad(contents);
 

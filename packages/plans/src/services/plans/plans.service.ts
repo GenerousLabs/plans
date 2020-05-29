@@ -76,7 +76,7 @@ export const getPlanPathsFromUserDirectory = async ({
   path: string;
 }) => {
   const dir = await fs.promises.readdir(path, {
-    encoding: 'utf-8',
+    encoding: 'utf8',
     withFileTypes: true,
   });
 
@@ -120,7 +120,7 @@ export const getPlanDataFromIndexFilePath = async ({
   fs: FS;
   path: string;
 }) => {
-  const text = await fs.promises.readFile(path, { encoding: 'utf-8' });
+  const text = await fs.promises.readFile(path, { encoding: 'utf8' });
 
   const planData = planMarkdownToData(text);
 
@@ -135,7 +135,7 @@ export const getMessageDataFromPath = async ({
   path: string;
 }) => {
   const markdown = await fs.promises.readFile(path, {
-    encoding: 'utf-8',
+    encoding: 'utf8',
   });
 
   const data = await parseMessageFromMarkdown(markdown);
