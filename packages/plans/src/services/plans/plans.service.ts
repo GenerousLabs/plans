@@ -68,17 +68,6 @@ export const addPlansFolderToPath = ({ path }: { path: string }): string => {
   return join(path, PLANS_FOLDER_NAME);
 };
 
-export const doesDirectoryExist = async ({
-  fs,
-  path,
-}: {
-  fs: FS;
-  path: string;
-}) => {
-  const stat = await fs.promises.stat(path);
-  return stat.isDirectory();
-};
-
 export const getPlanPathsFromUserDirectory = async ({
   fs,
   path,
