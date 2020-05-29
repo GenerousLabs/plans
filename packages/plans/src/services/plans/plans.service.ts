@@ -1,5 +1,5 @@
-import { join } from 'path';
 import matter from 'gray-matter';
+import { join } from 'path';
 import { FS } from '../../shared.types';
 
 const PLANS_FOLDER_NAME = 'plans';
