@@ -1,5 +1,12 @@
 import mockFs from 'mock-fs';
 
+export const connectionsYaml = `- id: bob
+  name: Bob
+  repoFolder: bob
+- id: charlie
+  name: Charlie
+  repoFolder: charlie`;
+
 export const bob = {
   slug: 'bob',
   data: { name: 'Bob' },

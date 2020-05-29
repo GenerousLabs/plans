@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`repo service getConn successfully reads and parses connections.yaml #7vAlyp 1`] = `
+Array [
+  Object {
+    "id": "bob",
+    "name": "Bob",
+    "repoFolder": "bob",
+  },
+  Object {
+    "id": "charlie",
+    "name": "Charlie",
+    "repoFolder": "charlie",
+  },
+]
+`;
