@@ -1,8 +1,65 @@
 import { GitParams } from '../../shared.types';
 import { AppThunk } from '../../store';
 import { noop, upsertOne } from './repos.state';
-import { rootPathToMeRepoPath, updateRepo } from './repos.service';
+import {
+  rootPathToMeRepoPath,
+  updateRepo,
+  getConnectionsFromRepo,
+  rootPathToUserRepoPath,
+  Connection,
+} from './repos.service';
 import { to } from '../../utils/to.util';
+import Bluebird from 'bluebird';
+import { loadPlansFromUserPath } from '../plans/plans.actions';
+import { getSerializableError } from '../../utils/errors.utils';
+
+export const updateUserRepo = ({
+  fs,
+  http,
+  headers,
+  rootPath,
+  connection,
+}: Omit<GitParams, 'dir'> & {
+  rootPath: string;
+  connection: Connection;
+}): AppThunk => async dispatch => {
+  const { id, repoFolder } = connection;
+
+  const dir = rootPathToUserRepoPath({ rootPath, repoFolder });
+
+  const updateResponse = await to(updateRepo({ fs, http, headers, dir }));
+
+  if (updateResponse.error) {
+    const { error } = updateResponse;
+    dispatch(
+      noop({
+        code: '#zwDZDP',
+        message: 'Error updating user repo',
+        params: {
+          error: getSerializableError(error),
+          dir,
+          id,
+        },
+      })
+    );
+    return;
+  }
+
+  const { result } = updateResponse;
+
+  dispatch(
+    upsertOne({
+      id,
+      currentHeadCommitHash: result.commitOidAfter,
+      lastFetchTimestampSeconds: Math.round(Date.now() / 1e3),
+      path: dir,
+    })
+  );
+
+  await dispatch(
+    loadPlansFromUserPath({ fs, userId: id, userDirectoryPath: dir })
+  );
+};
 
 export const init = ({
   fs,
@@ -51,6 +108,35 @@ export const init = ({
       lastFetchTimestampSeconds: Math.round(Date.now() / 1e3),
     })
   );
+
+  const connectionsResponse = await to(
+    getConnectionsFromRepo({ fs, dir: mePath })
+  );
+  if (connectionsResponse.error) {
+    const { error } = connectionsResponse;
+    dispatch(
+      noop({
+        code: '#l85nXL',
+        message: 'Error loading connections',
+        params: { error, mePath },
+      })
+    );
+    return;
+  }
+
+  const connections = connectionsResponse.result;
+
+  await Bluebird.each(connections, async connection => {
+    await dispatch(
+      updateUserRepo({
+        fs,
+        http,
+        headers,
+        rootPath,
+        connection,
+      })
+    );
+  });
 
   /**
    * - Find the connections file
