@@ -138,14 +138,4 @@ export const init = ({
       })
     );
   });
-
-  /**
-   * - Find the connections file
-   * - Parse it
-   * - Get the list of local repos
-   *   - Push the data into redux
-   * - Iterate over each repo
-   *   - Pull it
-   *   - Trigger the plans scan
-   */
 };
