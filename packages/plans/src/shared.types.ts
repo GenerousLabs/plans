@@ -25,4 +25,5 @@ export type GitParams = {
   fs: FS;
   http: HttpClient;
   headers?: Headers;
+  dir: string;
 };

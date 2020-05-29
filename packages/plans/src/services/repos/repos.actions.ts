@@ -53,8 +53,6 @@ export const init = ({
   );
 
   /**
-   * - Load the me repo
-   * - Pull it
    * - Find the connections file
    * - Parse it
    * - Get the list of local repos

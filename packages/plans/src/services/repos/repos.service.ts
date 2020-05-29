@@ -12,10 +12,7 @@ export const rootPathToMeRepoPath = ({ rootPath }: { rootPath: string }) => {
   return join(rootPath, PATH_TO_ME_REPO);
 };
 
-export const getCurrentCommit = async ({
-  fs,
-  dir,
-}: GitParams & { dir: string }) => {
+export const getCurrentCommit = async ({ fs, dir }: GitParams) => {
   const status = await git.log({ fs, dir, depth: 1 });
 
   if (status.length === 0) {
@@ -25,14 +22,7 @@ export const getCurrentCommit = async ({
   return status[0];
 };
 
-export const updateRepo = async ({
-  fs,
-  http,
-  headers,
-  dir,
-}: GitParams & {
-  dir: string;
-}) => {
+export const updateRepo = async ({ fs, http, headers, dir }: GitParams) => {
   const commitBefore = await getCurrentCommit({ fs, http, dir });
 
   try {
