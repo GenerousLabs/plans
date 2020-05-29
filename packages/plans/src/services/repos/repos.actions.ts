@@ -12,6 +12,7 @@ import {
   updateRepo,
 } from './repos.service';
 import { noop, upsertOne } from './repos.state';
+import { timestampSeconds } from '../../utils/time.utils';
 
 export const updateUserRepo = ({
   fs,
@@ -51,7 +52,7 @@ export const updateUserRepo = ({
     upsertOne({
       id,
       currentHeadCommitHash: result.commitOidAfter,
-      lastFetchTimestampSeconds: Math.round(Date.now() / 1e3),
+      lastFetchTimestampSeconds: timestampSeconds(),
       path: dir,
     })
   );
@@ -105,7 +106,7 @@ export const init = ({
       id: 'root',
       path: mePath,
       currentHeadCommitHash: result.commitOidAfter,
-      lastFetchTimestampSeconds: Math.round(Date.now() / 1e3),
+      lastFetchTimestampSeconds: timestampSeconds(),
     })
   );
 
