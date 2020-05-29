@@ -5,6 +5,7 @@ import { init as initRepos } from './services/repos/repos.actions';
 import { init as initStorage } from './services/storage/storage.service';
 import { GitParams } from './shared.types';
 import { AppThunk, createStore } from './store';
+import { getSerializableError } from './utils/errors.utils';
 
 export { reducer } from './store';
 
@@ -18,15 +19,20 @@ export const start = ({
 }): AppThunk => async dispatch => {
   dispatch(initStorage());
 
-  await dispatch(initRepos({ fs, http, headers, rootPath }));
-
-  // await dispatch(
-  //   loadPlansFromUserPath({
-  //     fs,
-  //     userDirectoryPath: join(rootPath, 'connections/bob'),
-  //     userId: 'bob',
-  //   })
-  // );
+  try {
+    await dispatch(initRepos({ fs, http, headers, rootPath }));
+  } catch (error) {
+    dispatch({
+      type: 'PLANS/init/error',
+      payload: {
+        code: '#YFjhvS',
+        message: 'Unknown error during initRepos() startup',
+        params: {
+          error: getSerializableError(error),
+        },
+      },
+    });
+  }
 };
 
 export const startWithPackageStore = ({
