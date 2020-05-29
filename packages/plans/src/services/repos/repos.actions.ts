@@ -9,7 +9,7 @@ export const init = ({
   http,
   headers,
   rootPath,
-}: GitParams & {
+}: Omit<GitParams, 'dir'> & {
   rootPath: string;
 }): AppThunk => async dispatch => {
   dispatch(

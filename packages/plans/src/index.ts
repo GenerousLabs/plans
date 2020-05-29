@@ -14,7 +14,7 @@ export const start = ({
   http,
   headers,
   rootPath,
-}: GitParams & {
+}: Omit<GitParams, 'dir'> & {
   rootPath: string;
 }): AppThunk => async dispatch => {
   dispatch(initStorage());
@@ -35,7 +35,7 @@ export const startWithPackageStore = ({
   http,
   headers,
   rootPath,
-}: GitParams & {
+}: Omit<GitParams, 'dir'> & {
   rootPath: string;
 }) => {
   const store = createStore();
