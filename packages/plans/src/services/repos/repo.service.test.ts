@@ -6,7 +6,7 @@ import { FS } from '../../shared.types';
 import { getConnectionsFromRepo } from './repos.service';
 
 describe('repo service', () => {
-  describe('getConn', () => {
+  describe('getConnectionsFromRepo()', () => {
     let fs: FS;
     beforeEach(async () => {
       fs = new LightningFS('__plans_tests', { wipe: true });
