@@ -2,7 +2,7 @@ import git from 'isomorphic-git';
 import yaml from 'js-yaml';
 import { join } from 'path';
 import { GitParams } from '../../shared.types';
-import { doesFileExist } from '../../utils/fs.utils';
+import { doesFileExist, doesDirectoryExist } from '../../utils/fs.utils';
 
 const PATH_TO_ME_REPO = 'me';
 const CONNECTIONS_FILE_NAME = 'connections.yaml';
@@ -16,6 +16,7 @@ export type Connection = {
   id: string;
   name: string;
   repoFolder: string;
+  remote: string;
   credentials?: {
     username?: string;
     password?: string;
@@ -53,7 +54,7 @@ export const getCurrentCommit = async ({ fs, dir }: GitParams) => {
   return status[0];
 };
 
-export const updateRepo = async ({ fs, http, headers, dir }: GitParams) => {
+export const pullRepo = async ({ fs, http, headers, dir }: GitParams) => {
   const commitBefore = await getCurrentCommit({ fs, http, dir });
 
   try {
@@ -77,6 +78,38 @@ export const updateRepo = async ({ fs, http, headers, dir }: GitParams) => {
   };
 };
 
+export const cloneRepo = async ({
+  fs,
+  http,
+  headers,
+  dir,
+  remote,
+}: GitParams & { remote: string }) => {
+  await git.clone({ fs, http, headers, dir, url: remote });
+  const commitAfter = await getCurrentCommit({ fs, http, dir });
+  return {
+    commitOidBefore: '',
+    commitOidAfter: commitAfter.oid,
+  };
+};
+
+export const cloneOrPullRepo = async ({
+  fs,
+  http,
+  headers,
+  dir,
+  remote,
+}: GitParams & { remote: string }) => {
+  if (!(await doesDirectoryExist({ fs, path: dir }))) {
+    await fs.promises.mkdir(dir);
+    return cloneRepo({ fs, http, headers, dir, remote });
+  }
+  // TODO: Check if directory is a git repo, abort if not
+  else {
+    return pullRepo({ fs, http, headers, dir });
+  }
+};
+
 export const addConnectionFileNameToPath = ({ path }: { path: string }) => {
   return join(path, CONNECTIONS_FILE_NAME);
 };
@@ -94,6 +127,8 @@ export const getConnectionsFromRepo = async ({
   const contents = await fs.promises.readFile(path, { encoding: 'utf8' });
 
   const data: Connection[] = yaml.safeLoad(contents);
+
+  // TODO Ensure that `data` conforms to our desired schema
 
   return data;
 };
