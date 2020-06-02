@@ -35,7 +35,11 @@ export type GitParams = {
 export type Connection = {
   id: string;
   name: string;
-  repoFolder: string;
+  folder: string;
+};
+export type Repo = {
+  id: string;
+  folder: string;
   remote: string;
   credentials?: {
     username?: string;
@@ -44,4 +48,5 @@ export type Connection = {
       [x: string]: string;
     };
   };
+  connections: Connection[];
 };

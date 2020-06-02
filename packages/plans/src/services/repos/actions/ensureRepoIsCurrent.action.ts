@@ -3,7 +3,7 @@ import { AppThunk } from '../../../store';
 import { timestampSeconds } from '../../../utils/time.utils';
 import { to } from '../../../utils/to.util';
 import { cloneOrPullRepo } from '../repos.service';
-import { noop, upsertOne } from '../repos.state';
+import { noop, updateOne } from '../repos.state';
 import { getSerializableError } from '../../../utils/errors.utils';
 
 export const ensureRepoIsCurrent = ({
@@ -13,11 +13,9 @@ export const ensureRepoIsCurrent = ({
   dir,
   remote,
   id,
-  connectionName,
 }: GitParams & {
   remote: string;
   id: string;
-  connectionName: string;
 }): AppThunk => async dispatch => {
   const updateResponse = await to(
     cloneOrPullRepo({ fs, http, headers, dir, remote })
@@ -41,12 +39,12 @@ export const ensureRepoIsCurrent = ({
   const { result } = updateResponse;
 
   dispatch(
-    upsertOne({
+    updateOne({
       id,
-      path: dir,
-      currentHeadCommitHash: result.commitOidAfter,
-      lastFetchTimestampSeconds: timestampSeconds(),
-      connectionName,
+      changes: {
+        currentHeadCommitHash: result.commitOidAfter,
+        lastFetchTimestampSeconds: timestampSeconds(),
+      },
     })
   );
 };

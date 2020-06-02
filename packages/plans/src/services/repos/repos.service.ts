@@ -1,7 +1,7 @@
 import git from 'isomorphic-git';
 import yaml from 'js-yaml';
 import { join } from 'path';
-import { Connection, GitParams } from '../../shared.types';
+import { GitParams, Repo } from '../../shared.types';
 import { doesDirectoryExist, doesFileExist } from '../../utils/fs.utils';
 
 const PATH_TO_ME_REPO = 'me';
@@ -108,7 +108,7 @@ export const getConnectionsFromRepo = async ({
 
   const contents = await fs.promises.readFile(path, { encoding: 'utf8' });
 
-  const data: Connection[] = yaml.safeLoad(contents);
+  const data: Repo[] = yaml.safeLoad(contents);
 
   // TODO Ensure that `data` conforms to our desired schema
 

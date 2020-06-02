@@ -3,32 +3,33 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
+import { Repo } from '../../shared.types';
 import { getLocalState, RootState } from '../../store';
 
 export const REDUCER_KEY = 'repos' as const;
 
 const getState = (state: RootState) => getLocalState(state)[REDUCER_KEY];
 
-type Repo = {
-  id: string;
+type RepoMeta = {
   path: string;
   lastFetchTimestampSeconds: number;
   currentHeadCommitHash: string;
-  connectionName: string;
 };
+type RepoState = Repo & RepoMeta;
 
-const reposAdapter = createEntityAdapter<Repo>();
+const reposAdapter = createEntityAdapter<RepoState>();
 
 const reposSlice = createSlice({
   name: 'PLANS/repos',
   initialState: reposAdapter.getInitialState(),
   reducers: {
     upsertOne: reposAdapter.upsertOne,
+    updateOne: reposAdapter.updateOne,
     removeOne: reposAdapter.removeOne,
   },
 });
 
-export const { upsertOne, removeOne } = reposSlice.actions;
+export const { upsertOne, updateOne, removeOne } = reposSlice.actions;
 
 export default reposSlice.reducer;
 
