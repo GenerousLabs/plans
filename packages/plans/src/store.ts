@@ -7,14 +7,16 @@ import {
 import devToolsEnhancer, {
   RemoteReduxDevToolsOptions,
 } from 'remote-redux-devtools';
-import plans from './services/plans/plans.state';
-import repos from './services/repos/repos.state';
+import plans, { REDUCER_KEY as plansKey } from './services/plans/plans.state';
+import repos, { REDUCER_KEY as reposKey } from './services/repos/repos.state';
 
 export const REDUX_ROOT_KEY = '__plans' as const;
 
+console.log('plans on startup #OdTMKk', repos.name);
+
 export const reducer = combineReducers({
-  plans,
-  repos,
+  [plansKey]: plans,
+  [reposKey]: repos,
 });
 
 export const createStore = (args?: {

@@ -1,10 +1,10 @@
-import { GitParams } from '../../../shared.types';
-import { AppThunk, getLocalState } from '../../../store';
-import { pullMeAndConnectionRepos } from '../../repos/actions/pullMeAndConnectionRepos.action';
-import { RootConfig } from '../startup.service';
-import { selectAll } from '../../repos/repos.state';
 import Bluebird from 'bluebird';
+import { GitParams } from '../../../shared.types';
+import { AppThunk } from '../../../store';
 import { loadPlansFromUserPath } from '../../plans/actions/loadPlansFromUserPath.action';
+import { pullMeAndConnectionRepos } from '../../repos/actions/pullMeAndConnectionRepos.action';
+import { selectAll } from '../../repos/repos.state';
+import { RootConfig } from '../startup.service';
 
 export const startup = ({
   fs,
@@ -25,9 +25,7 @@ export const startup = ({
     })
   );
 
-  const state = getLocalState(getRootState());
-
-  const repos = selectAll(state.repos);
+  const repos = selectAll(getRootState());
 
   Bluebird.each(repos, async repo => {
     const { id, path } = repo;

@@ -1,8 +1,13 @@
 import {
-  createSlice,
-  createEntityAdapter,
   createAction,
+  createEntityAdapter,
+  createSlice,
 } from '@reduxjs/toolkit';
+import { getLocalState, RootState } from '../../store';
+
+export const REDUCER_KEY = 'repos' as const;
+
+const getState = (state: RootState) => getLocalState(state)[REDUCER_KEY];
 
 type Repo = {
   id: string;
@@ -24,7 +29,6 @@ const reposSlice = createSlice({
 });
 
 export const { upsertOne, removeOne } = reposSlice.actions;
-export const { selectAll } = reposAdapter.getSelectors();
 
 export default reposSlice.reducer;
 
@@ -48,3 +52,8 @@ export const noop = createAction(
     };
   }
 );
+
+const reposSelectors = reposAdapter.getSelectors();
+
+export const selectAll = (state: RootState) =>
+  reposSelectors.selectAll(getState(state));
