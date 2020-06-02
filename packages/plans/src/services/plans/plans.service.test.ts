@@ -8,9 +8,9 @@ import {
 } from 'jest-without-globals';
 import * as f from '../../fixtures';
 import {
-  getPlanFilesFromDirectory,
-  getPlanDataFromIndexFilePath,
   getMessageDataFromPath,
+  getPlanDataFromIndexFilePath,
+  getPlanFilesFromDirectory,
 } from './plans.service';
 
 describe('plans service', () => {
