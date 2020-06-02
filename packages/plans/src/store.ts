@@ -12,8 +12,6 @@ import repos, { REDUCER_KEY as reposKey } from './services/repos/repos.state';
 
 export const REDUX_ROOT_KEY = '__plans' as const;
 
-console.log('plans on startup #OdTMKk', repos.name);
-
 export const reducer = combineReducers({
   [plansKey]: plans,
   [reposKey]: repos,
