@@ -27,3 +27,21 @@ export type GitParams = {
   headers?: Headers;
   dir: string;
 };
+
+/**
+ * A connection object that links the root user's me repository to another
+ * repository that is shared with another person.
+ */
+export type Connection = {
+  id: string;
+  name: string;
+  repoFolder: string;
+  remote: string;
+  credentials?: {
+    username?: string;
+    password?: string;
+    headers?: {
+      [x: string]: string;
+    };
+  };
+};

@@ -13,7 +13,12 @@ export const ensureRepoIsCurrent = ({
   dir,
   remote,
   id,
-}: GitParams & { remote: string; id: string }): AppThunk => async dispatch => {
+  connectionName,
+}: GitParams & {
+  remote: string;
+  id: string;
+  connectionName: string;
+}): AppThunk => async dispatch => {
   const updateResponse = await to(
     cloneOrPullRepo({ fs, http, headers, dir, remote })
   );
@@ -41,6 +46,7 @@ export const ensureRepoIsCurrent = ({
       path: dir,
       currentHeadCommitHash: result.commitOidAfter,
       lastFetchTimestampSeconds: timestampSeconds(),
+      connectionName,
     })
   );
 };

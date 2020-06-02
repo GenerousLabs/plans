@@ -38,6 +38,7 @@ export const pullMeAndConnectionRepos = ({
       dir: mePath,
       remote: meRepoRemote,
       id: 'me',
+      connectionName: '',
     })
   );
 
@@ -59,7 +60,7 @@ export const pullMeAndConnectionRepos = ({
   const connections = connectionsResponse.result;
 
   await Bluebird.each(connections, async connection => {
-    const { repoFolder, remote, id } = connection;
+    const { repoFolder, remote, id, name } = connection;
     const dir = rootPathToUserRepoPath({ rootPath, repoFolder });
 
     await dispatch(
@@ -70,6 +71,7 @@ export const pullMeAndConnectionRepos = ({
         dir,
         remote,
         id,
+        connectionName: name,
       })
     );
   });

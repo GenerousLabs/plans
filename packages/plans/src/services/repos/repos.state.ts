@@ -9,6 +9,7 @@ type Repo = {
   path: string;
   lastFetchTimestampSeconds: number;
   currentHeadCommitHash: string;
+  connectionName: string;
 };
 
 const reposAdapter = createEntityAdapter<Repo>();
@@ -23,6 +24,7 @@ const reposSlice = createSlice({
 });
 
 export const { upsertOne, removeOne } = reposSlice.actions;
+export const { selectAll } = reposAdapter.getSelectors();
 
 export default reposSlice.reducer;
 

@@ -1,30 +1,12 @@
 import git from 'isomorphic-git';
 import yaml from 'js-yaml';
 import { join } from 'path';
-import { GitParams } from '../../shared.types';
-import { doesFileExist, doesDirectoryExist } from '../../utils/fs.utils';
+import { Connection, GitParams } from '../../shared.types';
+import { doesDirectoryExist, doesFileExist } from '../../utils/fs.utils';
 
 const PATH_TO_ME_REPO = 'me';
 const CONNECTIONS_FILE_NAME = 'connections.yaml';
 const CONNECTIONS_FOLDER_NAME = 'connections';
-
-/**
- * A connection object that links the root user's me repository to another
- * repository that is shared with another person.
- */
-export type Connection = {
-  id: string;
-  name: string;
-  repoFolder: string;
-  remote: string;
-  credentials?: {
-    username?: string;
-    password?: string;
-    headers?: {
-      [x: string]: string;
-    };
-  };
-};
 
 const author = {
   name: 'plans',
