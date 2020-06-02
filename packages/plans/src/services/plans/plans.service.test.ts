@@ -27,7 +27,7 @@ describe('plans service', () => {
       expect(
         await getPlanFilesFromDirectory({
           fs,
-          path: 'alice/charlie/plans/omgyes',
+          path: 'alice/charlie/plans/charlie/omgyes',
         })
       ).toMatchSnapshot();
     });
@@ -47,7 +47,7 @@ describe('plans service', () => {
       expect(
         await getPlanDataFromIndexFilePath({
           fs,
-          path: 'alice/charlie/plans/omgyes/index.md',
+          path: 'alice/charlie/plans/charlie/omgyes/index.md',
         })
       ).toMatchSnapshot();
     });
@@ -58,7 +58,7 @@ describe('plans service', () => {
       expect(
         await getMessageDataFromPath({
           fs,
-          path: 'alice/charlie/plans/omgyes/message-1590595620.md',
+          path: 'alice/charlie/plans/charlie/omgyes/message-1590595620.md',
         })
       ).toMatchSnapshot();
     });

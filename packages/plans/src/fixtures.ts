@@ -1,11 +1,13 @@
 import mockFs from 'mock-fs';
 
 export const connectionsYaml = `- id: bob
+  folder: bob
   name: Bob
-  repoFolder: bob
+  remote: https://git.example.tld/alice/bob.git
 - id: charlie
+  folder: charlie
   name: Charlie
-  repoFolder: charlie`;
+  remote: https://git.example.tld/alice/charlie.git`;
 
 export const bob = {
   slug: 'bob',
@@ -84,25 +86,29 @@ export const mockFilesystem = () => {
       [bob.slug]: {
         'index.md': joinFrontmatter(bob),
         plans: {
-          [spotify.slug]: {
-            'index.md': joinFrontmatter(spotify),
-          },
-          [nordvpn.slug]: {
-            'index.md': joinFrontmatter(nordvpn),
+          [bob.slug]: {
+            [spotify.slug]: {
+              'index.md': joinFrontmatter(spotify),
+            },
+            [nordvpn.slug]: {
+              'index.md': joinFrontmatter(nordvpn),
+            },
           },
         },
       },
-      charlie: {
+      [charlie.slug]: {
         'index.md': joinFrontmatter(charlie),
         plans: {
-          [omgyes.slug]: {
-            'index.md': joinFrontmatter(omgyes),
-            [`message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
-              aliceMessage
-            ),
-            [`message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
-              charlieMessage
-            ),
+          [charlie.slug]: {
+            [omgyes.slug]: {
+              'index.md': joinFrontmatter(omgyes),
+              [`message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+                aliceMessage
+              ),
+              [`message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+                charlieMessage
+              ),
+            },
           },
         },
       },

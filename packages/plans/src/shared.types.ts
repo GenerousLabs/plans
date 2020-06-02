@@ -29,16 +29,12 @@ export type GitParams = {
 };
 
 /**
- * A connection object that links the root user's me repository to another
- * repository that is shared with another person.
+ * A repo represents the connection between users. A shared space that two (or
+ * potentially in the future, more than two) people can share things.
  */
-export type Connection = {
-  id: string;
-  name: string;
-  folder: string;
-};
 export type Repo = {
   id: string;
+  name: string;
   folder: string;
   remote: string;
   credentials?: {
@@ -48,5 +44,4 @@ export type Repo = {
       [x: string]: string;
     };
   };
-  connections: Connection[];
 };

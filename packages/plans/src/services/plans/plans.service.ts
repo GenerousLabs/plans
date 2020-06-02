@@ -68,6 +68,39 @@ export const addPlansFolderToPath = ({ path }: { path: string }): string => {
   return join(path, PLANS_FOLDER_NAME);
 };
 
+export const findFirstPlansDirectory = async ({
+  fs,
+  repoPath,
+  myUsername,
+}: {
+  fs: FS;
+  repoPath: string;
+  myUsername: string;
+}): Promise<string> => {
+  const ignoreDirectories = ['.', '..', myUsername];
+
+  const path = addPlansFolderToPath({ path: repoPath });
+
+  const directories = await fs.promises.readdir(path, { withFileTypes: true });
+
+  const found = directories.find(dir => {
+    if (!dir.isDirectory()) {
+      return false;
+    }
+    if (ignoreDirectories.includes(dir.name)) {
+      return false;
+    }
+    return true;
+  });
+
+  if (typeof found !== 'undefined') {
+    const output = join(path, found.name);
+    return output;
+  }
+
+  return '';
+};
+
 export const getPlanPathsFromUserDirectory = async ({
   fs,
   path,

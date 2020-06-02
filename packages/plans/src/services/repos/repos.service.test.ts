@@ -15,13 +15,13 @@ describe('repo service', () => {
       await fs.promises.writeFile('/repo/connections.yaml', connectionsYaml);
     });
 
-    it('throws when connections.yaml not found #Fv6TVV', async () => {
-      await expect(
-        getConnectionsFromRepo({
+    it('Returns empty array when connections.yaml not found #Fv6TVV', async () => {
+      expect(
+        await getConnectionsFromRepo({
           fs,
           dir: '/empty',
         })
-      ).rejects.toThrow();
+      ).toEqual([]);
     });
 
     it('successfully reads and parses connections.yaml #7vAlyp', async () => {

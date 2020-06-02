@@ -96,49 +96,72 @@ export const addConnectionFileNameToPath = ({ path }: { path: string }) => {
   return join(path, CONNECTIONS_FILE_NAME);
 };
 
+const repoStringFields = ['id', 'name', 'folder', 'remote'];
+const credentialStringFields = ['username', 'password'];
+export const isRepo = (repo: any): repo is Repo => {
+  // All `repoStringFields` must be a string, and >0 length
+  for (const field of repoStringFields) {
+    if (typeof repo[field] !== 'string' || repo[field].length === 0) {
+      return false;
+    }
+  }
+
+  if (typeof repo.credentials !== 'undefined') {
+    // All `credentialStringFields` if they exist, must be a string and >0 length
+    for (const field in credentialStringFields) {
+      if (typeof repo[field] !== 'undefined') {
+        if (typeof repo[field] !== 'string' || repo[field].length === 0) {
+          return false;
+        }
+      }
+    }
+
+    if (typeof repo.credentials.headers !== 'undefined') {
+      // If the `headers` property exists, it must have children
+      if (Object.keys(repo.credentials).length === 0) {
+        return false;
+      }
+
+      // All `headers` properties must be a string and >0 length
+      for (const field of repo.credentials.headers) {
+        if (typeof repo[field] !== 'string' || repo[field].length === 0) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+};
+
 export const getConnectionsFromRepo = async ({
   fs,
   dir,
 }: Pick<GitParams, 'fs' | 'dir'>) => {
   const path = addConnectionFileNameToPath({ path: dir });
 
-  if (!doesFileExist({ fs, path })) {
-    throw new Error('Connections file not found. #jQrd0p');
+  // If there is no file, then we return an empty array, so the code runs before
+  // any repos have been created.
+  if (!(await doesFileExist({ fs, path }))) {
+    return [];
   }
 
   const contents = await fs.promises.readFile(path, { encoding: 'utf8' });
 
-  const data: Repo[] = yaml.safeLoad(contents);
+  const data = yaml.safeLoad(contents);
 
   if (typeof data === 'undefined' || typeof data.length !== 'number') {
     throw new Error('Invalid connection YAML data. #Tnsl4V');
   }
-  const repoStringFields = ['id', 'folder', 'remote'];
-  const connectionStringFields = ['id', 'folder', 'name'];
-  data.forEach(repo => {
-    repoStringFields.forEach(field => {
-      if (typeof (repo as any)[field] !== 'string') {
-        throw new Error('Failed to load repo data #COATkv');
-      }
-    });
-    if (
-      typeof repo.connections === 'undefined' ||
-      repo.connections.length === 0
-    ) {
-      throw new Error('Failed to load repo data #xOhsaZ');
-    }
-    if (repo.connections.length !== 1) {
-      throw new Error('One repo has >1 connections #LsL9Ht');
-    }
-    const connection = repo.connections[0];
-    connectionStringFields.forEach(field => {
-      if (typeof (connection as any)[field] !== 'string') {
-        throw new Error('Failed to load repo connection data #841Xsm');
-      }
-    });
-  });
 
-  // TODO Ensure that `data` conforms to our desired schema
+  const repos = (data as any[]).reduce<Repo[]>((repos, repo) => {
+    if (isRepo(repo)) {
+      return repos.concat(repo);
+    }
 
-  return data;
+    // TODO: Figure out how to gracefully handle errors
+    throw new Error('Invalid entry in repo file. #nimUr6');
+  }, []);
+
+  return repos;
 };

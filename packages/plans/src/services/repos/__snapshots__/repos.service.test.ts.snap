@@ -3,14 +3,16 @@
 exports[`repo service getConnectionsFromRepo() successfully reads and parses connections.yaml #7vAlyp 1`] = `
 Array [
   Object {
+    "folder": "bob",
     "id": "bob",
     "name": "Bob",
-    "repoFolder": "bob",
+    "remote": "https://git.example.tld/alice/bob.git",
   },
   Object {
+    "folder": "charlie",
     "id": "charlie",
     "name": "Charlie",
-    "repoFolder": "charlie",
+    "remote": "https://git.example.tld/alice/charlie.git",
   },
 ]
 `;

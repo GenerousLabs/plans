@@ -1,9 +1,8 @@
 import Bluebird from 'bluebird';
 import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { doesDirectoryExist } from '../../../utils/fs.utils';
 import {
-  addPlansFolderToPath,
+  findFirstPlansDirectory,
   getPlanPathsFromUserDirectory,
 } from '../plans.service';
 import { noop } from '../plans.state';
@@ -26,10 +25,15 @@ export const loadPlansFromUserPath = ({
     })
   );
 
-  const plansPath = addPlansFolderToPath({ path: userDirectoryPath });
+  const plansPath = await findFirstPlansDirectory({
+    fs,
+    repoPath: userDirectoryPath,
+    // TODO We need to get the user's real folder name here
+    myUsername: 'alice',
+  });
 
   // If the user does not have a `plans` folder, there's nothing to do here.
-  if (!(await doesDirectoryExist({ fs, path: plansPath }))) {
+  if (plansPath.length === 0) {
     dispatch(
       noop({
         code: '#nMlg40',
