@@ -8,6 +8,7 @@ import {
   Plan,
 } from '../plans.service';
 import { noop, upsertOnePlan } from '../plans.state';
+import { loadMessageFromPath } from './loadMessageFromPath.action';
 
 export const loadPlanFromPath = ({
   fs,
