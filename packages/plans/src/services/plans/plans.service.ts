@@ -1,6 +1,7 @@
 import matter from 'gray-matter';
 import { join } from 'path';
 import { FS } from '../../shared.types';
+import { doesDirectoryExist } from '../../utils/fs.utils';
 
 const PLANS_FOLDER_NAME = 'plans';
 
@@ -80,6 +81,10 @@ export const findFirstPlansDirectory = async ({
   const ignoreDirectories = ['.', '..', myUsername];
 
   const path = addPlansFolderToPath({ path: repoPath });
+
+  if (!(await doesDirectoryExist({ fs, path }))) {
+    return '';
+  }
 
   const directories = await fs.promises.readdir(path, { withFileTypes: true });
 
