@@ -6,7 +6,7 @@ import { ensureRepoIsCurrent } from './ensureRepoIsCurrent.action';
 import {
   getConnectionsFromRepo,
   rootPathToMeRepoPath,
-  rootPathToUserRepoPath,
+  rootPathToRepoPath,
 } from '../repos.service';
 import { noop, upsertOne } from '../repos.state';
 
@@ -38,7 +38,6 @@ export const pullMeAndConnectionRepos = ({
       dir: mePath,
       remote: meRepoRemote,
       id: 'me',
-      connectionName: '',
     })
   );
 
@@ -61,10 +60,9 @@ export const pullMeAndConnectionRepos = ({
 
   await Bluebird.each(repos, async repo => {
     // TODO Implement the use of `repo.credentials`
-    const { id: repoId, folder: repoFolder, remote, connections } = repo;
-    const { id: userId, folder: userFolder, name } = connections[0];
+    const { id, folder: repoFolder, remote } = repo;
 
-    const dir = rootPathToUserRepoPath({ rootPath, repoFolder });
+    const dir = rootPathToRepoPath({ rootPath, repoFolder });
 
     dispatch(
       upsertOne({
@@ -82,8 +80,7 @@ export const pullMeAndConnectionRepos = ({
         headers,
         dir,
         remote,
-        id: repoId,
-        connectionName: name,
+        id,
       })
     );
   });

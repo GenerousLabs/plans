@@ -16,7 +16,7 @@ export const rootPathToMeRepoPath = ({ rootPath }: { rootPath: string }) => {
   return join(rootPath, PATH_TO_ME_REPO);
 };
 
-export const rootPathToUserRepoPath = ({
+export const rootPathToRepoPath = ({
   rootPath,
   repoFolder,
 }: {
@@ -109,6 +109,34 @@ export const getConnectionsFromRepo = async ({
   const contents = await fs.promises.readFile(path, { encoding: 'utf8' });
 
   const data: Repo[] = yaml.safeLoad(contents);
+
+  if (typeof data === 'undefined' || typeof data.length !== 'number') {
+    throw new Error('Invalid connection YAML data. #Tnsl4V');
+  }
+  const repoStringFields = ['id', 'folder', 'remote'];
+  const connectionStringFields = ['id', 'folder', 'name'];
+  data.forEach(repo => {
+    repoStringFields.forEach(field => {
+      if (typeof (repo as any)[field] !== 'string') {
+        throw new Error('Failed to load repo data #COATkv');
+      }
+    });
+    if (
+      typeof repo.connections === 'undefined' ||
+      repo.connections.length === 0
+    ) {
+      throw new Error('Failed to load repo data #xOhsaZ');
+    }
+    if (repo.connections.length !== 1) {
+      throw new Error('One repo has >1 connections #LsL9Ht');
+    }
+    const connection = repo.connections[0];
+    connectionStringFields.forEach(field => {
+      if (typeof (connection as any)[field] !== 'string') {
+        throw new Error('Failed to load repo connection data #841Xsm');
+      }
+    });
+  });
 
   // TODO Ensure that `data` conforms to our desired schema
 
