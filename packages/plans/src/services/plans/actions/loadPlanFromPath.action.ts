@@ -71,6 +71,7 @@ export const loadPlanFromPath = ({
   const plan: Plan = {
     id: planId,
     planFolderId,
+    path,
     ...data,
     descriptionMarkdown: content,
     slug,

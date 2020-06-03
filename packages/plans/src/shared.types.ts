@@ -56,6 +56,7 @@ export type Plan = {
   id: string;
   planFolderId: string;
   slug: string;
+  path: string;
   name: string;
   descriptionMarkdown: string;
 };
