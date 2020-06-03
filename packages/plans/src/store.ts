@@ -7,10 +7,9 @@ import {
 import devToolsEnhancer, {
   RemoteReduxDevToolsOptions,
 } from 'remote-redux-devtools';
+import { REDUX_ROOT_KEY } from './constants';
 import plans, { REDUCER_KEY as plansKey } from './services/plans/plans.state';
 import repos, { REDUCER_KEY as reposKey } from './services/repos/repos.state';
-
-export const REDUX_ROOT_KEY = '__plans' as const;
 
 export const reducer = combineReducers({
   [plansKey]: plans,

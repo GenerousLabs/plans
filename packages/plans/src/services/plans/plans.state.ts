@@ -4,12 +4,13 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
-import { getLocalState, RootState } from '../../store';
+import { REDUX_ROOT_KEY } from '../../constants';
+import { RootState } from '../../store';
 import { Message, Plan } from './plans.service';
 
 export const REDUCER_KEY = 'plans' as const;
 
-const getState = (state: RootState) => getLocalState(state)[REDUCER_KEY];
+const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
 
 const plansAdapter = createEntityAdapter<Plan>();
 

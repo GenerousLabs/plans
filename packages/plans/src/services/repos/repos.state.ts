@@ -3,12 +3,13 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
+import { REDUX_ROOT_KEY } from '../../constants';
 import { Repo } from '../../shared.types';
-import { getLocalState, RootState } from '../../store';
+import { RootState } from '../../store';
 
 export const REDUCER_KEY = 'repos' as const;
 
-const getState = (state: RootState) => getLocalState(state)[REDUCER_KEY];
+const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
 
 type RepoMeta = {
   path: string;
