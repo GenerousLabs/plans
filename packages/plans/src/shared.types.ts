@@ -45,3 +45,11 @@ export type Repo = {
     };
   };
 };
+
+export type Plan = {
+  id: string;
+  userId: string;
+  slug: string;
+  name: string;
+  descriptionMarkdown: string;
+};

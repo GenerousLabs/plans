@@ -23,7 +23,7 @@ export const ensureRepoIsCurrent = ({
 
   if (updateResponse.error) {
     const { error } = updateResponse;
-    dispatch(
+    await dispatch(
       noop({
         code: '#DL1pTF',
         message: 'Error updating repo',
@@ -38,7 +38,7 @@ export const ensureRepoIsCurrent = ({
 
   const { result } = updateResponse;
 
-  dispatch(
+  await dispatch(
     updateOne({
       id,
       changes: {

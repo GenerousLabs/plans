@@ -5,14 +5,6 @@ import { doesDirectoryExist } from '../../utils/fs.utils';
 
 const PLANS_FOLDER_NAME = 'plans';
 
-export type Plan = {
-  id: string;
-  userId: string;
-  slug: string;
-  name: string;
-  descriptionMarkdown: string;
-};
-
 type PlanFrontMatter = {
   name: string;
 };

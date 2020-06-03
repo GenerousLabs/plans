@@ -9,6 +9,7 @@ import {
   rootPathToRepoPath,
 } from '../repos.service';
 import { noop, upsertOne } from '../repos.state';
+import { ME_REPO_ID, ME_REPO_FOLDER } from '../../../constants';
 
 export const pullMeAndConnectionRepos = ({
   fs,
@@ -20,7 +21,7 @@ export const pullMeAndConnectionRepos = ({
   rootPath: string;
   meRepoRemote: string;
 }): AppThunk => async dispatch => {
-  dispatch(
+  await dispatch(
     noop({
       code: '#FmqCCM',
       message: 'init() start',
@@ -31,13 +32,25 @@ export const pullMeAndConnectionRepos = ({
   const mePath = rootPathToMeRepoPath({ rootPath });
 
   await dispatch(
+    upsertOne({
+      id: ME_REPO_ID,
+      name: 'me',
+      folder: ME_REPO_FOLDER,
+      remote: meRepoRemote,
+      path: mePath,
+      currentHeadCommitHash: '',
+      lastFetchTimestampSeconds: 0,
+    })
+  );
+
+  await dispatch(
     ensureRepoIsCurrent({
       fs,
       http,
       headers,
       dir: mePath,
       remote: meRepoRemote,
-      id: 'me',
+      id: ME_REPO_ID,
     })
   );
 
@@ -46,7 +59,7 @@ export const pullMeAndConnectionRepos = ({
   );
   if (connectionsResponse.error) {
     const { error } = connectionsResponse;
-    dispatch(
+    await dispatch(
       noop({
         code: '#l85nXL',
         message: 'Error loading connections',
@@ -64,7 +77,7 @@ export const pullMeAndConnectionRepos = ({
 
     const dir = rootPathToRepoPath({ rootPath, repoFolder });
 
-    dispatch(
+    await dispatch(
       upsertOne({
         ...repo,
         path: dir,

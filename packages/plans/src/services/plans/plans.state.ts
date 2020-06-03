@@ -5,8 +5,8 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { REDUX_ROOT_KEY } from '../../constants';
+import { Plan } from '../../shared.types';
 import { RootState } from '../../store';
-import { Plan } from './plans.service';
 import { Message } from './services/messages/messages.service';
 
 export const REDUCER_KEY = 'plans' as const;
