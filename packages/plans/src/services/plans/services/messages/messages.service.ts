@@ -1,5 +1,6 @@
 import matter from 'gray-matter';
 import { FS } from '../../../../shared.types';
+import { join } from 'path';
 
 export type Message = {
   id: string;
@@ -51,4 +52,34 @@ export const getMessageDataFromPath = async ({
   const data = await parseMessageFromMarkdown(markdown);
 
   return data;
+};
+
+export const _messageFilename = ({
+  planDirectoryPath,
+  dateTimestampSeconds,
+}: {
+  planDirectoryPath: string;
+  dateTimestampSeconds: number;
+}) => {
+  return join(planDirectoryPath, `message-${dateTimestampSeconds}.md`);
+};
+
+/**
+ * Write a new message.
+ */
+export const writeMessageToPlanDirectory = async ({
+  fs,
+  planDirectoryPath,
+  contentMarkdown,
+  sender,
+  dateTimestampSeconds,
+}: {
+  fs: FS;
+  planDirectoryPath: string;
+  contentMarkdown: string;
+} & MessageFrontmatter) => {
+  const path = _messageFilename({ planDirectoryPath, dateTimestampSeconds });
+  const data = { sender, dateTimestampSeconds };
+  const content = matter.stringify(contentMarkdown, data);
+  await fs.promises.writeFile(path, content, { encoding: 'utf8' });
 };
