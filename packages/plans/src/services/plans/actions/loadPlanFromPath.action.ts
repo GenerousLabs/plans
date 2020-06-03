@@ -1,11 +1,10 @@
 import Bluebird from 'bluebird';
-import { FS } from '../../../shared.types';
+import { FS, Plan } from '../../../shared.types';
 import { AppThunk } from '../../../store';
 import { to } from '../../../utils/to.util';
 import {
   getPlanDataFromIndexFilePath,
   getPlanFilesFromDirectory,
-  Plan,
 } from '../plans.service';
 import { noop, upsertOnePlan } from '../plans.state';
 import { loadMessageFromPath } from './loadMessageFromPath.action';
@@ -13,19 +12,19 @@ import { loadMessageFromPath } from './loadMessageFromPath.action';
 export const loadPlanFromPath = ({
   fs,
   path,
-  userId,
+  planFolderId,
   slug,
 }: {
   fs: FS;
   path: string;
-  userId: string;
+  planFolderId: string;
   slug: string;
 }): AppThunk => async dispatch => {
   dispatch(
     noop({
       code: '#FWoxSS',
       message: 'Load plan from path',
-      params: { userId, path, slug },
+      params: { planFolderId, path, slug },
     })
   );
 
@@ -71,7 +70,7 @@ export const loadPlanFromPath = ({
 
   const plan: Plan = {
     id: planId,
-    userId,
+    planFolderId,
     ...data,
     descriptionMarkdown: content,
     slug,
@@ -95,7 +94,7 @@ export const loadPlanFromPath = ({
     noop({
       code: '#iXomhQ',
       message: 'loadPlanFromPath() finishd',
-      params: { userId, path, slug },
+      params: { planFolderId, path, slug },
     })
   );
 };

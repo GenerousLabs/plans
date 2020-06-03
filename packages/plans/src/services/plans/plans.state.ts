@@ -5,13 +5,25 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { REDUX_ROOT_KEY } from '../../constants';
-import { Plan } from '../../shared.types';
+import { Plan, PlanFolder } from '../../shared.types';
 import { RootState } from '../../store';
 import { Message } from './services/messages/messages.service';
 
 export const REDUCER_KEY = 'plans' as const;
 
 const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
+
+const foldersAdapter = createEntityAdapter<PlanFolder>();
+
+const foldersSlice = createSlice({
+  name: 'PLANS/plans/folders',
+  initialState: foldersAdapter.getInitialState(),
+  reducers: {
+    upsertOneFolder: foldersAdapter.upsertOne,
+    upsertManyFolders: foldersAdapter.upsertMany,
+    removeOneFolder: foldersAdapter.removeOne,
+  },
+});
 
 const plansAdapter = createEntityAdapter<Plan>();
 
@@ -47,6 +59,11 @@ export const {
   upsertManyMessages,
   removeOneMessage,
 } = messagesSlice.actions;
+export const {
+  upsertOneFolder,
+  upsertManyFolders,
+  removeOneFolder,
+} = foldersSlice.actions;
 
 export const noop = createAction(
   'PLANS/plans/noop',
@@ -70,6 +87,7 @@ export const noop = createAction(
 );
 
 const reducer = combineReducers({
+  folders: foldersSlice.reducer,
   plans: plansSlice.reducer,
   messages: messagesSlice.reducer,
 });

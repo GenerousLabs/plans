@@ -1,7 +1,7 @@
 import Bluebird from 'bluebird';
 import { GitParams } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { loadPlansFromUserPath } from '../../plans/actions/loadPlansFromUserPath.action';
+import { loadPlansFromRepo } from '../../plans/actions/loadPlansFromRepo.action';
 import { pullMeAndConnectionRepos } from '../../repos/actions/pullMeAndConnectionRepos.action';
 import { selectAll } from '../../repos/repos.state';
 import { RootConfig } from '../startup.service';
@@ -29,8 +29,6 @@ export const startup = ({
 
   Bluebird.each(repos, async repo => {
     const { id, path } = repo;
-    await dispatch(
-      loadPlansFromUserPath({ fs, userId: id, userDirectoryPath: path })
-    );
+    await dispatch(loadPlansFromRepo({ fs, repoId: id, path: path }));
   });
 };

@@ -43,13 +43,13 @@ export const findFirstPlansDirectory = async ({
   fs: FS;
   repoPath: string;
   myUsername: string;
-}): Promise<string> => {
+}) => {
   const ignoreDirectories = ['.', '..', myUsername];
 
   const path = addPlansFolderToPath({ path: repoPath });
 
   if (!(await doesDirectoryExist({ fs, path }))) {
-    return '';
+    return;
   }
 
   const directories = await fs.promises.readdir(path, { withFileTypes: true });
@@ -65,18 +65,18 @@ export const findFirstPlansDirectory = async ({
   });
 
   if (typeof found !== 'undefined') {
-    const output = join(path, found.name);
-    return output;
+    const foundPath = join(path, found.name);
+    return { slug: found.name, path: foundPath };
   }
 
-  return '';
+  return;
 };
 
 /**
  * Given a user's directory (eg `bob/plans/bob`), get the paths to the child
  * directories, each of which should contain details on a single plan.
  */
-export const getPlanPathsFromUserDirectory = async ({
+export const getPlanPathsFromPlansFolder = async ({
   fs,
   path,
 }: {

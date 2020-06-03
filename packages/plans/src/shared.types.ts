@@ -46,9 +46,15 @@ export type Repo = {
   };
 };
 
+export type PlanFolder = {
+  id: string;
+  repoId: string;
+  folder: string;
+};
+
 export type Plan = {
   id: string;
-  userId: string;
+  planFolderId: string;
   slug: string;
   name: string;
   descriptionMarkdown: string;

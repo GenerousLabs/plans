@@ -3,50 +3,60 @@ import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
 import {
   findFirstPlansDirectory,
-  getPlanPathsFromUserDirectory,
+  getPlanPathsFromPlansFolder,
 } from '../plans.service';
-import { noop } from '../plans.state';
+import { noop, upsertOneFolder } from '../plans.state';
 import { loadPlanFromPath } from './loadPlanFromPath.action';
 
-export const loadPlansFromUserPath = ({
+export const loadPlansFromRepo = ({
   fs,
-  userId,
-  userDirectoryPath,
+  repoId,
+  path,
 }: {
   fs: FS;
-  userId: string;
-  userDirectoryPath: string;
+  repoId: string;
+  path: string;
 }): AppThunk => async dispatch => {
   dispatch(
     noop({
       code: '#wi9aR7',
-      message: 'loadUserPlansAction called',
-      params: { userName: userId, userDirectoryPath },
+      message: 'loadPlansFromRepo called',
+      params: { repoId, path },
     })
   );
 
   const plansPath = await findFirstPlansDirectory({
     fs,
-    repoPath: userDirectoryPath,
+    repoPath: path,
     // TODO We need to get the user's real folder name here
     myUsername: 'alice',
   });
 
   // If the user does not have a `plans` folder, there's nothing to do here.
-  if (plansPath.length === 0) {
+  if (typeof plansPath === 'undefined') {
     dispatch(
       noop({
         code: '#nMlg40',
         message: 'loadUserPlansAction directory not found',
-        params: { userId, userDirectoryPath },
+        params: { repoId, path },
       })
     );
     return;
   }
 
-  const plansPaths = await getPlanPathsFromUserDirectory({
+  const planFolderId = plansPath.path;
+
+  await dispatch(
+    upsertOneFolder({
+      id: planFolderId,
+      repoId,
+      folder: plansPath.slug,
+    })
+  );
+
+  const plansPaths = await getPlanPathsFromPlansFolder({
     fs,
-    path: plansPath,
+    path: plansPath.path,
   });
 
   await Bluebird.each(plansPaths, async ({ path, slug }) => {
@@ -55,7 +65,7 @@ export const loadPlansFromUserPath = ({
         fs,
         path,
         slug,
-        userId,
+        planFolderId,
       })
     );
   });
@@ -65,8 +75,8 @@ export const loadPlansFromUserPath = ({
       code: '#i0W2Yp',
       message: 'loadUserPlansAction finished',
       params: {
-        userId,
-        userDirectoryPath,
+        userId: repoId,
+        userDirectoryPath: path,
         plansPaths,
       },
     })
