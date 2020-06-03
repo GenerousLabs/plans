@@ -1,6 +1,7 @@
 import Bluebird from 'bluebird';
 import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
+import { getMyUsernameOrThrow } from '../../startup/startup.state';
 import {
   findFirstPlansDirectory,
   getPlanPathsFromPlansFolder,
@@ -16,7 +17,7 @@ export const loadPlansFromRepo = ({
   fs: FS;
   repoId: string;
   path: string;
-}): AppThunk => async dispatch => {
+}): AppThunk => async (dispatch, getRootState) => {
   dispatch(
     noop({
       code: '#wi9aR7',
@@ -25,11 +26,12 @@ export const loadPlansFromRepo = ({
     })
   );
 
+  const myUsername = getMyUsernameOrThrow(getRootState());
+
   const plansPath = await findFirstPlansDirectory({
     fs,
     repoPath: path,
-    // TODO We need to get the user's real folder name here
-    myUsername: 'alice',
+    myUsername,
   });
 
   // If the user does not have a `plans` folder, there's nothing to do here.
