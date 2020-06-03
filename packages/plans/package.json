@@ -55,6 +55,7 @@
     "gray-matter": "^4.0.2",
     "isomorphic-git": "^1.4.0",
     "js-yaml": "^3.14.0",
+    "remeda": "^0.0.20",
     "yaml": "^1.10.0"
   }
 }
