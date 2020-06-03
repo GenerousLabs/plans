@@ -33,7 +33,8 @@ export const ensureRepoIsCurrent = ({
         },
       })
     );
-    return;
+    // TODO Figure out how to handle errors, this might not be smart...
+    throw error;
   }
 
   const { result } = updateResponse;
