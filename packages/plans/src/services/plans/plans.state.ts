@@ -6,7 +6,8 @@ import {
 } from '@reduxjs/toolkit';
 import { REDUX_ROOT_KEY } from '../../constants';
 import { RootState } from '../../store';
-import { Message, Plan } from './plans.service';
+import { Plan } from './plans.service';
+import { Message } from './services/messages/messages.service';
 
 export const REDUCER_KEY = 'plans' as const;
 
