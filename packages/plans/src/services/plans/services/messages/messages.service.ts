@@ -79,7 +79,9 @@ export const writeMessageToPlanDirectory = async ({
   contentMarkdown: string;
 } & MessageFrontmatter) => {
   const path = _messageFilename({ planDirectoryPath, dateTimestampSeconds });
-  const data = { sender, dateTimestampSeconds };
-  const content = matter.stringify(contentMarkdown, data);
+  const content = matter.stringify(contentMarkdown, {
+    sender,
+    dateTimestampSeconds,
+  });
   await fs.promises.writeFile(path, content, { encoding: 'utf8' });
 };
