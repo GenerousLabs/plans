@@ -59,3 +59,5 @@ const reposSelectors = reposAdapter.getSelectors();
 
 export const selectAll = (state: RootState) =>
   reposSelectors.selectAll(getState(state));
+export const selectById = (state: RootState, id: string) =>
+  reposSelectors.selectById(getState(state), id);
