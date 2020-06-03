@@ -69,6 +69,13 @@ export const addPlansFolderToPath = ({ path }: { path: string }): string => {
   return join(path, PLANS_FOLDER_NAME);
 };
 
+/**
+ * Given the path to a repository, find the first plan directory which is not
+ * ours.
+ *
+ * So given `alice/bob` as the repo, find `alice/bob/plans/bob` and ignore
+ * `alice/bob/plans/alice`.
+ */
 export const findFirstPlansDirectory = async ({
   fs,
   repoPath,
@@ -106,6 +113,10 @@ export const findFirstPlansDirectory = async ({
   return '';
 };
 
+/**
+ * Given a user's directory (eg `bob/plans/bob`), get the paths to the child
+ * directories, each of which should contain details on a single plan.
+ */
 export const getPlanPathsFromUserDirectory = async ({
   fs,
   path,
@@ -125,6 +136,10 @@ export const getPlanPathsFromUserDirectory = async ({
   return plansPaths;
 };
 
+/**
+ * Given a path to the directory containing a plan, find the index and message
+ * file paths.
+ */
 export const getPlanFilesFromDirectory = async ({
   fs,
   path,
@@ -151,6 +166,9 @@ export const getPlanFilesFromDirectory = async ({
   return { indexFile, messageFiles };
 };
 
+/**
+ * Return the plan data from the path to its `index.md` file.
+ */
 export const getPlanDataFromIndexFilePath = async ({
   fs,
   path,
@@ -165,6 +183,9 @@ export const getPlanDataFromIndexFilePath = async ({
   return planData;
 };
 
+/**
+ * Return the contents of a single message file.
+ */
 export const getMessageDataFromPath = async ({
   fs,
   path,
