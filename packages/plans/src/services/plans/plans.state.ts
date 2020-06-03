@@ -94,9 +94,14 @@ const reducer = combineReducers({
 
 export default reducer;
 
+const foldersSelectors = foldersAdapter.getSelectors();
 const plansSelectors = plansAdapter.getSelectors();
 const messagesSelectors = messagesAdapter.getSelectors();
 
+export const selectAllPlanFolders = (state: RootState) =>
+  foldersSelectors.selectAll(getState(state).folders);
+export const selectFolderById = (state: RootState, id: string) =>
+  foldersSelectors.selectById(getState(state).folders, id);
 export const selectAllPlans = (state: RootState) =>
   plansSelectors.selectAll(getState(state).plans);
 export const selectPlanById = (state: RootState, id: string) =>
