@@ -5,14 +5,6 @@ import { doesDirectoryExist } from '../../utils/fs.utils';
 
 const PLANS_FOLDER_NAME = 'plans';
 
-export type Message = {
-  id: string;
-  planId: string;
-  slug: string;
-  sender: string;
-  contentMarkdown: string;
-};
-
 export type Plan = {
   id: string;
   userId: string;
@@ -38,31 +30,6 @@ export const planMarkdownToData = (markdownWithFrontmatter: string) => {
   const { content } = parsed;
   const data = _castToData(parsed.data);
   return { content, data };
-};
-
-type MessageFrontmatter = {
-  sender: string;
-  dateTimestampSeconds: number;
-};
-
-const parseMessageDataFromFrontmatter = (input: {
-  [key: string]: any;
-}): MessageFrontmatter => {
-  const { sender, dateTimestampSeconds } = input;
-  if (typeof sender !== 'string') {
-    throw new Error('Failed to find sender for message. #gtNSF1');
-  }
-  if (typeof dateTimestampSeconds !== 'number') {
-    throw new Error('Failed to find dateTimestampSeconds for message. #qD6aB3');
-  }
-  return { sender, dateTimestampSeconds };
-};
-
-export const parseMessageFromMarkdown = async (input: string) => {
-  const parsed = matter(input);
-  const { content } = parsed;
-  const data = parseMessageDataFromFrontmatter(parsed.data);
-  return { contentMarkdown: content, ...data };
 };
 
 export const addPlansFolderToPath = ({ path }: { path: string }): string => {
@@ -181,23 +148,4 @@ export const getPlanDataFromIndexFilePath = async ({
   const planData = planMarkdownToData(text);
 
   return planData;
-};
-
-/**
- * Return the contents of a single message file.
- */
-export const getMessageDataFromPath = async ({
-  fs,
-  path,
-}: {
-  fs: FS;
-  path: string;
-}) => {
-  const markdown = await fs.promises.readFile(path, {
-    encoding: 'utf8',
-  });
-
-  const data = await parseMessageFromMarkdown(markdown);
-
-  return data;
 };

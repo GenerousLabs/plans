@@ -1,7 +1,10 @@
 import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
 import { to } from '../../../utils/to.util';
-import { getMessageDataFromPath, Message } from '../plans.service';
+import {
+  getMessageDataFromPath,
+  Message,
+} from '../services/messages/messages.service';
 import { noop, upsertOneMessage } from '../plans.state';
 
 export const loadMessageFromPath = ({

@@ -1,14 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`plans service getMessageDataFromPath() Fetches message data correctly #OtOeRY 1`] = `
-Object {
-  "contentMarkdown": "Are you up for sharing this with me?",
-  "dateTimestampSeconds": 1590595620,
-  "sender": "alice",
-}
-`;
-
-exports[`plans service getPlanDataFromIndexFilePath() Fetches data from plan index file #DakdZI 1`] = `
+exports[`plans.service getPlanDataFromIndexFilePath() Fetches data from plan index file #DakdZI 1`] = `
 Object {
   "content": "OMG Yes subscription
 ",
@@ -18,7 +10,7 @@ Object {
 }
 `;
 
-exports[`plans service getPlanFilesFromDirectory() Retrieves correct file list #O3ztrx 1`] = `
+exports[`plans.service getPlanFilesFromDirectory() Retrieves correct file list #O3ztrx 1`] = `
 Object {
   "indexFile": Object {
     "path": "alice/charlie/plans/charlie/omgyes/index.md",
