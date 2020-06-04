@@ -17,12 +17,12 @@ export const saveNewMessage = ({
   headers,
   planId,
   contentMarkdown,
+  dateTimestampSeconds = timestampSeconds(),
 }: GitParams & {
   planId: string;
   contentMarkdown: string;
+  dateTimestampSeconds: number;
 }): AppThunk => async (dispatch, getRootState) => {
-  const dateTimestampSeconds = timestampSeconds();
-
   const rootState = getRootState();
 
   const myUsername = getMyUsernameOrThrow(rootState);
