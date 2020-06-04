@@ -3,6 +3,7 @@ import isomorphicGitHttp from 'isomorphic-git/http/node';
 import { GitParams } from '../../shared.types';
 import { createStore } from '../../store';
 import { startup } from './actions/startup.action';
+import { saveNewMessage } from '../plans/actions/saveNewMessage.action';
 
 export type RootConfig = {
   // A folder on disk to serve as a root for our set of repositories
@@ -48,14 +49,47 @@ if (process.env.NODE_ENV === 'development') {
           }
         : undefined;
     console.log('Headers set #T3n8hi', headers);
-    startWithLocalStore({
-      fs,
-      http: isomorphicGitHttp,
-      rootConfig: {
-        path: ROOT_PATH,
-        meRepoRemote: '',
-        meRepoHeaders: headers,
-      },
-    });
+
+    const run = async () => {
+      const http = isomorphicGitHttp;
+
+      const store = await startWithLocalStore({
+        fs,
+        http,
+        rootConfig: {
+          path: ROOT_PATH,
+          meRepoRemote: '',
+          meRepoHeaders: headers,
+        },
+      });
+
+      return;
+
+      store.dispatch({ type: 'test start #MNg4Ud' });
+
+      const rootState = store.getState();
+      const planId = rootState.__plans.plans.plans.ids[0];
+      const plan = rootState.__plans.plans.plans.entities[planId];
+
+      if (typeof plan === 'undefined') {
+        store.dispatch({ type: 'Stop #000d9j' });
+        return;
+      }
+
+      await store.dispatch(
+        saveNewMessage({
+          fs,
+          http,
+          headers,
+          contentMarkdown: 'A simple test message',
+          dir: plan.path,
+          planId: plan.id,
+        })
+      );
+
+      store.dispatch({ type: 'test finish #IaZi0D' });
+    };
+
+    run();
   }
 }
