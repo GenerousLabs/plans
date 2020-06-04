@@ -13,7 +13,9 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
+    "pretest": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server start",
     "test": "tsdx test",
+    "posttest": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server stop",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "redux-devtools": "redux-devtools --hostname=localhost --port=8000"
@@ -39,6 +41,7 @@
     "@types/mock-fs": "^4.10.0",
     "@types/remote-redux-devtools": "^0.5.4",
     "fake-indexeddb": "^3.0.1",
+    "git-http-mock-server": "^1.2.1",
     "husky": "^4.2.5",
     "jest-without-globals": "^0.0.3",
     "mock-fs": "^4.12.0",
