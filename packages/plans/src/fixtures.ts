@@ -42,6 +42,15 @@ dateTimestampSeconds: 1590595860
   markdown: "Would love to share this with you if you're interested.",
 };
 
+export const testMessage = {
+  data: { sender: 'alice', dateTimestampSeconds: 1591281216 },
+  frontmatter: `---
+sender: alice
+dateTimestampSeconds: 1591281216
+---`,
+  markdown: 'A new message for testing purposes.',
+};
+
 export const spotify = {
   slug: 'spotify',
   data: { name: 'Spotify' },
