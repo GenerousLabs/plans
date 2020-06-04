@@ -6,3 +6,5 @@ export const REDUX_ROOT_KEY = '__plans' as const;
 
 export const ME_REPO_ID = 'me' as const;
 export const ME_REPO_FOLDER = 'me' as const;
+
+export const GIT_AUTHOR_NAME = 'GeneroUS Plans';
