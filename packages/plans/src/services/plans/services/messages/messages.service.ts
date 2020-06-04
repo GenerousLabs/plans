@@ -84,4 +84,6 @@ export const writeMessageToPlanDirectory = async ({
     dateTimestampSeconds,
   });
   await fs.promises.writeFile(path, content, { encoding: 'utf8' });
+
+  return path;
 };
