@@ -3,11 +3,11 @@ import mockFs from 'mock-fs';
 export const connectionsYaml = `- id: bob
   folder: bob
   name: Bob
-  remote: https://git.example.tld/alice/bob.git
+  remote: http://localhost:8174/bob.git
 - id: charlie
   folder: charlie
   name: Charlie
-  remote: https://git.example.tld/alice/charlie.git`;
+  remote: http://localhost:8174/charlie.git`;
 
 export const bob = {
   slug: 'bob',
@@ -82,7 +82,17 @@ export const joinFrontmatter = ({
 
 export const mockFilesystem = () => {
   mockFs({
+    e2e: {
+      // me: {},
+      connections: {
+        // bob: {},
+        // charlie: {},
+      },
+    },
     alice: {
+      me: {
+        'connections.yaml': connectionsYaml,
+      },
       [bob.slug]: {
         'index.md': joinFrontmatter(bob),
         plans: {

@@ -6,13 +6,13 @@ Array [
     "folder": "bob",
     "id": "bob",
     "name": "Bob",
-    "remote": "https://git.example.tld/alice/bob.git",
+    "remote": "http://localhost:8174/bob.git",
   },
   Object {
     "folder": "charlie",
     "id": "charlie",
     "name": "Charlie",
-    "remote": "https://git.example.tld/alice/charlie.git",
+    "remote": "http://localhost:8174/charlie.git",
   },
 ]
 `;
