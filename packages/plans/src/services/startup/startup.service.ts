@@ -15,7 +15,7 @@ export type RootConfig = {
   };
 };
 
-export const startWithLocalStore = ({
+export const startWithLocalStore = async ({
   fs,
   http,
   rootConfig,
@@ -25,13 +25,15 @@ export const startWithLocalStore = ({
   const {} = rootConfig;
 
   const store = createStore();
-  store.dispatch(
+  await store.dispatch(
     startup({
       fs,
       http,
       rootConfig,
     })
   );
+
+  return store;
 };
 
 if (process.env.NODE_ENV === 'development') {
