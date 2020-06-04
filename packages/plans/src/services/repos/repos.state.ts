@@ -61,3 +61,10 @@ export const selectAll = (state: RootState) =>
   reposSelectors.selectAll(getState(state));
 export const selectById = (state: RootState, id: string) =>
   reposSelectors.selectById(getState(state), id);
+export const selectByIdOrThrow = (state: RootState, id: string) => {
+  const repo = selectById(state, id);
+  if (typeof repo === 'undefined') {
+    throw new Error('Failed to find repo. #JjSJfP');
+  }
+  return repo;
+};
