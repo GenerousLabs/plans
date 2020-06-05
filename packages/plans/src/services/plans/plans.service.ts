@@ -1,7 +1,8 @@
 import matter from 'gray-matter';
 import { join } from 'path';
-import { FS } from '../../shared.types';
+import { FS, Plan } from '../../shared.types';
 import { doesDirectoryExist } from '../../utils/fs.utils';
+import { PLAN_INDEX_FILENAME } from '../../constants';
 
 const PLANS_FOLDER_NAME = 'plans';
 
@@ -110,7 +111,7 @@ export const getPlanFilesFromDirectory = async ({
     withFileTypes: true,
   });
 
-  const index = planFiles.find(file => file.name === 'index.md');
+  const index = planFiles.find(file => file.name === PLAN_INDEX_FILENAME);
 
   if (typeof index === 'undefined') {
     throw new Error(`Plan does not have index file. #yJtokv`);
@@ -140,4 +141,33 @@ export const getPlanDataFromIndexFilePath = async ({
   const planData = planMarkdownToData(text);
 
   return planData;
+};
+
+export const planPathToIndexFilePath = ({ path }: { path: string }) => {
+  return join(path, PLAN_INDEX_FILENAME);
+};
+
+export const planToText = ({
+  plan,
+}: {
+  plan: Pick<Plan, 'descriptionMarkdown' | 'name'>;
+}) => {
+  return matter.stringify(plan.descriptionMarkdown, { name: plan.name });
+};
+
+export const writePlanToDisk = async ({
+  fs,
+  repoPath,
+  plan,
+}: {
+  fs: FS;
+  repoPath: string;
+  plan: Pick<Plan, 'descriptionMarkdown' | 'name' | 'slug'>;
+}) => {
+  const { slug } = plan;
+  const newPlanPath = join(repoPath, slug);
+  await fs.promises.mkdir(newPlanPath);
+  const contents = planToText({ plan });
+  const newPlanIndexPath = planPathToIndexFilePath({ path: newPlanPath });
+  await fs.promises.writeFile(newPlanIndexPath, contents, { encoding: 'utf8' });
 };

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'jest-without-globals';
 import {
   getPlanDataFromIndexFilePath,
   getPlanFilesFromDirectory,
+  writePlanToDisk,
 } from './plans.service';
 import * as f from '../../fixtures';
 
@@ -40,6 +41,32 @@ describe('plans.service', () => {
           path: '/alice/charlie/plans/charlie/omgyes/index.md',
         })
       ).toMatchSnapshot();
+    });
+  });
+
+  describe('writePlanToDisk()', () => {
+    it('Write a plan to disk #oQvE2B', async () => {
+      const fs = f.createDefaultMockFilesystem();
+
+      const expectedContents = f.joinFrontmatter(f.pia);
+
+      await writePlanToDisk({
+        fs,
+        // TODO There's like a better directory to use here
+        repoPath: '/daniella/plans/empty/',
+        plan: {
+          descriptionMarkdown: f.pia.markdown,
+          name: f.pia.data.name,
+          slug: f.pia.slug,
+        },
+      });
+
+      expect(
+        await fs.promises.readFile(
+          `/daniella/plans/empty/${f.pia.slug}/index.md`,
+          { encoding: 'utf8' }
+        )
+      ).toEqual(expectedContents);
     });
   });
 });
