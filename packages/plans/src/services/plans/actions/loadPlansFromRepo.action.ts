@@ -37,6 +37,7 @@ export const loadPlansFromRepo = ({
         id: folderId,
         repoId,
         folder: folder.slug,
+        path: folder.path,
       })
     );
 

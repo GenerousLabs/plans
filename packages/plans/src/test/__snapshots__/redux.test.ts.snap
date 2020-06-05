@@ -9,21 +9,25 @@ Object {
           "/e2e/connections/bob/plans/alice": Object {
             "folder": "alice",
             "id": "/e2e/connections/bob/plans/alice",
+            "path": "/e2e/connections/bob/plans/alice",
             "repoId": "bob",
           },
           "/e2e/connections/bob/plans/bob": Object {
             "folder": "bob",
             "id": "/e2e/connections/bob/plans/bob",
+            "path": "/e2e/connections/bob/plans/bob",
             "repoId": "bob",
           },
           "/e2e/connections/charlie/plans/alice": Object {
             "folder": "alice",
             "id": "/e2e/connections/charlie/plans/alice",
+            "path": "/e2e/connections/charlie/plans/alice",
             "repoId": "charlie",
           },
           "/e2e/connections/charlie/plans/charlie": Object {
             "folder": "charlie",
             "id": "/e2e/connections/charlie/plans/charlie",
+            "path": "/e2e/connections/charlie/plans/charlie",
             "repoId": "charlie",
           },
         },

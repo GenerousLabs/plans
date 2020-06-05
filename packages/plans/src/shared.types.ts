@@ -58,6 +58,7 @@ export type PlanFolder = {
    * share with others
    */
   folder: string;
+  path: string;
 };
 
 export type Plan = {
