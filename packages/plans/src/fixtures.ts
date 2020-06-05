@@ -5,6 +5,10 @@ import { FS } from './shared.types';
 import { createStore } from './store';
 import { ME_MOCK_REMOTE } from './constants';
 
+// TODO Rename everything in this file
+// Currently it's all the same as the mock repos, which is confusing, it would
+// make more sense to use different names in this file
+
 export const connectionsYaml = `- id: bob
   folder: bob
   name: Bob
