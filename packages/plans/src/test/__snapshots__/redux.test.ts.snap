@@ -6,10 +6,20 @@ Object {
     "plans": Object {
       "folders": Object {
         "entities": Object {
+          "/e2e/connections/bob/plans/alice": Object {
+            "folder": "alice",
+            "id": "/e2e/connections/bob/plans/alice",
+            "repoId": "bob",
+          },
           "/e2e/connections/bob/plans/bob": Object {
             "folder": "bob",
             "id": "/e2e/connections/bob/plans/bob",
             "repoId": "bob",
+          },
+          "/e2e/connections/charlie/plans/alice": Object {
+            "folder": "alice",
+            "id": "/e2e/connections/charlie/plans/alice",
+            "repoId": "charlie",
           },
           "/e2e/connections/charlie/plans/charlie": Object {
             "folder": "charlie",
@@ -18,7 +28,9 @@ Object {
           },
         },
         "ids": Array [
+          "/e2e/connections/bob/plans/alice",
           "/e2e/connections/bob/plans/bob",
+          "/e2e/connections/charlie/plans/alice",
           "/e2e/connections/charlie/plans/charlie",
         ],
       },
@@ -50,6 +62,15 @@ Object {
       },
       "plans": Object {
         "entities": Object {
+          "/e2e/connections/bob/plans/alice/pia/index.md": Object {
+            "descriptionMarkdown": "I have a PIA account which I hardly ever use.
+",
+            "folderId": "/e2e/connections/bob/plans/alice",
+            "id": "/e2e/connections/bob/plans/alice/pia/index.md",
+            "name": "Private Internet Access",
+            "path": "/e2e/connections/bob/plans/alice/pia",
+            "slug": "pia",
+          },
           "/e2e/connections/bob/plans/bob/nordvpn/index.md": Object {
             "descriptionMarkdown": "My NordVPN account doesn't get so much use, happy to share.
 ",
@@ -69,6 +90,15 @@ Object {
             "path": "/e2e/connections/bob/plans/bob/spotify",
             "slug": "spotify",
           },
+          "/e2e/connections/charlie/plans/alice/pia/index.md": Object {
+            "descriptionMarkdown": "I have a PIA account which I hardly ever use.
+",
+            "folderId": "/e2e/connections/charlie/plans/alice",
+            "id": "/e2e/connections/charlie/plans/alice/pia/index.md",
+            "name": "Private Internet Access",
+            "path": "/e2e/connections/charlie/plans/alice/pia",
+            "slug": "pia",
+          },
           "/e2e/connections/charlie/plans/charlie/pia/index.md": Object {
             "descriptionMarkdown": "I have a VPN that allows multiple devices, share it...
 ",
@@ -80,8 +110,10 @@ Object {
           },
         },
         "ids": Array [
+          "/e2e/connections/bob/plans/alice/pia/index.md",
           "/e2e/connections/bob/plans/bob/nordvpn/index.md",
           "/e2e/connections/bob/plans/bob/spotify/index.md",
+          "/e2e/connections/charlie/plans/alice/pia/index.md",
           "/e2e/connections/charlie/plans/charlie/pia/index.md",
         ],
       },
@@ -89,7 +121,7 @@ Object {
     "repos": Object {
       "entities": Object {
         "bob": Object {
-          "currentHeadCommitHash": "e12cbf3f0d77bdd7805c6d9b20cbeb4dbdc24fe7",
+          "currentHeadCommitHash": "d1be9b639e83c67732e8ea69763962f56da052bc",
           "folder": "bob",
           "id": "bob",
           "lastFetchTimestampSeconds": 1591281,
@@ -98,7 +130,7 @@ Object {
           "remote": "http://localhost:8174/bob.git",
         },
         "charlie": Object {
-          "currentHeadCommitHash": "a66b79a700237e53e0c937db55441de94d9c26a0",
+          "currentHeadCommitHash": "41dea3a3713add415c31dd22da8f99cd71f118b7",
           "folder": "charlie",
           "id": "charlie",
           "lastFetchTimestampSeconds": 1591281,
