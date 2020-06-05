@@ -1,9 +1,9 @@
-import fs from 'fs';
 import isomorphicGitHttp from 'isomorphic-git/http/node';
-import { GitParams } from '../../shared.types';
+import { fs } from 'memfs';
+import { ME_MOCK_REMOTE } from '../../constants';
+import { FS, GitParams } from '../../shared.types';
 import { createStore } from '../../store';
 import { startup } from './actions/startup.action';
-import { saveNewMessage } from '../plans/actions/saveNewMessage.action';
 
 export type RootConfig = {
   // A folder on disk to serve as a root for our set of repositories
@@ -14,6 +14,10 @@ export type RootConfig = {
   meRepoHeaders?: {
     [x: string]: string;
   };
+};
+
+const getMemfs = () => {
+  return (fs as unknown) as FS;
 };
 
 export const startWithLocalStore = async ({
@@ -38,56 +42,23 @@ export const startWithLocalStore = async ({
 };
 
 if (process.env.NODE_ENV === 'development') {
-  if (typeof process.env.ROOT_PATH === 'string') {
-    const { ROOT_PATH } = process.env;
-    console.log('Starting with ROOT_PATH #2Yc8PN', ROOT_PATH);
-    const { AUTH } = process.env;
-    const headers =
-      typeof AUTH === 'string'
-        ? {
-            Authorization: `Basic ${Buffer.from(AUTH).toString('base64')}`,
-          }
-        : undefined;
-    console.log('Headers set #T3n8hi', headers);
+  if (typeof process.env.BOOT_LOCAL_STORE === 'string') {
+    console.log('Starting with local store / memfs #2Yc8PN');
 
     const run = async () => {
       const http = isomorphicGitHttp;
+      const fs = getMemfs();
+      await fs.promises.mkdir('/connections/');
 
-      const store = await startWithLocalStore({
+      // const store = await startWithLocalStore({
+      await startWithLocalStore({
         fs,
         http,
         rootConfig: {
-          path: ROOT_PATH,
-          meRepoRemote: '',
-          meRepoHeaders: headers,
+          path: '/',
+          meRepoRemote: ME_MOCK_REMOTE,
         },
       });
-
-      return;
-
-      store.dispatch({ type: 'test start #MNg4Ud' });
-
-      const rootState = store.getState();
-      const planId = rootState.__plans.plans.plans.ids[0];
-      const plan = rootState.__plans.plans.plans.entities[planId];
-
-      if (typeof plan === 'undefined') {
-        store.dispatch({ type: 'Stop #000d9j' });
-        return;
-      }
-
-      await store.dispatch(
-        saveNewMessage({
-          fs,
-          http,
-          headers,
-          contentMarkdown: 'A simple test message',
-          dir: plan.path,
-          planId: plan.id,
-        })
-      );
-
-      store.dispatch({ type: 'test finish #IaZi0D' });
     };
 
     run();

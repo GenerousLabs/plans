@@ -3,8 +3,7 @@ import http from 'isomorphic-git/http/node';
 import { createFsFromVolume, Volume } from 'memfs';
 import { FS } from './shared.types';
 import { createStore } from './store';
-
-export const meMockRemote = 'http://localhost:8174/me.git';
+import { ME_MOCK_REMOTE } from './constants';
 
 export const connectionsYaml = `- id: bob
   folder: bob
@@ -147,7 +146,7 @@ export const createDefaultMockFilesystem = () => {
 
 export const mocksWithClonedMeRepo = async () => {
   const fs = createDefaultMockFilesystem();
-  await git.clone({ fs, http, dir: '/e2e/me', url: meMockRemote });
+  await git.clone({ fs, http, dir: '/e2e/me', url: ME_MOCK_REMOTE });
   const store = createStore({
     enableDevTools: false,
     enableRemoteDevTools: false,

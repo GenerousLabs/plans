@@ -11,7 +11,9 @@
     "node": ">=10"
   },
   "scripts": {
+    "prestart": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server start",
     "start": "tsdx watch",
+    "poststart": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server stop",
     "build": "tsdx build",
     "pretest": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server start",
     "test": "tsdx test",

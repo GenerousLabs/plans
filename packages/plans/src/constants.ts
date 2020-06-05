@@ -8,3 +8,5 @@ export const ME_REPO_ID = 'me' as const;
 export const ME_REPO_FOLDER = 'me' as const;
 
 export const GIT_AUTHOR_NAME = 'GeneroUS Plans';
+
+export const ME_MOCK_REMOTE = 'http://localhost:8174/me.git';
