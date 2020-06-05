@@ -53,7 +53,7 @@ describe('plans.service', () => {
       await writePlanToDisk({
         fs,
         // TODO There's like a better directory to use here
-        repoPath: '/daniella/plans/empty/',
+        folderPath: '/daniella/plans/empty/',
         plan: {
           descriptionMarkdown: f.pia.markdown,
           name: f.pia.data.name,

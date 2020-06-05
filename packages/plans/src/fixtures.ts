@@ -4,6 +4,7 @@ import { createFsFromVolume, Volume } from 'memfs';
 import { FS } from './shared.types';
 import { createStore } from './store';
 import { ME_MOCK_REMOTE } from './constants';
+import { startup } from './services/startup/actions/startup.action';
 
 // TODO Rename everything in this file
 // Currently it's all the same as the mock repos, which is confusing, it would
@@ -104,6 +105,14 @@ name: OMG Yes
   markdown: `OMG Yes subscription
 `,
 };
+export const deezer = {
+  slug: 'deezer',
+  data: { name: 'Deezer' },
+  frontmatter: `---
+name: Deezer
+---`,
+  markdown: 'My deezer family plan has some spots',
+};
 
 export const joinFrontmatter = ({
   frontmatter,
@@ -155,5 +164,22 @@ export const mocksWithClonedMeRepo = async () => {
     enableDevTools: false,
     enableRemoteDevTools: false,
   });
+  return { fs, http, store };
+};
+
+export const mocksWithInitCompleted = async () => {
+  const { fs, http, store } = await mocksWithClonedMeRepo();
+
+  await store.dispatch(
+    startup({
+      fs,
+      http,
+      rootConfig: {
+        meRepoRemote: ME_MOCK_REMOTE,
+        path: '/e2e',
+      },
+    })
+  );
+
   return { fs, http, store };
 };

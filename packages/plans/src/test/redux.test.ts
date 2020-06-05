@@ -4,6 +4,7 @@ import * as f from '../fixtures';
 import { saveNewMessage } from '../services/plans/actions/saveNewMessage.action';
 import { startup } from '../services/startup/actions/startup.action';
 import '../utils/time.utils';
+import { saveNewPlan } from '../services/plans/actions/saveNewPlan.action';
 
 const TIMEOUT = 60e3;
 
@@ -65,18 +66,7 @@ describe('redux e2e', () => {
 
   describe('saveNewMessage()', () => {
     it('saves a new message #qST95r', async () => {
-      const { fs, http, store } = await f.mocksWithClonedMeRepo();
-
-      await store.dispatch(
-        startup({
-          fs,
-          http,
-          rootConfig: {
-            meRepoRemote: ME_MOCK_REMOTE,
-            path: '/e2e',
-          },
-        })
-      );
+      const { fs, http, store } = await f.mocksWithInitCompleted();
 
       await store.dispatch(
         saveNewMessage({
@@ -98,5 +88,38 @@ describe('redux e2e', () => {
         )
       ).toEqual(expectedContents);
     });
+  });
+
+  describe('saveNewPlan()', () => {
+    it(
+      'Saves a new plan to disk #Cow3QZ',
+      async () => {
+        const { fs, store } = await f.mocksWithInitCompleted();
+
+        await store.dispatch(
+          saveNewPlan({
+            fs,
+            folderId: '/e2e/connections/bob/plans/alice',
+            plan: {
+              descriptionMarkdown: f.deezer.markdown,
+              name: f.deezer.data.name,
+              slug: f.deezer.slug,
+            },
+          })
+        );
+
+        const expectedContents = `${f.joinFrontmatter(f.deezer)}\n`;
+
+        expect(
+          await fs.promises.readFile(
+            '/e2e/connections/bob/plans/alice/deezer/index.md',
+            { encoding: 'utf8' }
+          )
+        ).toEqual(expectedContents);
+
+        expect(store.getState()).toMatchSnapshot();
+      },
+      TIMEOUT
+    );
   });
 });

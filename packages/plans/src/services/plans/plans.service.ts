@@ -157,17 +157,20 @@ export const planToText = ({
 
 export const writePlanToDisk = async ({
   fs,
-  repoPath,
+  folderPath,
   plan,
 }: {
   fs: FS;
-  repoPath: string;
+  folderPath: string;
   plan: Pick<Plan, 'descriptionMarkdown' | 'name' | 'slug'>;
 }) => {
   const { slug } = plan;
-  const newPlanPath = join(repoPath, slug);
+  const newPlanPath = join(folderPath, slug);
+
   await fs.promises.mkdir(newPlanPath);
+
   const contents = planToText({ plan });
   const newPlanIndexPath = planPathToIndexFilePath({ path: newPlanPath });
+
   await fs.promises.writeFile(newPlanIndexPath, contents, { encoding: 'utf8' });
 };
