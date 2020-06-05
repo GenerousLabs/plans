@@ -1,4 +1,10 @@
-import mockFs from 'mock-fs';
+import git from 'isomorphic-git';
+import http from 'isomorphic-git/http/node';
+import { createFsFromVolume, Volume } from 'memfs';
+import { FS } from './shared.types';
+import { createStore } from './store';
+
+export const meMockRemote = 'http://localhost:8174/me.git';
 
 export const connectionsYaml = `- id: bob
   folder: bob
@@ -89,56 +95,39 @@ export const joinFrontmatter = ({
   return `${frontmatter}\n${markdown}`;
 };
 
-export const mockFilesystem = () => {
-  mockFs({
-    e2e: {
-      // me: {},
-      connections: {
-        // bob: {},
-        // charlie: {},
-      },
-    },
-    alice: {
-      me: {
-        'connections.yaml': connectionsYaml,
-      },
-      [bob.slug]: {
-        'index.md': joinFrontmatter(bob),
-        plans: {
-          [bob.slug]: {
-            [spotify.slug]: {
-              'index.md': joinFrontmatter(spotify),
-            },
-            [nordvpn.slug]: {
-              'index.md': joinFrontmatter(nordvpn),
-            },
-          },
-        },
-      },
-      [charlie.slug]: {
-        'index.md': joinFrontmatter(charlie),
-        plans: {
-          [charlie.slug]: {
-            [omgyes.slug]: {
-              'index.md': joinFrontmatter(omgyes),
-              [`message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
-                aliceMessage
-              ),
-              [`message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
-                charlieMessage
-              ),
-            },
-          },
-        },
-      },
-    },
-    'daniella/plans/empty': {},
-    elena: {
-      'index.md': '',
-    },
-  });
+export const createDefaultMockFilesystem = () => {
+  return (createFsFromVolume(
+    Volume.fromJSON({
+      [`/e2e/connections`]: null,
+      [`/alice/me/connections.yaml`]: connectionsYaml,
+      [`/alice/${bob.slug}/index.md`]: joinFrontmatter(bob),
+      [`/alice/${bob.slug}/plans/${bob.slug}/${spotify.slug}/index.md`]: joinFrontmatter(
+        spotify
+      ),
+      [`/alice/${bob.slug}/plans/${bob.slug}/${nordvpn.slug}/index.md`]: joinFrontmatter(
+        nordvpn
+      ),
+      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/index.md`]: joinFrontmatter(
+        omgyes
+      ),
+      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+        aliceMessage
+      ),
+      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+        charlieMessage
+      ),
+      [`/daniella/plans/empty`]: null,
+      [`/elena/index.md`]: '',
+    })
+  ) as unknown) as FS;
 };
 
-export const mockFilesystemRestore = () => {
-  mockFs.restore();
+export const mocksWithClonedMeRepo = async () => {
+  const fs = createDefaultMockFilesystem();
+  await git.clone({ fs, http, dir: '/e2e/me', url: meMockRemote });
+  const store = createStore({
+    enableDevTools: false,
+    enableRemoteDevTools: false,
+  });
+  return { fs, http, store };
 };

@@ -1,11 +1,4 @@
-import fs from 'fs';
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  it,
-} from 'jest-without-globals';
+import { describe, expect, it } from 'jest-without-globals';
 import * as f from '../../../../fixtures';
 import {
   getMessageDataFromPath,
@@ -13,29 +6,25 @@ import {
 } from './messages.service';
 
 describe('messages.service', () => {
-  beforeEach(() => {
-    f.mockFilesystem();
-  });
-
-  afterEach(() => {
-    f.mockFilesystemRestore();
-  });
-
   describe('getMessageDataFromPath()', () => {
     it('Fetches message data correctly #OtOeRY', async () => {
+      const fs = f.createDefaultMockFilesystem();
+
       expect(
         await getMessageDataFromPath({
           fs,
-          path: 'alice/charlie/plans/charlie/omgyes/message-1590595620.md',
+          path: '/alice/charlie/plans/charlie/omgyes/message-1590595620.md',
         })
       ).toMatchSnapshot();
     });
 
     it('Throws on empty file', async () => {
+      const fs = f.createDefaultMockFilesystem();
+
       await expect(
         getMessageDataFromPath({
           fs,
-          path: 'elena/index.md',
+          path: '/elena/index.md',
         })
       ).rejects.toThrow();
     });
@@ -43,6 +32,7 @@ describe('messages.service', () => {
 
   describe('writeMessageToPlanDirectory()', () => {
     it('Successfully writes the message file #lpWGL7', async () => {
+      const fs = f.createDefaultMockFilesystem();
       const {
         markdown,
         data: { dateTimestampSeconds, sender },
@@ -50,7 +40,7 @@ describe('messages.service', () => {
 
       await writeMessageToPlanDirectory({
         fs,
-        planDirectoryPath: 'elena/',
+        planDirectoryPath: '/elena/',
         contentMarkdown: markdown,
         dateTimestampSeconds,
         sender,
@@ -59,13 +49,17 @@ describe('messages.service', () => {
       const expectedFileContents = `${f.joinFrontmatter(f.charlieMessage)}\n`;
 
       expect(
-        await fs.promises.readFile(`elena/message-${dateTimestampSeconds}.md`, {
-          encoding: 'utf8',
-        })
+        await fs.promises.readFile(
+          `/elena/message-${dateTimestampSeconds}.md`,
+          {
+            encoding: 'utf8',
+          }
+        )
       ).toEqual(expectedFileContents);
     });
 
     it('Does not add a second trailing line break #JJBAfm', async () => {
+      const fs = f.createDefaultMockFilesystem();
       const {
         markdown,
         data: { dateTimestampSeconds, sender },
@@ -73,7 +67,7 @@ describe('messages.service', () => {
 
       await writeMessageToPlanDirectory({
         fs,
-        planDirectoryPath: 'elena/',
+        planDirectoryPath: '/elena/',
         // Single trailing line break
         contentMarkdown: `${markdown}\n`,
         dateTimestampSeconds,
@@ -83,13 +77,17 @@ describe('messages.service', () => {
       const expectedFileContents = `${f.joinFrontmatter(f.charlieMessage)}\n`;
 
       expect(
-        await fs.promises.readFile(`elena/message-${dateTimestampSeconds}.md`, {
-          encoding: 'utf8',
-        })
+        await fs.promises.readFile(
+          `/elena/message-${dateTimestampSeconds}.md`,
+          {
+            encoding: 'utf8',
+          }
+        )
       ).toEqual(expectedFileContents);
     });
 
     it('Will add a third line break #JJBAfm', async () => {
+      const fs = f.createDefaultMockFilesystem();
       const {
         markdown,
         data: { dateTimestampSeconds, sender },
@@ -97,7 +95,7 @@ describe('messages.service', () => {
 
       await writeMessageToPlanDirectory({
         fs,
-        planDirectoryPath: 'elena/',
+        planDirectoryPath: '/elena/',
         contentMarkdown: `${markdown}\n\n`,
         dateTimestampSeconds,
         sender,
@@ -106,9 +104,12 @@ describe('messages.service', () => {
       const expectedFileContents = `${f.joinFrontmatter(f.charlieMessage)}\n\n`;
 
       expect(
-        await fs.promises.readFile(`elena/message-${dateTimestampSeconds}.md`, {
-          encoding: 'utf8',
-        })
+        await fs.promises.readFile(
+          `/elena/message-${dateTimestampSeconds}.md`,
+          {
+            encoding: 'utf8',
+          }
+        )
       ).toEqual(expectedFileContents);
     });
   });
