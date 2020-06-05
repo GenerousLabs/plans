@@ -62,7 +62,7 @@ export type PlanFolder = {
 
 export type Plan = {
   id: string;
-  planFolderId: string;
+  folderId: string;
   slug: string;
   path: string;
   name: string;

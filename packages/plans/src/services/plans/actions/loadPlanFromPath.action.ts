@@ -8,23 +8,24 @@ import {
 } from '../plans.service';
 import { noop, upsertOnePlan } from '../plans.state';
 import { loadMessageFromPath } from './loadMessageFromPath.action';
+import { getSerializableError } from '../../../utils/errors.utils';
 
 export const loadPlanFromPath = ({
   fs,
   path,
-  planFolderId,
+  folderId,
   slug,
 }: {
   fs: FS;
   path: string;
-  planFolderId: string;
+  folderId: string;
   slug: string;
 }): AppThunk => async dispatch => {
   dispatch(
     noop({
       code: '#FWoxSS',
       message: 'Load plan from path',
-      params: { planFolderId, path, slug },
+      params: { folderId, path, slug },
     })
   );
 
@@ -36,7 +37,7 @@ export const loadPlanFromPath = ({
       noop({
         code: '#VFlmTq',
         message: 'Error getting plan from directory',
-        params: { error, slug, path },
+        params: { error: getSerializableError(error), slug, path },
       })
     );
     return;
@@ -70,7 +71,7 @@ export const loadPlanFromPath = ({
 
   const plan: Plan = {
     id: planId,
-    planFolderId,
+    folderId: folderId,
     path,
     ...data,
     descriptionMarkdown: content,
@@ -95,7 +96,7 @@ export const loadPlanFromPath = ({
     noop({
       code: '#iXomhQ',
       message: 'loadPlanFromPath() finishd',
-      params: { planFolderId, path, slug },
+      params: { folderId, path, slug },
     })
   );
 };

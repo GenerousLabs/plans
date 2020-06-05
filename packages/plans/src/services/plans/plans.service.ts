@@ -76,7 +76,7 @@ export const findFirstPlansDirectory = async ({
  * Given a user's directory (eg `bob/plans/bob`), get the paths to the child
  * directories, each of which should contain details on a single plan.
  */
-export const getPlanPathsFromPlansFolder = async ({
+export const getChildDirectoriesFromPath = async ({
   fs,
   path,
 }: {

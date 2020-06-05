@@ -1,13 +1,12 @@
 import Bluebird from 'bluebird';
 import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { getMyUsernameOrThrow } from '../../startup/startup.state';
 import {
-  findFirstPlansDirectory,
-  getPlanPathsFromPlansFolder,
+  getChildDirectoriesFromPath,
+  addPlansFolderToPath,
 } from '../plans.service';
 import { noop, upsertOneFolder } from '../plans.state';
-import { loadPlanFromPath } from './loadPlanFromPath.action';
+import { loadPlansFromFolder } from './loadPlansFromFolder.action';
 
 export const loadPlansFromRepo = ({
   fs,
@@ -17,7 +16,7 @@ export const loadPlansFromRepo = ({
   fs: FS;
   repoId: string;
   path: string;
-}): AppThunk => async (dispatch, getRootState) => {
+}): AppThunk => async dispatch => {
   dispatch(
     noop({
       code: '#wi9aR7',
@@ -26,50 +25,22 @@ export const loadPlansFromRepo = ({
     })
   );
 
-  const myUsername = getMyUsernameOrThrow(getRootState());
+  const plansPath = addPlansFolderToPath({ path });
 
-  const plansPath = await findFirstPlansDirectory({
-    fs,
-    repoPath: path,
-    myUsername,
-  });
+  const folders = await getChildDirectoriesFromPath({ fs, path: plansPath });
 
-  // If the user does not have a `plans` folder, there's nothing to do here.
-  if (typeof plansPath === 'undefined') {
-    dispatch(
-      noop({
-        code: '#nMlg40',
-        message: 'loadUserPlansAction directory not found',
-        params: { repoId, path },
-      })
-    );
-    return;
-  }
+  await Bluebird.each(folders, async folder => {
+    const folderId = folder.path;
 
-  const planFolderId = plansPath.path;
-
-  await dispatch(
-    upsertOneFolder({
-      id: planFolderId,
-      repoId,
-      folder: plansPath.slug,
-    })
-  );
-
-  const plansPaths = await getPlanPathsFromPlansFolder({
-    fs,
-    path: plansPath.path,
-  });
-
-  await Bluebird.each(plansPaths, async ({ path, slug }) => {
     await dispatch(
-      loadPlanFromPath({
-        fs,
-        path,
-        slug,
-        planFolderId,
+      upsertOneFolder({
+        id: folderId,
+        repoId,
+        folder: folder.slug,
       })
     );
+
+    await dispatch(loadPlansFromFolder({ fs, path: folder.path, folderId }));
   });
 
   dispatch(
@@ -77,9 +48,10 @@ export const loadPlansFromRepo = ({
       code: '#i0W2Yp',
       message: 'loadUserPlansAction finished',
       params: {
-        userId: repoId,
-        userDirectoryPath: path,
-        plansPaths,
+        repoId,
+        path,
+        plansPath,
+        folders,
       },
     })
   );

@@ -6,7 +6,7 @@ import { ensureRepoIsCurrent } from './ensureRepoIsCurrent.action';
 import {
   getConnectionsFromRepo,
   rootPathToMeRepoPath,
-  rootPathToRepoPath,
+  rootPathToConnectionRepoPath,
 } from '../repos.service';
 import { noop, upsertOne } from '../repos.state';
 import { ME_REPO_ID, ME_REPO_FOLDER } from '../../../constants';
@@ -75,7 +75,7 @@ export const pullMeAndConnectionRepos = ({
     // TODO Implement the use of `repo.credentials`
     const { id, folder: repoFolder, remote } = repo;
 
-    const dir = rootPathToRepoPath({ rootPath, repoFolder });
+    const dir = rootPathToConnectionRepoPath({ rootPath, repoFolder });
 
     await dispatch(
       upsertOne({
@@ -98,5 +98,3 @@ export const pullMeAndConnectionRepos = ({
     );
   });
 };
-
-export const cloneOrPullMeRepo = () => {};

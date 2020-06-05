@@ -34,7 +34,7 @@ export const saveNewMessage = ({
     throw new Error('Cannot find plan. #4VqrMR');
   }
 
-  const folder = selectFolderById(rootState, plan.planFolderId);
+  const folder = selectFolderById(rootState, plan.folderId);
 
   if (typeof folder === 'undefined') {
     // TODO Log error here
@@ -103,7 +103,7 @@ export const saveNewMessage = ({
     loadPlanFromPath({
       fs,
       path: plan.path,
-      planFolderId: plan.planFolderId,
+      folderId: plan.folderId,
       slug: plan.slug,
     })
   );

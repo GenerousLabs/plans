@@ -16,7 +16,7 @@ export const rootPathToMeRepoPath = ({ rootPath }: { rootPath: string }) => {
   return join(rootPath, PATH_TO_ME_REPO);
 };
 
-export const rootPathToRepoPath = ({
+export const rootPathToConnectionRepoPath = ({
   rootPath,
   repoFolder,
 }: {
