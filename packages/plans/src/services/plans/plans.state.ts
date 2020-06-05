@@ -102,6 +102,13 @@ export const selectAllPlanFolders = (state: RootState) =>
   foldersSelectors.selectAll(getState(state).folders);
 export const selectFolderById = (state: RootState, id: string) =>
   foldersSelectors.selectById(getState(state).folders, id);
+export const selectFolderByIdOrThrow = (state: RootState, id: string) => {
+  const folder = foldersSelectors.selectById(getState(state).folders, id);
+  if (typeof folder === 'undefined') {
+    throw new Error('Failed to find folder #L98aQp');
+  }
+  return folder;
+};
 export const selectAllPlans = (state: RootState) =>
   plansSelectors.selectAll(getState(state).plans);
 export const selectPlanById = (state: RootState, id: string) =>
