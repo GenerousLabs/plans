@@ -46,9 +46,17 @@ export type Repo = {
   };
 };
 
+/**
+ * A folder containing plans.
+ */
 export type PlanFolder = {
   id: string;
   repoId: string;
+  /**
+   * The name of the folder, not its path, if this is my username, then this
+   * folder belongs to me, and so the plans contained within it are plans I
+   * share with others
+   */
   folder: string;
 };
 
