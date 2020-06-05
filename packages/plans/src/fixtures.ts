@@ -15,6 +15,14 @@ export const connectionsYaml = `- id: bob
   name: Charlie
   remote: http://localhost:8174/charlie.git`;
 
+export const alice = {
+  slug: 'alice',
+  data: { name: 'Alice' },
+  frontmatter: `---
+  name: Alice
+  ---`,
+  markdown: '',
+};
 export const bob = {
   slug: 'bob',
   data: { name: 'Bob' },
@@ -57,6 +65,15 @@ dateTimestampSeconds: 1591281216
   markdown: 'A new message for testing purposes.',
 };
 
+export const pia = {
+  slug: 'pia',
+  data: { name: 'Private Internet Access' },
+  frontmatter: `---
+name: Private Internet Access
+---`,
+  markdown: `I hardly ever use it, has 6 device limit
+`,
+};
 export const spotify = {
   slug: 'spotify',
   data: { name: 'Spotify' },
@@ -99,21 +116,27 @@ export const createDefaultMockFilesystem = () => {
   return (createFsFromVolume(
     Volume.fromJSON({
       [`/e2e/connections`]: null,
-      [`/alice/me/connections.yaml`]: connectionsYaml,
-      [`/alice/${bob.slug}/index.md`]: joinFrontmatter(bob),
-      [`/alice/${bob.slug}/plans/${bob.slug}/${spotify.slug}/index.md`]: joinFrontmatter(
+      [`/${alice.slug}/me/connections.yaml`]: connectionsYaml,
+      [`/${alice.slug}/${bob.slug}/index.md`]: joinFrontmatter(bob),
+      [`/${alice.slug}/${bob.slug}/plans/${alice.slug}/${pia.slug}/index.md`]: joinFrontmatter(
+        pia
+      ),
+      [`/${alice.slug}/${bob.slug}/plans/${bob.slug}/${spotify.slug}/index.md`]: joinFrontmatter(
         spotify
       ),
-      [`/alice/${bob.slug}/plans/${bob.slug}/${nordvpn.slug}/index.md`]: joinFrontmatter(
+      [`/${alice.slug}/${bob.slug}/plans/${bob.slug}/${nordvpn.slug}/index.md`]: joinFrontmatter(
         nordvpn
       ),
-      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/index.md`]: joinFrontmatter(
+      [`/${alice.slug}/${charlie.slug}/plans/${alice.slug}/${pia.slug}/index.md`]: joinFrontmatter(
+        pia
+      ),
+      [`/${alice.slug}/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/index.md`]: joinFrontmatter(
         omgyes
       ),
-      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+      [`/${alice.slug}/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${aliceMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
         aliceMessage
       ),
-      [`/alice/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
+      [`/${alice.slug}/${charlie.slug}/plans/${charlie.slug}/${omgyes.slug}/message-${charlieMessage.data.dateTimestampSeconds}.md`]: joinFrontmatter(
         charlieMessage
       ),
       [`/daniella/plans/empty`]: null,
