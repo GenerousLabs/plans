@@ -106,3 +106,19 @@ Goals
 
 - Some kind of predictable shape to the data coming from git
 - A predictable API to push new data
+
+## Future
+
+How do we provide a path from the "pod" model towards a truly decentralised,
+peer to peer architecture? Is the "pod" a "hosted node" effectively?
+
+Does this approach fundamentally compromise on the path to our longer term
+goals?
+
+What would be a first step alternative? A React Native based app?
+
+Quick sketch, what would an app look like?
+
+- Create a private key
+  - All the usual headache of storing it, etc
+-
