@@ -1,87 +1,75 @@
 # Plans
 
-The medium term vision is to use git repos as a mechanism to share data.
+Very simple first version.
 
-To start with, the first goal is to let 2 users share digital plans in one
-repo. For example, I have a VPN account and my friends are welcome to use it.
+Publish data in a specially formatted git repo. Give others access to let
+them "consume" that data.
 
-The idea is to use git repos as the data transport layer. They have built in
-support for signed commits, automatically include a full history, and are
-widely deployed, used, and understood.
+## Ultra Simple v1
 
-The whole setup starts with an identity. A private key. The public key is the
-user's public "identity". After the identity comes the "me" repo. The "me"
-repo contains links to other repos for both data sharing and app installs.
+- I create my account, which means I create my own repo
+- I create my own profile
+- I create my own plans
+- I can share my repo with others
+- Others can share their repo with me
+- My client sucks all the repos in
+  - I see my plans / their plans
+  - Last updated at the top
+  - No messaging
 
-## me
+What does the folder structure look like?
 
-- `/index.md` - My user profile
-- `/connections.yaml` - A list of my repos
+- /me
+  - /me/connections.yaml
+- /bob - my copy of Bob's repo
+  - /bob/plans/nordvpn/index.md - Bob's NordVPN plan
+- /charlie
+  - /charlie/plans/omgyes/index.md
 
-## shared repos
+### Shortcuts
 
-Alice shares a repo with Bob. To Alice, the repo is called `bob`. To Bob the
-repo is called `alice`.
+- No messaging. Later.
+- No GPG keys. Later.
+- No identity really. Later.
 
-## Data Models
+### Data Models
 
-- User
-  - id
-  - slug
-  - name
-  - publicKey
-  - profilePics
+Questions
+
+- How do users and repos link?
+  - I create repos?
+
+Models
+
 - Repo
   - id
-  - slug
   - name
-  - connections
-    - user_slug - This user's folder name in this repo
-    - user_id - Equal to "me" for my own remote / slug combo
-    - remote
-- App
+  - slug
+  - remote_url
+- User - Loaded from a repo
   - id
   - slug
-  - name
-  - remote
-    - url
-- AppInstance - An app running on a repo
-  - id
-  - repo_id
-  - app_id
-
-Invitations
-
-- Invitation
-  - sender_username
-  - remote_url - A URL including auth params to fetch from
-  - body
-
-Plans app models
-
-- UserFolder
-  - id
-  - user_id
-  - appinstance_id
-- Plan
-  - id
-  - slug
-  - userfolder_id
   - name
   - description
-- Message
+- Plan
   - id
-  - plan_id
-  - sender_user_id
-  - recipient_user_ids
-  - time
-  - body
+  - user_id
+  - slug
+  - updated_at
+  - name
+  - description
 
-# Questions
+### Flows
 
-- Do we already start from scratch with this 2 tier architecture?
-- If so, what does that mean? Start again with a new package?
-- What's the minimum required to get this running?
-  - What would be a useful, deployable, first step?
-  - How would we hack this as quick & dirty as possible to get it live?
-    - Could we only load plans into redux?
+#### Accept invitation
+
+- Somebody sends me a URL
+- I enter the URL into my client
+- I enter what I want to call this repo
+  - eg `Fred`
+  - This gets slugified eg `fred`
+- My client pulls the repo
+  - Puts it into the `connections/fred` directory
+  - Parses the data from it and updates my UI
+    - First, it loads the user's name & description from the repo
+    - Then it loads the plans in the repo
