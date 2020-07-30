@@ -1,6 +1,6 @@
 import { GitParams } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { loadRepos } from '../../me/actions/loadRepos';
+import { loadRepos } from '../../me/actions/loadRepos.action';
 import { pullMeRepo } from '../../me/actions/pullMeRepo.action';
 import { RootConfig } from '../startup.service';
 
