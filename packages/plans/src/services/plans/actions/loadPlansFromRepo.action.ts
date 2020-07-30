@@ -39,7 +39,7 @@ export const loadPlansFromRepo = ({
 
     await dispatch(
       addOneUser({
-        id: slug,
+        id: path,
         name: 'Name Coming Soon',
         slug,
         description: 'Will be loaded soon',
