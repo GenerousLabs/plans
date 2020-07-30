@@ -14,7 +14,7 @@ export const loadPlansFromRepo = ({
 }: {
   fs: FS;
   repo: Pick<Repo, 'id' | 'path'>;
-}): AppThunk => async dispatch => {
+}): AppThunk => async (dispatch) => {
   const { id: repoId, path } = repo;
 
   dispatch(
@@ -32,7 +32,7 @@ export const loadPlansFromRepo = ({
     path: plansPath,
   });
 
-  await Bluebird.each(userFolders, async userFolder => {
+  await Bluebird.each(userFolders, async (userFolder) => {
     const { slug, path } = userFolder;
 
     // TODO Load user data from index file here
