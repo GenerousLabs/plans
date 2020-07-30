@@ -1,31 +1,29 @@
-import Bluebird from 'bluebird';
 import { FS, Plan } from '../../../shared.types';
 import { AppThunk } from '../../../store';
+import { getSerializableError } from '../../../utils/errors.utils';
 import { to } from '../../../utils/to.util';
 import {
   getPlanDataFromIndexFilePath,
   getPlanFilesFromDirectory,
 } from '../plans.service';
 import { noop, upsertOnePlan } from '../plans.state';
-import { loadMessageFromPath } from './loadMessageFromPath.action';
-import { getSerializableError } from '../../../utils/errors.utils';
 
 export const loadPlanFromPath = ({
   fs,
   path,
-  folderId,
+  userId,
   slug,
 }: {
   fs: FS;
   path: string;
-  folderId: string;
+  userId: string;
   slug: string;
 }): AppThunk => async dispatch => {
   dispatch(
     noop({
       code: '#FWoxSS',
       message: 'Load plan from path',
-      params: { folderId, path, slug },
+      params: { userId, path, slug },
     })
   );
 
@@ -44,7 +42,7 @@ export const loadPlanFromPath = ({
   }
 
   const { result } = responseOne;
-  const { indexFile, messageFiles } = result;
+  const { indexFile } = result;
 
   const planId = indexFile.path;
 
@@ -71,32 +69,20 @@ export const loadPlanFromPath = ({
 
   const plan: Plan = {
     id: planId,
-    folderId: folderId,
+    userId,
     path,
     ...data,
-    descriptionMarkdown: content,
+    description: content,
     slug,
   };
 
   await dispatch(upsertOnePlan(plan));
 
-  await Bluebird.each(messageFiles, async messageFile => {
-    const { slug, path } = messageFile;
-    await dispatch(
-      loadMessageFromPath({
-        fs,
-        path,
-        slug,
-        planId,
-      })
-    );
-  });
-
   dispatch(
     noop({
       code: '#iXomhQ',
       message: 'loadPlanFromPath() finishd',
-      params: { folderId, path, slug },
+      params: { userId, path, slug },
     })
   );
 };

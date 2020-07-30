@@ -1,22 +1,22 @@
 import Bluebird from 'bluebird';
-import { FS } from '../../../shared.types';
+import { FS, Repo } from '../../../shared.types';
 import { AppThunk } from '../../../store';
 import {
-  getChildDirectoriesFromPath,
   addPlansFolderToPath,
+  getChildDirectoriesFromPath,
 } from '../plans.service';
-import { noop, upsertOneFolder } from '../plans.state';
+import { addOneUser, noop } from '../plans.state';
 import { loadPlansFromFolder } from './loadPlansFromFolder.action';
 
 export const loadPlansFromRepo = ({
   fs,
-  repoId,
-  path,
+  repo,
 }: {
   fs: FS;
-  repoId: string;
-  path: string;
+  repo: Pick<Repo, 'id' | 'path'>;
 }): AppThunk => async dispatch => {
+  const { id: repoId, path } = repo;
+
   dispatch(
     noop({
       code: '#wi9aR7',
@@ -27,21 +27,25 @@ export const loadPlansFromRepo = ({
 
   const plansPath = addPlansFolderToPath({ path });
 
-  const folders = await getChildDirectoriesFromPath({ fs, path: plansPath });
+  const userFolders = await getChildDirectoriesFromPath({
+    fs,
+    path: plansPath,
+  });
 
-  await Bluebird.each(folders, async folder => {
-    const folderId = folder.path;
+  await Bluebird.each(userFolders, async userFolder => {
+    const { slug, path } = userFolder;
 
     await dispatch(
-      upsertOneFolder({
-        id: folderId,
-        repoId,
-        folder: folder.slug,
-        path: folder.path,
+      addOneUser({
+        id: slug,
+        name: 'Name Coming Soon',
+        slug,
+        description: 'Will be loaded soon',
+        path,
       })
     );
 
-    await dispatch(loadPlansFromFolder({ fs, path: folder.path, folderId }));
+    await dispatch(loadPlansFromFolder({ fs, path, userId: slug }));
   });
 
   dispatch(
@@ -52,7 +56,7 @@ export const loadPlansFromRepo = ({
         repoId,
         path,
         plansPath,
-        folders,
+        userFolders,
       },
     })
   );

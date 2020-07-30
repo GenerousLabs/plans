@@ -18,6 +18,7 @@ const usersSlice = createSlice({
   name: 'PLANS/plans/users',
   initialState: usersAdapter.getInitialState(),
   reducers: {
+    addOneUser: usersAdapter.addOne,
     addManyUsers: usersAdapter.addMany,
   },
 });
@@ -39,7 +40,7 @@ export const {
   upsertManyPlans,
   removeOnePlan,
 } = plansSlice.actions;
-export const { addManyUsers } = usersSlice.actions;
+export const { addManyUsers, addOneUser } = usersSlice.actions;
 
 export const noop = createAction(
   'PLANS/plans/noop',

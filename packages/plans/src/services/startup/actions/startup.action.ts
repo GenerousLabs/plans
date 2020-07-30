@@ -5,6 +5,7 @@ import { loadRepos } from '../../me/actions/loadRepos.action';
 import { pullMeRepo } from '../../me/actions/pullMeRepo.action';
 import { pullRepo } from '../../me/actions/pullRepo.action';
 import { selectAllRepos } from '../../me/me.state';
+import { loadPlansFromRepo } from '../../plans/actions/loadPlansFromRepo.action';
 import { RootConfig } from '../startup.service';
 
 export const startup = ({
@@ -33,8 +34,9 @@ export const startup = ({
   await Bluebird.each(repos, async repo => {
     try {
       await dispatch(pullRepo({ fs, http, headers, repo }));
+      await dispatch(loadPlansFromRepo({ fs, repo }));
     } catch (error) {
-      console.error('Error pulling repo #9zmpoA', error);
+      console.error('Error pulling repo or loading plans #9zmpoA', error);
     }
   });
 };

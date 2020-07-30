@@ -150,9 +150,9 @@ export const planPathToIndexFilePath = ({ path }: { path: string }) => {
 export const planToText = ({
   plan,
 }: {
-  plan: Pick<Plan, 'descriptionMarkdown' | 'name'>;
+  plan: Pick<Plan, 'description' | 'name'>;
 }) => {
-  return matter.stringify(plan.descriptionMarkdown, { name: plan.name });
+  return matter.stringify(plan.description, { name: plan.name });
 };
 
 export const writePlanToDisk = async ({
@@ -162,7 +162,7 @@ export const writePlanToDisk = async ({
 }: {
   fs: FS;
   folderPath: string;
-  plan: Pick<Plan, 'descriptionMarkdown' | 'name' | 'slug'>;
+  plan: Pick<Plan, 'description' | 'name' | 'slug'>;
 }) => {
   const { slug } = plan;
   const newPlanPath = join(folderPath, slug);

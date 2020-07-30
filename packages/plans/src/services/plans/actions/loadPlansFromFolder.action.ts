@@ -7,11 +7,11 @@ import { loadPlanFromPath } from './loadPlanFromPath.action';
 export const loadPlansFromFolder = ({
   fs,
   path,
-  folderId,
+  userId,
 }: {
   fs: FS;
   path: string;
-  folderId: string;
+  userId: string;
 }): AppThunk => async dispatch => {
   const plansPaths = await getChildDirectoriesFromPath({
     fs,
@@ -24,7 +24,7 @@ export const loadPlansFromFolder = ({
         fs,
         path,
         slug,
-        folderId,
+        userId,
       })
     );
   });
