@@ -20,6 +20,7 @@
     "posttest": "GIT_HTTP_MOCK_SERVER_ROOT=\"./git-fixtures\" git-http-mock-server stop",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
+    "develop": "BOOT_LOCAL_STORE=true yarn start --onSuccess 'node dist/'",
     "redux-devtools": "redux-devtools --hostname=localhost --port=8000"
   },
   "peerDependencies": {},
