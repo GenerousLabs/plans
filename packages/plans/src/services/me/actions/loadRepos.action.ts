@@ -20,6 +20,4 @@ export const loadRepos = ({
   const repos = yamlRepos.map(repo => yamlRepoToReduxRepo({ rootPath, repo }));
 
   await dispatch(addManyRepos(repos));
-
-  return repos;
 };
