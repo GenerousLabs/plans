@@ -30,8 +30,6 @@ export const startup = ({
 
   const repos = selectAllRepos(getRootState());
 
-  console.log('repos #D9EKOO', repos);
-
   await Bluebird.each(repos, async repo => {
     try {
       await dispatch(pullRepo({ fs, http, headers, repo }));
@@ -39,17 +37,4 @@ export const startup = ({
       console.error('Error pulling repo #9zmpoA', error);
     }
   });
-
-  console.log('cloned repos #zqIalJ');
-
-  // await Bluebird.each(repos, async repo => {
-  //   const { id, path } = repo;
-
-  //   // We do not load plans from our own repo
-  //   if (id === ME_REPO_ID) {
-  //     return;
-  //   }
-
-  //   await dispatch(loadPlansFromRepo({ fs, repoId: id, path: path }));
-  // });
 };
