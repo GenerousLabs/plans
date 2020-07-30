@@ -3,7 +3,7 @@ import http from 'isomorphic-git/http/node';
 import { createFsFromVolume, Volume } from 'memfs';
 import { FS } from './shared.types';
 import { createStore } from './store';
-import { ME_MOCK_REMOTE } from './constants';
+import { ME_MOCK_REMOTE } from './shared.constants';
 import { startup } from './services/startup/actions/startup.action';
 
 // TODO Rename everything in this file

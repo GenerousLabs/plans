@@ -1,5 +1,5 @@
 import {
-  createAction,
+  combineReducers,
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
@@ -14,48 +14,31 @@ const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
 const reposAdapter = createEntityAdapter<Repo>();
 
 const reposSlice = createSlice({
-  name: 'PLANS/repos',
+  name: 'PLANS/me/repos',
   initialState: reposAdapter.getInitialState(),
   reducers: {
-    upsertOne: reposAdapter.upsertOne,
-    updateOne: reposAdapter.updateOne,
-    removeOne: reposAdapter.removeOne,
+    addMany: reposAdapter.addMany,
   },
 });
 
-export const { upsertOne, updateOne, removeOne } = reposSlice.actions;
+// Wrap the repos slice in a parent reducer so we can choose to store more state
+// at the me level if we want to
+const reducer = combineReducers({
+  repos: reposSlice.reducer,
+});
 
-export default reposSlice.reducer;
+export default reducer;
 
-export const noop = createAction(
-  'PLANS/repos/noop',
-  ({
-    code,
-    message,
-    params,
-  }: {
-    code: string;
-    message?: string;
-    params?: any;
-  }) => {
-    return {
-      payload: {
-        code,
-        message,
-        params,
-      },
-    };
-  }
-);
+export const addManyRepos = reposSlice.actions.addMany;
 
 const reposSelectors = reposAdapter.getSelectors();
 
-export const selectAll = (state: RootState) =>
+export const selectAllRepos = (state: RootState) =>
   reposSelectors.selectAll(getState(state));
-export const selectById = (state: RootState, id: string) =>
+export const selectRepoById = (state: RootState, id: string) =>
   reposSelectors.selectById(getState(state), id);
-export const selectByIdOrThrow = (state: RootState, id: string) => {
-  const repo = selectById(state, id);
+export const selectRepoByIdOrThrow = (state: RootState, id: string) => {
+  const repo = selectRepoById(state, id);
   if (typeof repo === 'undefined') {
     throw new Error('Failed to find repo. #JjSJfP');
   }

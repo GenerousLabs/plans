@@ -28,14 +28,11 @@ export type GitParams = {
   dir: string;
 };
 
-/**
- * A repo represents the connection between users. A shared space that two (or
- * potentially in the future, more than two) people can share things.
- */
 export type Repo = {
   id: string;
   name: string;
-  folder: string;
+  slug: string;
+  path: string;
   remote: string;
   credentials?: {
     username?: string;
@@ -44,28 +41,27 @@ export type Repo = {
       [x: string]: string;
     };
   };
+  lastFetchTimestampSeconds: number;
+  currentHeadCommitHash: string;
 };
 
 /**
- * A folder containing plans.
+ * A user is loaded from a repo and contains information the user themselves
+ * has shared. For example, their name.
  */
-export type PlanFolder = {
+export type User = {
   id: string;
-  repoId: string;
-  /**
-   * The name of the folder, not its path, if this is my username, then this
-   * folder belongs to me, and so the plans contained within it are plans I
-   * share with others
-   */
-  folder: string;
+  name: string;
+  slug: string;
+  description: string;
   path: string;
 };
 
 export type Plan = {
   id: string;
-  folderId: string;
+  userId: string;
   slug: string;
   path: string;
   name: string;
-  descriptionMarkdown: string;
+  description: string;
 };

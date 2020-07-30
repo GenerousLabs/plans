@@ -4,7 +4,7 @@ import { AppThunk } from '../../../store';
 import { timestampSeconds } from '../../../utils/time.utils';
 import { pullRepo } from '../repos.service';
 import { noop, selectByIdOrThrow, updateOne } from '../repos.state';
-import { GIT_AUTHOR_NAME } from '../../../constants';
+import { GIT_AUTHOR_NAME } from '../../../shared.constants';
 
 export const saveAndPush = ({
   fs,

@@ -6,9 +6,14 @@ export const REDUX_ROOT_KEY = '__plans' as const;
 
 export const ME_REPO_ID = 'me' as const;
 export const ME_REPO_FOLDER = 'me' as const;
+export const REPOS_FILENAME = 'repos.yaml' as const;
 
 export const GIT_AUTHOR_NAME = 'GeneroUS Plans';
 
 export const ME_MOCK_REMOTE = 'http://localhost:8174/me.git';
 
 export const PLAN_INDEX_FILENAME = 'index.md';
+
+export const PLANS_AUTHOR = {
+  name: 'plans',
+};

@@ -1,6 +1,6 @@
 import isomorphicGitHttp from 'isomorphic-git/http/node';
 import { fs } from 'memfs';
-import { ME_MOCK_REMOTE } from '../../constants';
+import { ME_MOCK_REMOTE } from '../../shared.constants';
 import { FS, GitParams } from '../../shared.types';
 import { createStore } from '../../store';
 import { startup } from './actions/startup.action';

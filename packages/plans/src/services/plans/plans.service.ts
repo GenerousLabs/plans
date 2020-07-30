@@ -2,7 +2,7 @@ import matter from 'gray-matter';
 import { join } from 'path';
 import { FS, Plan } from '../../shared.types';
 import { doesDirectoryExist } from '../../utils/fs.utils';
-import { PLAN_INDEX_FILENAME } from '../../constants';
+import { PLAN_INDEX_FILENAME } from '../../shared.constants';
 
 const PLANS_FOLDER_NAME = 'plans';
 

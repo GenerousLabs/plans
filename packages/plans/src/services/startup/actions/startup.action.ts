@@ -1,10 +1,7 @@
-import Bluebird from 'bluebird';
-import { ME_REPO_ID } from '../../../constants';
 import { GitParams } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { loadPlansFromRepo } from '../../plans/actions/loadPlansFromRepo.action';
-import { pullMeAndConnectionRepos } from '../../repos/actions/pullMeAndConnectionRepos.action';
-import { selectAll } from '../../repos/repos.state';
+import { loadRepos } from '../../me/actions/loadRepos';
+import { pullMeRepo } from '../../me/actions/pullMeRepo.action';
 import { RootConfig } from '../startup.service';
 
 export const startup = ({
@@ -13,11 +10,11 @@ export const startup = ({
   rootConfig,
 }: Omit<GitParams, 'dir' | 'headers'> & {
   rootConfig: RootConfig;
-}): AppThunk => async (dispatch, getRootState) => {
+}): AppThunk => async dispatch => {
   const { path: rootPath, meRepoRemote, meRepoHeaders: headers } = rootConfig;
 
   await dispatch(
-    pullMeAndConnectionRepos({
+    pullMeRepo({
       fs,
       http,
       headers,
@@ -26,16 +23,18 @@ export const startup = ({
     })
   );
 
-  const repos = selectAll(getRootState());
+  const repos = await dispatch(loadRepos({ fs, rootPath }));
 
-  await Bluebird.each(repos, async repo => {
-    const { id, path } = repo;
+  console.log('repos #D9EKOO', repos);
 
-    // We do not load plans from our own repo
-    if (id === ME_REPO_ID) {
-      return;
-    }
+  // await Bluebird.each(repos, async repo => {
+  //   const { id, path } = repo;
 
-    await dispatch(loadPlansFromRepo({ fs, repoId: id, path: path }));
-  });
+  //   // We do not load plans from our own repo
+  //   if (id === ME_REPO_ID) {
+  //     return;
+  //   }
+
+  //   await dispatch(loadPlansFromRepo({ fs, repoId: id, path: path }));
+  // });
 };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { REDUX_ROOT_KEY } from '../../constants';
+import { REDUX_ROOT_KEY } from '../../shared.constants';
 
 export const REDUCER_KEY = 'startup' as const;
 

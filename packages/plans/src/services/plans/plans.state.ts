@@ -4,24 +4,21 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
-import { REDUX_ROOT_KEY } from '../../constants';
-import { Plan, PlanFolder } from '../../shared.types';
+import { REDUX_ROOT_KEY } from '../../shared.constants';
+import { Plan, User } from '../../shared.types';
 import { RootState } from '../../store';
-import { Message } from './services/messages/messages.service';
 
 export const REDUCER_KEY = 'plans' as const;
 
 const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
 
-const foldersAdapter = createEntityAdapter<PlanFolder>();
+const usersAdapter = createEntityAdapter<User>();
 
-const foldersSlice = createSlice({
-  name: 'PLANS/plans/folders',
-  initialState: foldersAdapter.getInitialState(),
+const usersSlice = createSlice({
+  name: 'PLANS/plans/users',
+  initialState: usersAdapter.getInitialState(),
   reducers: {
-    upsertOneFolder: foldersAdapter.upsertOne,
-    upsertManyFolders: foldersAdapter.upsertMany,
-    removeOneFolder: foldersAdapter.removeOne,
+    addManyUsers: usersAdapter.addMany,
   },
 });
 
@@ -37,33 +34,12 @@ const plansSlice = createSlice({
   },
 });
 
-const messagesAdapter = createEntityAdapter<Message>();
-
-const messagesSlice = createSlice({
-  name: 'PLANS/plans/messages',
-  initialState: messagesAdapter.getInitialState(),
-  reducers: {
-    upsertOneMessage: messagesAdapter.upsertOne,
-    upsertManyMessages: messagesAdapter.upsertMany,
-    removeOneMessage: messagesAdapter.removeOne,
-  },
-});
-
 export const {
   upsertOnePlan,
   upsertManyPlans,
   removeOnePlan,
 } = plansSlice.actions;
-export const {
-  upsertOneMessage,
-  upsertManyMessages,
-  removeOneMessage,
-} = messagesSlice.actions;
-export const {
-  upsertOneFolder,
-  upsertManyFolders,
-  removeOneFolder,
-} = foldersSlice.actions;
+export const { addManyUsers } = usersSlice.actions;
 
 export const noop = createAction(
   'PLANS/plans/noop',
@@ -87,37 +63,28 @@ export const noop = createAction(
 );
 
 const reducer = combineReducers({
-  folders: foldersSlice.reducer,
+  users: usersSlice.reducer,
   plans: plansSlice.reducer,
-  messages: messagesSlice.reducer,
 });
 
 export default reducer;
 
-const foldersSelectors = foldersAdapter.getSelectors();
+const foldersSelectors = usersAdapter.getSelectors();
 const plansSelectors = plansAdapter.getSelectors();
-const messagesSelectors = messagesAdapter.getSelectors();
 
-export const selectAllPlanFolders = (state: RootState) =>
-  foldersSelectors.selectAll(getState(state).folders);
-export const selectFolderById = (state: RootState, id: string) =>
-  foldersSelectors.selectById(getState(state).folders, id);
-export const selectFolderByIdOrThrow = (state: RootState, id: string) => {
-  const folder = foldersSelectors.selectById(getState(state).folders, id);
+export const selectAllUsers = (state: RootState) =>
+  foldersSelectors.selectAll(getState(state).users);
+export const selectUserById = (state: RootState, id: string) =>
+  foldersSelectors.selectById(getState(state).users, id);
+export const selectUserByIdOrThrow = (state: RootState, id: string) => {
+  const folder = foldersSelectors.selectById(getState(state).users, id);
   if (typeof folder === 'undefined') {
-    throw new Error('Failed to find folder #L98aQp');
+    throw new Error('Failed to find user #d4q7YM');
   }
   return folder;
 };
+
 export const selectAllPlans = (state: RootState) =>
   plansSelectors.selectAll(getState(state).plans);
 export const selectPlanById = (state: RootState, id: string) =>
   plansSelectors.selectById(getState(state).plans, id);
-export const selectAllMessages = (state: RootState) =>
-  messagesSelectors.selectAll(getState(state).messages);
-export const selectMessagesById = (state: RootState, id: string) =>
-  messagesSelectors.selectById(getState(state).messages, id);
-export const selectMessagesByPlanId = (state: RootState, planId: string) =>
-  messagesSelectors
-    .selectAll(getState(state).messages)
-    .filter(message => message.planId === planId);

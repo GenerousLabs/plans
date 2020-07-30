@@ -4,12 +4,11 @@ import { AppThunk } from '../../../store';
 import { to } from '../../../utils/to.util';
 import { ensureRepoIsCurrent } from './ensureRepoIsCurrent.action';
 import {
-  getConnectionsFromRepo,
   rootPathToMeRepoPath,
   rootPathToConnectionRepoPath,
 } from '../repos.service';
 import { noop, upsertOne } from '../repos.state';
-import { ME_REPO_ID, ME_REPO_FOLDER } from '../../../constants';
+import { ME_REPO_ID, ME_REPO_FOLDER } from '../../../shared.constants';
 
 export const pullMeAndConnectionRepos = ({
   fs,
