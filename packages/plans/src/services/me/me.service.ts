@@ -52,7 +52,7 @@ export const getReposFromReposYaml = async ({
 
   const data = yaml.safeLoad(contents);
 
-  if (typeof data === 'undefined' || typeof data.length !== 'number') {
+  if (typeof data === 'undefined' || typeof (data as any).length !== 'number') {
     throw new Error('Invalid connection YAML data. #Tnsl4V');
   }
 
