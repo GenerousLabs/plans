@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`messages.service getMessageDataFromPath() Fetches message data correctly #OtOeRY 1`] = `
-Object {
-  "contentMarkdown": "Are you up for sharing this with me?",
-  "dateTimestampSeconds": 1590595620,
-  "sender": "alice",
-}
-`;
