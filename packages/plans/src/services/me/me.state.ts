@@ -7,9 +7,12 @@ import { REDUX_ROOT_KEY } from '../../shared.constants';
 import { Repo } from '../../shared.types';
 import { RootState } from '../../store';
 
-export const REDUCER_KEY = 'repos' as const;
+export const REDUCER_KEY = 'me' as const;
+
+const reposKey = 'repos' as const;
 
 const getState = (state: RootState) => state[REDUX_ROOT_KEY][REDUCER_KEY];
+const getReposState = (state: RootState) => getState(state)[reposKey];
 
 const reposAdapter = createEntityAdapter<Repo>();
 
@@ -27,7 +30,7 @@ export const { addManyRepos, updateOneRepo } = reposSlice.actions;
 // Wrap the repos slice in a parent reducer so we can choose to store more state
 // at the me level if we want to
 const reducer = combineReducers({
-  repos: reposSlice.reducer,
+  [reposKey]: reposSlice.reducer,
 });
 
 export default reducer;
@@ -35,9 +38,9 @@ export default reducer;
 const reposSelectors = reposAdapter.getSelectors();
 
 export const selectAllRepos = (state: RootState) =>
-  reposSelectors.selectAll(getState(state));
+  reposSelectors.selectAll(getReposState(state));
 export const selectRepoById = (state: RootState, id: string) =>
-  reposSelectors.selectById(getState(state), id);
+  reposSelectors.selectById(getReposState(state), id);
 export const selectRepoByIdOrThrow = (state: RootState, id: string) => {
   const repo = selectRepoById(state, id);
   if (typeof repo === 'undefined') {

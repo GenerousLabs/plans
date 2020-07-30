@@ -7,14 +7,16 @@ import {
 import devToolsEnhancer, {
   RemoteReduxDevToolsOptions,
 } from 'remote-redux-devtools';
-import { REDUX_ROOT_KEY } from './shared.constants';
+import me, { REDUCER_KEY as meKey } from './services/me/me.state';
 import plans, { REDUCER_KEY as plansKey } from './services/plans/plans.state';
 import repos, { REDUCER_KEY as reposKey } from './services/repos/repos.state';
 import startup, {
   REDUCER_KEY as startupKey,
 } from './services/startup/startup.state';
+import { REDUX_ROOT_KEY } from './shared.constants';
 
 export const reducer = combineReducers({
+  [meKey]: me,
   [plansKey]: plans,
   [reposKey]: repos,
   [startupKey]: startup,
