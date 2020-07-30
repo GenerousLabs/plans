@@ -63,7 +63,7 @@ export const cloneOrPullRepo = async ({
   remote,
 }: GitParams & { remote: string }) => {
   if (!(await doesDirectoryExist({ fs, path: dir }))) {
-    await fs.promises.mkdir(dir);
+    await fs.promises.mkdir(dir, { recursive: true });
     return cloneRepo({ fs, http, headers, dir, remote });
   }
   // TODO: Check if directory is a git repo, abort if not
