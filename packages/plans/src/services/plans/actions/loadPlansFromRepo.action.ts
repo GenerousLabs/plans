@@ -35,6 +35,8 @@ export const loadPlansFromRepo = ({
   await Bluebird.each(userFolders, async userFolder => {
     const { slug, path } = userFolder;
 
+    // TODO Load user data from index file here
+
     await dispatch(
       addOneUser({
         id: slug,
