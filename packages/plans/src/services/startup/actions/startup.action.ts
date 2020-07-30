@@ -31,7 +31,7 @@ export const startup = ({
 
   const repos = selectAllRepos(getRootState());
 
-  await Bluebird.each(repos, async repo => {
+  await Bluebird.each(repos, async (repo) => {
     try {
       await dispatch(pullRepo({ fs, http, headers, repo }));
       await dispatch(loadPlansFromRepo({ fs, repo }));

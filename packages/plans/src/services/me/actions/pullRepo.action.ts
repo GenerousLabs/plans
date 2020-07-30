@@ -11,7 +11,7 @@ export const pullRepo = ({
   repo,
 }: Omit<GitParams, 'dir'> & {
   repo: Pick<Repo, 'id' | 'path' | 'remote'>;
-}): AppThunk => async dispatch => {
+}): AppThunk => async (dispatch) => {
   const { id, path: dir, remote } = repo;
 
   await cloneOrPullRepo({ fs, http, headers, dir, remote });
