@@ -116,21 +116,19 @@ export const getPlanFilesFromDirectory = async ({
   fs: FS;
   path: string;
 }) => {
-  const planFiles = await fs.promises.readdir(path, {
-    withFileTypes: true,
-  });
+  const planFiles = await fs.promises.readdir(path);
 
-  const index = planFiles.find((file) => file.name === PLAN_INDEX_FILENAME);
+  const index = planFiles.find((file) => file === PLAN_INDEX_FILENAME);
 
   if (typeof index === 'undefined') {
     throw new Error(`Plan does not have index file. #yJtokv`);
   }
 
-  const indexFile = { path: join(path, index.name), slug: index.name };
+  const indexFile = { path: join(path, index), slug: index };
 
   const messageFiles = planFiles
-    .filter((file) => file.name !== 'index.md')
-    .map((file) => ({ path: join(path, file.name), slug: file.name }));
+    .filter((file) => file !== PLAN_INDEX_FILENAME)
+    .map((file) => ({ path: join(path, file), slug: file }));
 
   return { indexFile, messageFiles };
 };
