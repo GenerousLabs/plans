@@ -1,8 +1,9 @@
+import Bluebird from 'bluebird';
 import matter from 'gray-matter';
 import { join } from 'path';
+import { PLAN_INDEX_FILENAME } from '../../shared.constants';
 import { FS, Plan } from '../../shared.types';
 import { doesDirectoryExist } from '../../utils/fs.utils';
-import { PLAN_INDEX_FILENAME } from '../../shared.constants';
 
 const PLANS_FOLDER_NAME = 'plans';
 
@@ -55,7 +56,7 @@ export const findFirstPlansDirectory = async ({
 
   const directories = await fs.promises.readdir(path, { withFileTypes: true });
 
-  const found = directories.find(dir => {
+  const found = directories.find((dir) => {
     if (!dir.isDirectory()) {
       return false;
     }
@@ -84,14 +85,22 @@ export const getChildDirectoriesFromPath = async ({
   fs: FS;
   path: string;
 }) => {
+  // NOTE: LightningFS/readdir does not support `withFileTypes`
   const dir = await fs.promises.readdir(path, {
     encoding: 'utf8',
-    withFileTypes: true,
   });
 
-  const plansPaths = dir
-    .filter(plan => plan.isDirectory())
-    .map(plan => ({ path: join(path, plan.name), slug: plan.name }));
+  // This is a hack to recreate something like `.readdir()` and `withFileTypes`
+  const dirStats = await Bluebird.map(dir, async (filename) => ({
+    name: filename,
+    stat: await fs.promises.stat(join(path, filename)),
+  }));
+
+  const plansPaths = dirStats
+    .filter((plan) => {
+      return plan.stat.isDirectory();
+    })
+    .map((plan) => ({ path: join(path, plan.name), slug: plan.name }));
 
   return plansPaths;
 };
@@ -111,7 +120,7 @@ export const getPlanFilesFromDirectory = async ({
     withFileTypes: true,
   });
 
-  const index = planFiles.find(file => file.name === PLAN_INDEX_FILENAME);
+  const index = planFiles.find((file) => file.name === PLAN_INDEX_FILENAME);
 
   if (typeof index === 'undefined') {
     throw new Error(`Plan does not have index file. #yJtokv`);
@@ -120,8 +129,8 @@ export const getPlanFilesFromDirectory = async ({
   const indexFile = { path: join(path, index.name), slug: index.name };
 
   const messageFiles = planFiles
-    .filter(file => file.name !== 'index.md')
-    .map(file => ({ path: join(path, file.name), slug: file.name }));
+    .filter((file) => file.name !== 'index.md')
+    .map((file) => ({ path: join(path, file.name), slug: file.name }));
 
   return { indexFile, messageFiles };
 };
