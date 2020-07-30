@@ -1,6 +1,10 @@
 import { GitParams } from '../../../shared.types';
 import { AppThunk } from '../../../store';
-import { getReposFromReposYaml, rootPathToReposYamlPath } from '../me.service';
+import {
+  getReposFromReposYaml,
+  rootPathToReposYamlPath,
+  yamlRepoToReduxRepo,
+} from '../me.service';
 import { addManyRepos } from '../me.state';
 
 export const loadRepos = ({
@@ -11,7 +15,9 @@ export const loadRepos = ({
 }): AppThunk => async dispatch => {
   const yamlPath = rootPathToReposYamlPath(rootPath);
 
-  const repos = await getReposFromReposYaml({ fs, path: yamlPath });
+  const yamlRepos = await getReposFromReposYaml({ fs, path: yamlPath });
+
+  const repos = yamlRepos.map(repo => yamlRepoToReduxRepo({ rootPath, repo }));
 
   await dispatch(addManyRepos(repos));
 
