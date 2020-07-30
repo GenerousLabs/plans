@@ -17,9 +17,12 @@ const reposSlice = createSlice({
   name: 'PLANS/me/repos',
   initialState: reposAdapter.getInitialState(),
   reducers: {
-    addMany: reposAdapter.addMany,
+    addManyRepos: reposAdapter.addMany,
+    updateOneRepo: reposAdapter.updateOne,
   },
 });
+
+export const { addManyRepos, updateOneRepo } = reposSlice.actions;
 
 // Wrap the repos slice in a parent reducer so we can choose to store more state
 // at the me level if we want to
@@ -28,8 +31,6 @@ const reducer = combineReducers({
 });
 
 export default reducer;
-
-export const addManyRepos = reposSlice.actions.addMany;
 
 const reposSelectors = reposAdapter.getSelectors();
 
