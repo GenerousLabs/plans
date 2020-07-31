@@ -1,3 +1,10 @@
+# v1
+
+- [ ] Load plan + user + repo
+- [ ] Parse user's index.md file
+
+# Others
+
 - [ ] Store my user info somewhere in the me repo
   - Load into redux on startup?
 - [ ] Add the username to the repo folder path
