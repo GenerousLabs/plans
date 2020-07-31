@@ -6,14 +6,12 @@ import {
   LightningFS,
   http,
 } from "plans";
-import counterReducer from "./features/counter/counterSlice";
 
 const fs = new LightningFS("domd", { wipe: false });
 
 export const store = configureStore({
   reducer: {
     [plansKey]: plansReducer,
-    counter: counterReducer,
   },
 });
 
