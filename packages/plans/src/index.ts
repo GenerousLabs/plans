@@ -23,3 +23,12 @@ export {
 } from './services/plans/plans.state';
 
 export { createNewMyPlan } from './services/me/actions/createNewMyPlan.action';
+
+export {
+  selectAllRepos,
+  selectRepoById,
+  selectRepoByIdOrThrow,
+  selectAllMyPlans,
+  selectMyPlanById,
+  selectMyPlanByIdOrThrow,
+} from './services/me/me.state';
