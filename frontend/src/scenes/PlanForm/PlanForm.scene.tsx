@@ -1,11 +1,11 @@
 import { Button, Typography } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
+import { createNewMyPlan } from "plans";
 import React from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { AppDispatch, addPlanConfigs } from "../../store";
-import { createNewMyPlan } from "plans";
+import { addPlanConfigs, AppDispatch } from "../../store";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
