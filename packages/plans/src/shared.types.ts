@@ -95,6 +95,7 @@ export const isYamlRepo = (repo: any): repo is YamlRepo => {
  */
 export type User = {
   id: string;
+  repoId: string;
   name: string;
   slug: string;
   description: string;

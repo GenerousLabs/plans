@@ -41,6 +41,7 @@ export const loadPlansFromRepo = ({
     await dispatch(
       addOneUser({
         id: userId,
+        repoId,
         name: 'Name Coming Soon',
         slug,
         description: 'Will be loaded soon',
