@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.32",
     "@types/js-yaml": "^3.12.4",
+    "@types/mkdirp": "^1.0.1",
     "@types/mock-fs": "^4.10.0",
     "@types/remote-redux-devtools": "^0.5.4",
     "fake-indexeddb": "^3.0.1",
@@ -64,6 +65,7 @@
     "gray-matter": "^4.0.2",
     "isomorphic-git": "^1.4.0",
     "js-yaml": "^3.14.0",
+    "mkdirp": "^1.0.4",
     "remeda": "^0.0.20",
     "slugify": "^1.4.5",
     "yaml": "^1.10.0"
