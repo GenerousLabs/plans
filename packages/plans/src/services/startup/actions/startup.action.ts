@@ -7,6 +7,7 @@ import { pullRepo } from '../../me/actions/pullRepo.action';
 import { selectAllRepos } from '../../me/me.state';
 import { loadPlansFromRepo } from '../../plans/actions/loadPlansFromRepo.action';
 import { RootConfig } from '../startup.service';
+import { initFinished, initStarted } from '../startup.state';
 
 export const startup = ({
   fs,
@@ -16,6 +17,8 @@ export const startup = ({
   rootConfig: RootConfig;
 }): AppThunk => async (dispatch, getRootState) => {
   const { path: rootPath, meRepoRemote, meRepoHeaders: headers } = rootConfig;
+
+  await dispatch(initStarted());
 
   await dispatch(
     pullMeRepo({
@@ -39,4 +42,6 @@ export const startup = ({
       console.error('Error pulling repo or loading plans #9zmpoA', error);
     }
   });
+
+  await dispatch(initFinished());
 };
