@@ -6,6 +6,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { addPlanConfigs, AppDispatch } from "../../store";
+import { history } from "../Routes/Routes.scene";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -43,7 +44,7 @@ const PlanForm = () => {
             )
           );
 
-          helpers.resetForm();
+          history.push("/plans/mine");
         }}
       >
         <Form>
