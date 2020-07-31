@@ -42,6 +42,7 @@ const PlanForm = () => {
             helperText="Supports markdown"
             component={TextField}
             fullWidth
+            multiline
             rows={4}
           />
           <Button variant="contained" type="submit">
