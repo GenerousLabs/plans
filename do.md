@@ -2,6 +2,7 @@
 
 - [ ] Load plan + user + repo
 - [ ] Parse user's index.md file
+- [ ] Remove id from repos.yaml file
 
 # Others
 
