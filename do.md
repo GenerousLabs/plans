@@ -1,6 +1,7 @@
 # v1
 
-- [ ] Load plan + user + repo
+- [x] Load plan + user + repo
+- [ ] My own plans
 - [ ] Parse user's index.md file
 - [ ] Remove id from repos.yaml file
 
