@@ -6,6 +6,7 @@ import { AppThunk } from '../../../store';
 import { loadPlansFromFolder } from '../../plans/actions/loadPlansFromFolder.action';
 import { writePlanToDisk } from '../../plans/plans.service';
 import { rootPathToMyPlansPath } from '../me.service';
+import { upsertOneMyPlan } from '../me.state';
 
 export const createNewMyPlan = ({
   fs,
@@ -30,6 +31,11 @@ export const createNewMyPlan = ({
 
   await writePlanToDisk({ fs, folderPath: planFolderPath, plan: planWithSlug });
   await dispatch(
-    loadPlansFromFolder({ fs, path: planFolderPath, userId: ME_REPO_ID })
+    loadPlansFromFolder({
+      fs,
+      path: planFolderPath,
+      userId: ME_REPO_ID,
+      upsertPlan: upsertOneMyPlan,
+    })
   );
 };

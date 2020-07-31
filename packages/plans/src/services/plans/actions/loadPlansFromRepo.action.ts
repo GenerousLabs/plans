@@ -5,7 +5,7 @@ import {
   addPlansFolderToPath,
   getChildDirectoriesFromPath,
 } from '../plans.service';
-import { addOneUser, noop } from '../plans.state';
+import { addOneUser, noop, upsertOnePlan } from '../plans.state';
 import { loadPlansFromFolder } from './loadPlansFromFolder.action';
 
 export const loadPlansFromRepo = ({
@@ -49,7 +49,9 @@ export const loadPlansFromRepo = ({
       })
     );
 
-    await dispatch(loadPlansFromFolder({ fs, path, userId }));
+    await dispatch(
+      loadPlansFromFolder({ fs, path, userId, upsertPlan: upsertOnePlan })
+    );
   });
 
   dispatch(
