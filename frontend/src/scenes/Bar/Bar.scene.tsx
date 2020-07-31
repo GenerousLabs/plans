@@ -21,7 +21,7 @@ const Bar = () => {
             component="h1"
             color="inherit"
           >
-            Plans v1
+            GeneroUS Plans v1
           </Typography>
         </Toolbar>
       </AppBar>
