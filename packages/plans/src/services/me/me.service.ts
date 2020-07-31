@@ -4,12 +4,23 @@ import {
   ME_REPO_FOLDER,
   REPOS_FILENAME,
   REPOS_FOLDER,
+  MY_PLANS_FOLDER,
+  PLANS_FOLDER,
 } from '../../shared.constants';
 import { GitParams, isYamlRepo, Repo, YamlRepo } from '../../shared.types';
 import { doesFileExist } from '../../utils/fs.utils';
 
 export const rootPathToMeRepoPath = (rootPath: string) =>
   join(rootPath, ME_REPO_FOLDER);
+
+export const rootPathToMyPlansRepoPath = (rootPath: string) =>
+  join(rootPath, MY_PLANS_FOLDER);
+
+export const rootPathToMyPlansPath = ({ rootPath }: { rootPath: string }) => {
+  // TODO Use the real username here
+  const myPlansPath = join(rootPath, MY_PLANS_FOLDER, PLANS_FOLDER, 'alice');
+  return myPlansPath;
+};
 
 export const rootPathToReposYamlPath = (rootPath: string) =>
   join(rootPathToMeRepoPath(rootPath), REPOS_FILENAME);

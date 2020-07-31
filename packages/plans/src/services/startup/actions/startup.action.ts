@@ -8,6 +8,8 @@ import { selectAllRepos } from '../../me/me.state';
 import { loadPlansFromRepo } from '../../plans/actions/loadPlansFromRepo.action';
 import { RootConfig } from '../startup.service';
 import { initFinished, initStarted } from '../startup.state';
+import { loadMyPlans } from '../../me/actions/loadMyPlans.action';
+import { pullMyPlansRepo } from '../../me/actions/pullMyPlansRepo.action';
 
 export const startup = ({
   fs,
@@ -29,6 +31,19 @@ export const startup = ({
       meRepoRemote,
     })
   );
+
+  await dispatch(
+    pullMyPlansRepo({
+      fs,
+      http,
+      headers,
+      rootPath,
+      // TODO Load my plans remote from me repo somewhere
+      remote: 'http://localhost:8174/alice.git',
+    })
+  );
+
+  await dispatch(loadMyPlans({ fs, rootPath }));
 
   await dispatch(loadRepos({ fs, rootPath }));
 

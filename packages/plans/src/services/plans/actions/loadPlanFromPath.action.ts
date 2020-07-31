@@ -13,11 +13,13 @@ export const loadPlanFromPath = ({
   path,
   userId,
   slug,
+  upsertPlan,
 }: {
   fs: FS;
   path: string;
   userId: string;
   slug: string;
+  upsertPlan: typeof upsertOnePlan;
 }): AppThunk => async (dispatch) => {
   dispatch(
     noop({
@@ -76,7 +78,7 @@ export const loadPlanFromPath = ({
     slug,
   };
 
-  await dispatch(upsertOnePlan(plan));
+  await dispatch(upsertPlan(plan));
 
   dispatch(
     noop({

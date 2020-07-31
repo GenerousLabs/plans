@@ -3,6 +3,7 @@ import { FS } from '../../../shared.types';
 import { AppThunk } from '../../../store';
 import { getChildDirectoriesFromPath } from '../plans.service';
 import { loadPlanFromPath } from './loadPlanFromPath.action';
+import { upsertOnePlan } from '../plans.state';
 
 export const loadPlansFromFolder = ({
   fs,
@@ -12,7 +13,7 @@ export const loadPlansFromFolder = ({
   fs: FS;
   path: string;
   userId: string;
-}): AppThunk => async dispatch => {
+}): AppThunk => async (dispatch) => {
   const plansPaths = await getChildDirectoriesFromPath({
     fs,
     path: path,
@@ -25,6 +26,7 @@ export const loadPlansFromFolder = ({
         path,
         slug,
         userId,
+        upsertPlan: upsertOnePlan,
       })
     );
   });
