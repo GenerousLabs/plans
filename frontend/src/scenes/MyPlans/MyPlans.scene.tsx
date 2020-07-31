@@ -8,6 +8,12 @@ import { selectAllMyPlans } from "plans";
 import React from "react";
 import { useSelector } from "react-redux";
 
+/**
+ * NOTE - We cannot use the Plan component to render my plans, because they do
+ * not have a "user" or a "repo" in redux, and so the Plan component will crash
+ * when trying to find non existent data from redux.
+ */
+
 const MyPlans = () => {
   const classes = useStyles();
   const myPlans = useSelector(selectAllMyPlans);
