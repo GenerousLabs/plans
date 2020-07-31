@@ -36,10 +36,11 @@ export const loadPlansFromRepo = ({
     const { slug, path } = userFolder;
 
     // TODO Load user data from index file here
+    const userId = path;
 
     await dispatch(
       addOneUser({
-        id: path,
+        id: userId,
         name: 'Name Coming Soon',
         slug,
         description: 'Will be loaded soon',
@@ -47,7 +48,7 @@ export const loadPlansFromRepo = ({
       })
     );
 
-    await dispatch(loadPlansFromFolder({ fs, path, userId: slug }));
+    await dispatch(loadPlansFromFolder({ fs, path, userId }));
   });
 
   dispatch(
