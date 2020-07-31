@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Route, Router, Switch } from "react-router-dom";
 import { AppState } from "../../store";
 import Plans from "../Plans/Plans.scene";
+import PlanForm from "../PlanForm/PlanForm.scene";
 
 export const history = createBrowserHistory();
 
@@ -29,6 +30,7 @@ const Routes = () => {
         {hasLoaded ? (
           <Switch>
             <Route path="/" exact component={Plans} />
+            <Route path="/plans/new" exact component={PlanForm} />
           </Switch>
         ) : (
           <Loading />
