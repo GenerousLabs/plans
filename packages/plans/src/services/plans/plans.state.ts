@@ -7,6 +7,7 @@ import {
 import { REDUX_ROOT_KEY } from '../../shared.constants';
 import { Plan, User } from '../../shared.types';
 import { RootState } from '../../store';
+import { selectRepoByIdOrThrow } from '../me/me.state';
 
 export const REDUCER_KEY = 'plans' as const;
 
@@ -101,4 +102,13 @@ export const selectPlanWithUserOrThrow = (state: RootState, planId: string) => {
   const plan = selectPlanByIdOrThrow(state, planId);
   const user = selectUserByIdOrThrow(state, plan.userId);
   return { plan, user };
+};
+
+export const selectPlanWithUserAndRepoOrThrow = (
+  state: RootState,
+  planId: string
+) => {
+  const { plan, user } = selectPlanWithUserOrThrow(state, planId);
+  const repo = selectRepoByIdOrThrow(state, user.repoId);
+  return { plan, user, repo };
 };

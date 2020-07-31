@@ -19,4 +19,5 @@ export {
   selectPlanById,
   selectPlanByIdOrThrow,
   selectPlanWithUserOrThrow,
+  selectPlanWithUserAndRepoOrThrow,
 } from './services/plans/plans.state';
