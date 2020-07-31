@@ -21,3 +21,5 @@ export {
   selectPlanWithUserOrThrow,
   selectPlanWithUserAndRepoOrThrow,
 } from './services/plans/plans.state';
+
+export { createNewMyPlan } from './services/me/actions/createNewMyPlan.action';
