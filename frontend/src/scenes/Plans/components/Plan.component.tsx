@@ -11,7 +11,7 @@ import { AppState } from "../../../store";
 
 const Plan = ({ id }: { id: string }) => {
   const classes = useStyles();
-  const { plan, user, repo } = useSelector((state: AppState) =>
+  const { plan, repo } = useSelector((state: AppState) =>
     selectPlanWithUserAndRepoOrThrow(state, id)
   );
 
