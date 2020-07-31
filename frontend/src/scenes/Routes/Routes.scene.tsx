@@ -8,6 +8,7 @@ import { AppState } from "../../store";
 import MyPlans from "../MyPlans/MyPlans.scene";
 import PlanForm from "../PlanForm/PlanForm.scene";
 import Plans from "../Plans/Plans.scene";
+import Bar from "../Bar/Bar.scene";
 
 export const history = createBrowserHistory();
 
@@ -27,6 +28,7 @@ const Routes = () => {
 
   return (
     <Router history={history}>
+      <Bar />
       <Container>
         {hasLoaded ? (
           <Switch>
