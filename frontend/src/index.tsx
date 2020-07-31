@@ -1,3 +1,5 @@
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -6,11 +8,17 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { store } from "./store";
 
+const baseTheme = createMuiTheme();
+const theme = responsiveFontSizes(baseTheme);
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <CssBaseline />
+        <App />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
