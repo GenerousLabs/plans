@@ -4,6 +4,7 @@ import { ME_MOCK_REMOTE } from '../../shared.constants';
 import { FS, GitParams } from '../../shared.types';
 import { createStore } from '../../store';
 import { startup } from './actions/startup.action';
+import mkdirp from 'mkdirp';
 
 export type RootConfig = {
   // A folder on disk to serve as a root for our set of repositories
@@ -48,7 +49,9 @@ if (process.env.NODE_ENV === 'development') {
     const run = async () => {
       const http = isomorphicGitHttp;
       const fs = getMemfs();
-      await fs.promises.mkdir('/connections/');
+      // NOTE: We need to cast `fs` to any here because our FS spec doesn't
+      // include the non promised versions, which `mkdirp()` uses.
+      await mkdirp('/connections/', { fs: fs as any });
 
       // const store = await startWithLocalStore({
       await startWithLocalStore({

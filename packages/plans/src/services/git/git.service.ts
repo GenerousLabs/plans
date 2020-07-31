@@ -1,5 +1,5 @@
 import git from 'isomorphic-git';
-import { dirname } from 'path';
+import mkdirp from 'mkdirp';
 import { PLANS_AUTHOR } from '../../shared.constants';
 import { GitParams } from '../../shared.types';
 import { doesDirectoryExist } from '../../utils/fs.utils';
@@ -63,14 +63,12 @@ export const cloneOrPullRepo = async ({
   dir,
   remote,
 }: GitParams & { remote: string }) => {
+  // This is a bit of a hack. If the directory exists, we assume that the repo
+  // has already been cloned. This is obviously fragile.
   if (!(await doesDirectoryExist({ fs, path: dir }))) {
-    // NOTE: LightningFS/mkdir does not support the `recursive: true` flag
-    const parentDir = dirname(dir);
-    if (!(await doesDirectoryExist({ fs, path: parentDir }))) {
-      await fs.promises.mkdir(parentDir);
-    }
-
-    await fs.promises.mkdir(dir);
+    // NOTE: We need to cast `fs` to any here because our FS spec doesn't
+    // include the non promised versions, which `mkdirp()` uses.
+    await mkdirp(dir, { fs: fs as any });
     return cloneRepo({ fs, http, headers, dir, remote });
   }
   // TODO: Check if directory is a git repo, abort if not

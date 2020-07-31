@@ -4,6 +4,7 @@ import { join } from 'path';
 import { PLAN_INDEX_FILENAME } from '../../shared.constants';
 import { FS, Plan } from '../../shared.types';
 import { doesDirectoryExist } from '../../utils/fs.utils';
+import mkdirp from 'mkdirp';
 
 const PLANS_FOLDER_NAME = 'plans';
 
@@ -174,7 +175,9 @@ export const writePlanToDisk = async ({
   const { slug } = plan;
   const newPlanPath = join(folderPath, slug);
 
-  await fs.promises.mkdir(newPlanPath);
+  // NOTE: We need to cast `fs` to any here because our FS spec doesn't include
+  // the non promised versions, which `mkdirp()` uses.
+  await mkdirp(newPlanPath, { fs: fs as any });
 
   const contents = planToText({ plan });
   const newPlanIndexPath = planPathToIndexFilePath({ path: newPlanPath });
