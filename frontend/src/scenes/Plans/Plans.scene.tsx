@@ -1,7 +1,7 @@
-import React from "react";
 import { Typography } from "@material-ui/core";
+import { selectAllPlans } from "plans";
+import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllPlans, selectAllUsers } from "plans";
 import Plan from "./components/Plan.component";
 
 const Plans = () => {
