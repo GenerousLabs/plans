@@ -78,14 +78,27 @@ export const selectAllUsers = (state: RootState) =>
 export const selectUserById = (state: RootState, id: string) =>
   foldersSelectors.selectById(getState(state).users, id);
 export const selectUserByIdOrThrow = (state: RootState, id: string) => {
-  const folder = foldersSelectors.selectById(getState(state).users, id);
-  if (typeof folder === 'undefined') {
+  const user = foldersSelectors.selectById(getState(state).users, id);
+  if (typeof user === 'undefined') {
     throw new Error('Failed to find user #d4q7YM');
   }
-  return folder;
+  return user;
 };
 
 export const selectAllPlans = (state: RootState) =>
   plansSelectors.selectAll(getState(state).plans);
 export const selectPlanById = (state: RootState, id: string) =>
   plansSelectors.selectById(getState(state).plans, id);
+export const selectPlanByIdOrThrow = (state: RootState, id: string) => {
+  const plan = selectPlanById(state, id);
+  if (typeof plan === 'undefined') {
+    throw new Error('Failed to find plan #4g4LeL');
+  }
+  return plan;
+};
+
+export const selectPlanWithUserOrThrow = (state: RootState, planId: string) => {
+  const plan = selectPlanByIdOrThrow(state, planId);
+  const user = selectUserByIdOrThrow(state, plan.userId);
+  return { plan, user };
+};

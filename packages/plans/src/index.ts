@@ -10,3 +10,13 @@ export const http = httpWeb;
 export { startup } from './services/startup/actions/startup.action';
 export { reducer } from './store';
 export { REDUX_ROOT_KEY } from './shared.constants';
+
+export {
+  selectAllUsers,
+  selectUserById,
+  selectUserByIdOrThrow,
+  selectAllPlans,
+  selectPlanById,
+  selectPlanByIdOrThrow,
+  selectPlanWithUserOrThrow,
+} from './services/plans/plans.state';
