@@ -18,7 +18,7 @@ export const loadPlanFromPath = ({
   path: string;
   userId: string;
   slug: string;
-}): AppThunk => async dispatch => {
+}): AppThunk => async (dispatch) => {
   dispatch(
     noop({
       code: '#FWoxSS',
@@ -81,7 +81,7 @@ export const loadPlanFromPath = ({
   dispatch(
     noop({
       code: '#iXomhQ',
-      message: 'loadPlanFromPath() finishd',
+      message: 'loadPlanFromPath() finished',
       params: { userId, path, slug },
     })
   );
