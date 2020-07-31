@@ -5,8 +5,10 @@ import {
   Theme,
   Toolbar,
   Typography,
+  Button,
 } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Bar = () => {
   const classes = useStyles();
@@ -23,6 +25,15 @@ const Bar = () => {
           >
             GeneroUS Plans v1
           </Typography>
+          <Button component={Link} to="/plans">
+            Plans
+          </Button>
+          <Button component={Link} to="/plans/new">
+            New Plan
+          </Button>
+          <Button component={Link} to="/plans/mine">
+            My Plans
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
