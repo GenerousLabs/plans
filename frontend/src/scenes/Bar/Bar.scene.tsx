@@ -25,8 +25,8 @@ const Bar = () => {
           >
             GeneroUS Plans v1
           </Typography>
-          <Button component={Link} to="/plans">
-            Plans
+          <Button component={Link} to="/">
+            Browse
           </Button>
           <Button component={Link} to="/plans/new">
             New Plan
