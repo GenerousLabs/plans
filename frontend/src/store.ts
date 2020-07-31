@@ -7,7 +7,13 @@ import {
   http,
 } from "plans";
 
-const fs = new LightningFS("domd", { wipe: false });
+const rootPath = "/p";
+
+export const fs = new LightningFS("domd", { wipe: false });
+
+export const addPlanConfigs = <T>(input: T) => {
+  return { ...input, fs: fs as any, http, rootPath };
+};
 
 export const store = configureStore({
   reducer: {
@@ -25,7 +31,7 @@ const start = async () => {
         http,
         rootConfig: {
           meRepoRemote: "http://localhost:8174/me.git",
-          path: "/p",
+          path: rootPath,
         },
       })
     );
