@@ -1,15 +1,18 @@
 {
   "folders": [
-	{
-		"path": "."
-	},
-	{
-		"path": "frontend"
-	},
-	{
-		"path": "packages/plans"
-	}
-],
+    {
+      "path": "."
+    },
+    {
+      "path": "frontend"
+    },
+    {
+      "path": "packages/plans"
+    },
+    {
+      "path": "server"
+    }
+  ],
   "settings": {
     "typescript.preferences.importModuleSpecifier": "relative"
   }
