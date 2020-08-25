@@ -1,13 +1,13 @@
 {
-    "name": "express-typescript-starter",
+    "name": "generous-plans-server",
     "version": "0.1.0",
-    "description": "A starting point for Node.js express apps with TypeScript",
+    "description": "Git based plan hosting",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
+        "url": "https://github.com/generouslabs/plans"
     },
-    "author": "Bowden Kelly",
-    "license": "MIT",
+    "author": "Generous Labs",
+    "license": "AGPL-3.0-or-later",
     "scripts": {
         "build": "npm run build-sass && npm run build-ts && npm run lint && npm run copy-static-assets",
         "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.css",
