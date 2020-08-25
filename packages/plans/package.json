@@ -38,7 +38,7 @@
     "trailingComma": "es5"
   },
   "name": "plans",
-  "author": "GeneroUS Labs",
+  "author": "Generous Labs",
   "module": "dist/plans.esm.js",
   "devDependencies": {
     "@types/bluebird": "^3.5.32",

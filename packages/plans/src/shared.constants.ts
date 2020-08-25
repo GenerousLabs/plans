@@ -16,7 +16,7 @@ export const ME_MOCK_REMOTE = 'http://localhost:8174/me.git';
 
 export const PLAN_INDEX_FILENAME = 'index.md';
 
-export const GIT_AUTHOR_NAME = 'GeneroUS Plans';
+export const GIT_AUTHOR_NAME = 'Generous Plans';
 export const PLANS_AUTHOR = {
   name: GIT_AUTHOR_NAME,
 };

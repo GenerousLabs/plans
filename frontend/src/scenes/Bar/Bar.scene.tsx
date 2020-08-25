@@ -23,7 +23,7 @@ const Bar = () => {
             component="h1"
             color="inherit"
           >
-            GeneroUS Plans v1
+            Generous Plans v1
           </Typography>
           <Button component={Link} to="/">
             Browse
