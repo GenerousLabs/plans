@@ -9159,6 +9159,13 @@ node-forge@0.9.0:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.0.tgz#d624050edbb44874adca12bb9a52ec63cb782579"
   integrity sha512-7ASaDa3pD+lJ3WvXFsxekJQelBKRpne+GOVbLbtHYdd7pFspyeuJHnWfLplGf3SwKGbfs/aYl5V/JCIaHVUKKQ==
 
+node-git-server@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/node-git-server/-/node-git-server-0.6.1.tgz#c69c82fe92335002442b92fb11d314911c3523b9"
+  integrity sha512-dCWUlzD4j1p2SEp/Lm08a0YJgm9W3KFQbyZXPKmI4tY/TAPii5KT0dQmuLDbNAJFW4OJ4KrvRDdunt/D8zi9ew==
+  dependencies:
+    through "^2.3.8"
+
 node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
@@ -13050,7 +13057,7 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-through@^2.3.6:
+through@^2.3.6, through@^2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=

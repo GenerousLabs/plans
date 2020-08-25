@@ -29,6 +29,7 @@
         "bluebird": "^3.5.5",
         "dotenv": "^8.2.0",
         "lodash": "^4.17.19",
+        "node-git-server": "^0.6.1",
         "winston": "^3.2.1"
     },
     "devDependencies": {
