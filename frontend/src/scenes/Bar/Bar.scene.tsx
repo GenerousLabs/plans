@@ -28,9 +28,6 @@ const Bar = () => {
           <Button component={Link} to="/">
             Browse
           </Button>
-          <Button component={Link} to="/plans/new">
-            New Plan
-          </Button>
           <Button component={Link} to="/plans/mine">
             My Plans
           </Button>
