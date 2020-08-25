@@ -10,11 +10,9 @@ const Plans = () => {
   return (
     <div>
       <Typography variant="h1">Plans</Typography>
-      <ul>
-        {plans.map((plan) => (
-          <Plan key={plan.id} id={plan.id} />
-        ))}
-      </ul>
+      {plans.map((plan) => (
+        <Plan key={plan.id} id={plan.id} />
+      ))}
     </div>
   );
 };
