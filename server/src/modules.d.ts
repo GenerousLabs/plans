@@ -14,6 +14,22 @@ declare module "node-git-server" {
     reject: () => void;
   }
 
+  class ServiceWithRepo extends Service {
+    repo: string;
+  }
+
+  class Fetch extends ServiceWithRepo {
+    commit: string;
+  }
+
+  class Push extends Fetch {
+    branch: string;
+  }
+
+  class Tag extends Fetch {
+    version: string;
+  }
+
   class Server {
     constructor(
       path: string,
@@ -26,7 +42,7 @@ declare module "node-git-server" {
          */
         authenticate?: (
           params: {
-            type: string;
+            type: "fetch" | "push" | "unknown";
             repo: string;
             /**
              * NOTE: Invoking the `user()` function will cause any requests
@@ -51,7 +67,10 @@ declare module "node-git-server" {
       }
     );
     // TODO: Better typing of `action` here
-    on(event: EventName, callback: (action: Service) => void): void;
+    on(event: EventName, callback: (service: Service) => void): void;
+    on(event: "fetch", callback: (fetch: Fetch) => void): void;
+    on(event: "push", callback: (push: Push) => void): void;
+    on(event: "tag", callback: (tag: Tag) => void): void;
     list(callback: (err: Error, results: string[]) => void): void;
     listen(port: number, callback?: () => void): void;
   }
