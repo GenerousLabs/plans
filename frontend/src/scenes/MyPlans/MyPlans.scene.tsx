@@ -1,9 +1,10 @@
 import {
-  Typography,
-  Divider,
-  makeStyles,
-  createStyles,
   Button,
+  createStyles,
+  Divider,
+  Input,
+  makeStyles,
+  Typography,
 } from "@material-ui/core";
 import { selectAllMyPlans } from "plans";
 import React from "react";
@@ -26,6 +27,15 @@ const MyPlans = () => {
       <Typography>
         This app is a work in progress. Please bear with us while we improve it.
       </Typography>
+      <Typography variant="h2">Sharing</Typography>
+      <Typography>
+        To share your plans with others, give them this URL.
+      </Typography>
+      <Typography>
+        <Input fullWidth value="https://plans.tld/user/123" />
+      </Typography>
+      <Divider className={classes.divider} />
+      <Typography variant="h2">Plans</Typography>
       <Typography className={classes.addNew}>
         <Button variant="contained" to="/plans/new" component={Link}>
           Add a new plan
@@ -33,7 +43,7 @@ const MyPlans = () => {
       </Typography>
       {myPlans.map((plan) => (
         <div key={plan.id}>
-          <Typography variant="h2">{plan.name}</Typography>
+          <Typography variant="h3">{plan.name}</Typography>
           <Typography>{plan.description}</Typography>
           <Divider className={classes.divider} />
         </div>
