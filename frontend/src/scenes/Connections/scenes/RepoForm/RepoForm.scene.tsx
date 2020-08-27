@@ -1,8 +1,11 @@
-import React from "react";
-import * as yup from "yup";
+import { Button } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
-import { Button } from "@material-ui/core";
+import { createNewRepo } from "plans";
+import React from "react";
+import { useDispatch } from "react-redux";
+import * as yup from "yup";
+import { addPlanConfigs, AppDispatch } from "../../../../store";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -15,6 +18,8 @@ const initialValues = {
 };
 
 const RepoForm = () => {
+  const dispatch: AppDispatch = useDispatch();
+
   return (
     <div>
       <Formik
@@ -22,7 +27,18 @@ const RepoForm = () => {
         initialValues={initialValues}
         onSubmit={(values, helpers) => {
           const { name, invite } = values;
+          dispatch(
+            createNewRepo(
+              addPlanConfigs({
+                repo: {
+                  name,
+                  remote: invite,
+                },
+              })
+            )
+          );
           console.log("submit #3fXsT6", name, invite);
+          helpers.resetForm();
         }}
       >
         <Form>

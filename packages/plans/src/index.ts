@@ -23,6 +23,7 @@ export {
 } from './services/plans/plans.state';
 
 export { createNewMyPlan } from './services/me/actions/createNewMyPlan.action';
+export { createNewRepo } from './services/me/actions/createNewRepo.action';
 
 export {
   selectAllRepos,

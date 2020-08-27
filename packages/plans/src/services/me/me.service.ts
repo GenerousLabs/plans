@@ -78,3 +78,22 @@ export const getReposFromReposYaml = async ({
 
   return repos;
 };
+
+export const addRepoToReposYaml = async ({
+  fs,
+  path,
+  newRepo,
+}: Pick<GitParams, 'fs'> & {
+  path: string;
+  newRepo: YamlRepo;
+}): Promise<boolean> => {
+  const existingRepos = await getReposFromReposYaml({ fs, path });
+
+  const repos = existingRepos.concat(newRepo);
+
+  const updatedYamlString = yaml.safeDump(repos);
+
+  await fs.promises.writeFile(path, updatedYamlString, { encoding: 'utf8' });
+
+  return true;
+};
