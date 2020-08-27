@@ -1,4 +1,4 @@
-import Server from "node-git-server";
+import Server from "@chmac/node-git-server";
 import path from "path";
 import logger from "./util/logger";
 import { splitRepo } from "./util/repoNames";

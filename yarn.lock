@@ -1132,6 +1132,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@chmac/node-git-server@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@chmac/node-git-server/-/node-git-server-0.6.2.tgz#c39a9e3983f4cddd603fea4e5f318ebd199c7df3"
+  integrity sha512-NwKG6oyl+6RfqQJWTL9P/mqVubYZJFUeSSzGzaosFQoiEOuLQcKjhdbb0Q9mUF4Xz8xSpx3NtsdMN8EaNf56RA==
+  dependencies:
+    through "^2.3.8"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -9158,13 +9165,6 @@ node-forge@0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.0.tgz#d624050edbb44874adca12bb9a52ec63cb782579"
   integrity sha512-7ASaDa3pD+lJ3WvXFsxekJQelBKRpne+GOVbLbtHYdd7pFspyeuJHnWfLplGf3SwKGbfs/aYl5V/JCIaHVUKKQ==
-
-node-git-server@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/node-git-server/-/node-git-server-0.6.1.tgz#c69c82fe92335002442b92fb11d314911c3523b9"
-  integrity sha512-dCWUlzD4j1p2SEp/Lm08a0YJgm9W3KFQbyZXPKmI4tY/TAPii5KT0dQmuLDbNAJFW4OJ4KrvRDdunt/D8zi9ew==
-  dependencies:
-    through "^2.3.8"
 
 node-int64@^0.4.0:
   version "0.4.0"

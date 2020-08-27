@@ -25,12 +25,12 @@
         "watch-ts": "tsc -w"
     },
     "dependencies": {
+        "@chmac/node-git-server": "^0.6.2",
         "async": "^3.1.0",
         "bluebird": "^3.5.5",
         "dotenv": "^8.2.0",
         "js-yaml": "^3.14.0",
         "lodash": "^4.17.19",
-        "node-git-server": "^0.6.1",
         "winston": "^3.2.1"
     },
     "devDependencies": {

@@ -1,4 +1,4 @@
-declare module "node-git-server" {
+declare module "@chmac/node-git-server" {
   type EventName =
     // | 'close'
     // | 'data'
@@ -34,6 +34,10 @@ declare module "node-git-server" {
     constructor(
       path: string,
       opts?: {
+        /**
+         * If provided, this path will be supplied to the git init command as --t
+         */
+        repoTemplatePath?: string;
         autoCreate?: boolean;
         /**
          * If authenticate() returns a promise, it will be awaited. If not, the
