@@ -21,7 +21,9 @@ const Connections = () => {
       <Typography>
         When a friend sends you an invite code, enter it here:
       </Typography>
-      <RepoForm />
+      <Paper className={classes.paper} elevation={1}>
+        <RepoForm />
+      </Paper>
       <Typography variant="h2" className={classes.h2}>
         Received
       </Typography>
