@@ -25,7 +25,7 @@ const Connections = () => {
         <RepoForm />
       </Paper>
       <Typography variant="h2" className={classes.h2}>
-        Received
+        Current
       </Typography>
       <Typography>
         You are currently viewing plans from the following connections.
