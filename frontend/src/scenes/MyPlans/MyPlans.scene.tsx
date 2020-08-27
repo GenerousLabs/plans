@@ -29,7 +29,8 @@ const MyPlans = () => {
       </Typography>
       <Typography variant="h2">Sharing</Typography>
       <Typography>
-        To share your plans with others, give them this URL.
+        To share your plans with others, give them this URL. This URL is like a
+        password, so be mindful of who you share it with.
       </Typography>
       <Typography>
         <Input fullWidth value="https://plans.tld/user/123" />
