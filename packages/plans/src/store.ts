@@ -55,6 +55,7 @@ export const createStore = (args?: {
 export type RootState = {
   [REDUX_ROOT_KEY]: ReturnType<typeof reducer>;
 };
+export type RootDispatch = ReturnType<typeof createStore>['dispatch'];
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
