@@ -26,6 +26,10 @@ export type GitParams = {
   http: HttpClient;
   headers?: Headers;
   dir: string;
+  author?: {
+    name: string;
+    email?: string;
+  };
 };
 
 export type Repo = {
