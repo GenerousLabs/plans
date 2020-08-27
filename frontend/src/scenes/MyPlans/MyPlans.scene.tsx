@@ -32,7 +32,10 @@ const MyPlans = () => {
         To share your plans with others, give them this URL. This URL is like a
         password, so be mindful of who you share it with.
       </Typography>
-      <Input fullWidth value="https://plans.tld/user/123" />
+      <Input
+        fullWidth
+        value="https://plans:KEYWILLGOHERE@plans.tld/alice/plans.git"
+      />
       <Divider className={classes.divider} />
       <Typography variant="h2">Plans</Typography>
       <Typography className={classes.addNew}>
