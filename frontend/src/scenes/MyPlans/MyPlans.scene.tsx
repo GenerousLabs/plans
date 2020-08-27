@@ -27,7 +27,7 @@ const MyPlans = () => {
       <Typography>
         This app is a work in progress. Please bear with us while we improve it.
       </Typography>
-      <Typography variant="h2">Sharing</Typography>
+      <Typography variant="h2">Share your plans</Typography>
       <Typography>
         To share your plans with others, give them this URL. This URL is like a
         password, so be mindful of who you share it with.
