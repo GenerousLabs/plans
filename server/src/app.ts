@@ -1,44 +1,60 @@
 import Server from "@chmac/node-git-server";
 import path from "path";
+import {
+  checkReadPermissions,
+  checkWritePermissions,
+} from "./services/repos/repos.service";
 import logger from "./util/logger";
-import { splitRepo } from "./util/repoNames";
 
 const PORT = parseInt(process.env.PORT || "8000");
 
 const repos = new Server(path.join(__dirname, "../data/repos"), {
+  repoTemplatePath: path.join(__dirname, "..", "templates", "empty-repo"),
+  checkout: true,
   autoCreate: true,
-  authenticate: ({ type, repo: repoPath, headers }) => {
+  authenticate: ({ type, repo: repoPath, headers, user }) => {
     return new Promise((resolve, reject) => {
-      logger.debug("Starting authentication() #GFjigq", {
-        meta: { type, repoPath, headers },
+      logger.debug("Auth started. Requesting username & password. #TPQcZG");
+      user(async (username, password) => {
+        logger.debug("Got username & password. #GFjigq", {
+          type,
+          repoPath,
+          headers,
+          username,
+          password,
+        });
+
+        const token = password;
+
+        try {
+          if (type === "push") {
+            const allowed = await checkWritePermissions({ repoPath, token });
+            if (allowed) {
+              return resolve();
+            }
+            return reject();
+          } else if (type === "fetch") {
+            const allowed = await checkReadPermissions({ repoPath, token });
+            if (allowed) {
+              return resolve();
+            }
+            return reject();
+          } else {
+            return reject("Unknown error. #ftvkPh");
+          }
+        } catch (error) {
+          logger.error("Error in authenticate() #OeGBID", error);
+          return reject(error);
+        }
       });
-
-      if (
-        process.env.NODE_ENV === "production" &&
-        typeof headers.authentication !== "string"
-      ) {
-        throw new Error("Missing Authentication header. #TWaJrB");
-      }
-
-      const { org, repo } = splitRepo(repoPath);
-
-      logger.debug("Parsed repo params #BUy3kT", { meta: { org, repo } });
-
-      if (type === "push") {
-        // TODO Check that the token is valid for the user
-        return resolve();
-      } else if (type === "fetch") {
-        // TODO Check if the token validates for this user to read
-        return resolve();
-      } else {
-        return reject("Unknown error. #ftvkPh");
-      }
     });
   },
 });
 
 /*
-repos.on("fetch", (fetch) => {
+repos.on("fetch", async (fetch) => {
+  const { repo: repoPath } = fetch;
+  checkReadPermissions({ repoPath, token });
   logger.debug("fetch #tgbL2b", fetch);
   fetch.reject();
 });
@@ -51,7 +67,6 @@ repos.on("info", (info) => {
   logger.debug("info #lBbbLL");
   info.reject();
 });
-*/
 
 repos.on("push", (push) => {
   const { repo, commit, branch } = push;
@@ -64,6 +79,7 @@ repos.on("tag", (tag) => {
   logger.debug("tag #KRCdQs", { a: { repo, commit, version } });
   tag.accept();
 });
+*/
 
 repos.listen(PORT, () => {
   logger.debug(`Listening on :${PORT}`);
