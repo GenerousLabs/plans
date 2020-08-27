@@ -1,14 +1,14 @@
 import {
-  Typography,
-  Paper,
-  makeStyles,
-  createStyles,
   Button,
-  Divider,
+  createStyles,
+  makeStyles,
+  Paper,
+  Typography,
 } from "@material-ui/core";
 import { selectAllRepos } from "plans";
 import React from "react";
 import { useSelector } from "react-redux";
+import RepoForm from "./scenes/RepoForm/RepoForm.scene";
 
 const Connections = () => {
   const classes = useStyles();
@@ -17,36 +17,16 @@ const Connections = () => {
   return (
     <div>
       <Typography variant="h1">Connections</Typography>
+      <Typography variant="h2">Import</Typography>
       <Typography>
-        You can <strong>invite your friends</strong> to share your plans. You
-        can also paste invitations that you have received.
+        When a friend sends you an invite code, enter it here:
       </Typography>
-      <Typography variant="h2" className={classes.h2}>
-        Invitations
-      </Typography>
-      <Typography>
-        Invitations you have sent to others are listed here.
-      </Typography>
-      {/* <Paper elevation={1} className={classes.paper}> */}
-      <Typography variant="h3">Create a new invitation</Typography>
-      <Typography>
-        Enter the name of the person you want to share your plans with:
-      </Typography>
-      <Typography>
-        <input type="text" />
-      </Typography>
-      <Typography>
-        <Button variant="contained" onClick={() => {}}>
-          Submit
-        </Button>
-      </Typography>
-      {/* </Paper> */}
-      <Divider className={classes.divider} />
+      <RepoForm />
       <Typography variant="h2" className={classes.h2}>
         Received
       </Typography>
       <Typography>
-        The invitations you have <strong>received</strong> are listed here.
+        You are currently viewing plans from the following connections.
       </Typography>
       {repos.map((repo) => (
         <Paper key={repo.id} elevation={1} className={classes.paper}>
@@ -58,18 +38,6 @@ const Connections = () => {
           </Typography>
         </Paper>
       ))}
-      {/* <Paper elevation={1} className={classes.paper}> */}
-      <Typography variant="h3">Import a new invite</Typography>
-      <Typography>Enter your invite text here:</Typography>
-      <Typography>
-        <input type="text" />
-      </Typography>
-      <Typography>
-        <Button variant="contained" onClick={() => {}}>
-          Submit
-        </Button>
-      </Typography>
-      {/* </Paper> */}
     </div>
   );
 };
