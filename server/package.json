@@ -28,6 +28,7 @@
         "async": "^3.1.0",
         "bluebird": "^3.5.5",
         "dotenv": "^8.2.0",
+        "js-yaml": "^3.14.0",
         "lodash": "^4.17.19",
         "node-git-server": "^0.6.1",
         "winston": "^3.2.1"
@@ -39,6 +40,7 @@
         "@types/concurrently": "^4.1.0",
         "@types/eslint": "^6.1.1",
         "@types/jest": "^24.0.23",
+        "@types/js-yaml": "^3.12.5",
         "@types/lodash": "^4.14.141",
         "@types/node": "^12.7.8",
         "@types/shelljs": "^0.8.5",
