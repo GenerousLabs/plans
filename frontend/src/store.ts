@@ -1,10 +1,16 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import {
+  Action,
+  configureStore,
+  getDefaultMiddleware,
+  Middleware,
+  ThunkAction,
+} from "@reduxjs/toolkit";
+import {
+  http,
+  LightningFS,
   reducer as plansReducer,
   REDUX_ROOT_KEY as plansKey,
   startup,
-  LightningFS,
-  http,
 } from "plans";
 
 const rootPath = "/p";
@@ -15,10 +21,18 @@ export const addPlanConfigs = <T>(input: T) => {
   return { ...input, fs: fs as any, http, rootPath };
 };
 
+const errorLogger: Middleware = (store) => (next) => (action) => {
+  if (action.type.substr(-9) === "/rejected") {
+    console.error("Rejected error #xBPArN", action.error);
+  }
+  return next(action);
+};
+
 export const store = configureStore({
   reducer: {
     [plansKey]: plansReducer,
   },
+  middleware: getDefaultMiddleware().concat(errorLogger),
 });
 
 const start = async () => {
