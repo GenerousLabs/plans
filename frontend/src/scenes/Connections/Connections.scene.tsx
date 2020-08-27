@@ -34,7 +34,17 @@ const Connections = () => {
         <Paper key={repo.id} elevation={1} className={classes.paper}>
           <Typography variant="h3">{repo.name}</Typography>
           <Typography>
-            <Button variant="contained" size="small">
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => {
+                alert(
+                  "Sorry, deleting is still a work in progress. " +
+                    "Please let us know if you need this urgently " +
+                    "and we'll implement it as soon as possible."
+                );
+              }}
+            >
               Delete
             </Button>
           </Typography>
