@@ -28,11 +28,13 @@ const errorLogger: Middleware = (store) => (next) => (action) => {
   return next(action);
 };
 
+const middlewares = process.env.NODE_ENV === "development" ? [errorLogger] : [];
+
 export const store = configureStore({
   reducer: {
     [plansKey]: plansReducer,
   },
-  middleware: getDefaultMiddleware().concat(errorLogger),
+  middleware: getDefaultMiddleware().concat(middlewares),
 });
 
 const start = async () => {
