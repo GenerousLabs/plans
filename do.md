@@ -21,4 +21,4 @@
 
 # Tech
 
-- We likely want a git server like https://www.gabrielcsapo.com/node-git-server/
+- [x] We likely want a git server like https://www.gabrielcsapo.com/node-git-server/
