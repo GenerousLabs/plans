@@ -42,7 +42,7 @@ export const startup = createAsyncThunk<
         headers,
         rootPath,
         // TODO Load my plans remote from me repo somewhere
-        remote: 'http://localhost:8174/alice.git',
+        remote: 'http://user:abc123@localhost:8000/alice/plans.git',
       })
     );
 
