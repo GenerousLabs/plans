@@ -55,7 +55,7 @@ describe('plans.service', () => {
         // TODO There's like a better directory to use here
         folderPath: '/daniella/plans/empty/',
         plan: {
-          descriptionMarkdown: f.pia.markdown,
+          description: f.pia.markdown,
           name: f.pia.data.name,
           slug: f.pia.slug,
         },
