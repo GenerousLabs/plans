@@ -21,11 +21,8 @@ import { AppState } from "../../store";
 const MyPlans = () => {
   const classes = useStyles();
   const myPlans = useSelector(selectAllMyPlans);
-  const sharing_token = useSelector(
-    (state: AppState) => state.__plans.config.sharing_token
-  );
-  const username = useSelector(
-    (state: AppState) => state.__plans.startup.myUsername
+  const { my_username, sharing_token } = useSelector(
+    (state: AppState) => state.__plans.config
   );
 
   return (
@@ -41,7 +38,7 @@ const MyPlans = () => {
       </Typography>
       <Input
         fullWidth
-        value={`https://plans:${sharing_token}@plans.tld/${username}/plans.git`}
+        value={`https://plans:${sharing_token}@plans.tld/${my_username}/plans.git`}
       />
       <Divider className={classes.divider} />
       <Typography variant="h2">Plans</Typography>
