@@ -1,9 +1,10 @@
 # v1
 
+- [ ] Replace myplans repo url
 - [x] Load plan + user + repo
-- [ ] My own plans
-- [ ] Parse user's index.md file
-- [ ] Remove id from repos.yaml file
+- [x] My own plans
+- [x] Parse user's index.md file
+- [x] Remove id from repos.yaml file
 
 # Others
 
