@@ -39,5 +39,5 @@ export const readConfigFromFile = async ({
     return config;
   }
 
-  throw new Error('Failed to load config. #sqyXKf');
+  throw new Error('Config file failed validation. #sqyXKf');
 };
