@@ -3,6 +3,7 @@ import fs from "fs";
 import { join } from "path";
 import { constants, readConfigFromFile } from "plans";
 import { ME_REPO_NAME, REPOS_ROOT } from "../../constants";
+import logger from "../../util/logger";
 import { splitRepo } from "../../util/repoNames";
 
 export const getRepoPath = ({ org, repo }: { org: string; repo: string }) => {
@@ -23,6 +24,7 @@ export const getConfigForRepoPath = async (repoPath: string) => {
     // catch is triggered if this throws.
     return await readConfigFromFile({ fs, configFilePath });
   } catch (error) {
+    logger.error("Error loading config #OM0gH6", error);
     throw new Error("Auth fail. #kdmkwX");
   }
 };
