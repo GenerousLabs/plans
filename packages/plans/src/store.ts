@@ -62,6 +62,13 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+// This type is a helper to pass to the 3rd generic type of
+// `createAsyncThunk()`, see docs:
+// https://redux-toolkit.js.org/usage/usage-with-typescript/#createasyncthunk
+export type RootThunkApi = {
+  state: RootState;
+  dispatch: RootDispatch;
+};
 
 /**
  * Get the state for this package from a top level redux store
