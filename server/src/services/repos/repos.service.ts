@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import fs from "fs";
 import { join } from "path";
-import { readConfigFromFile } from "plans";
-import { CONFIG_FILE_NAME, ME_REPO_NAME, REPOS_ROOT } from "../../constants";
+import { constants, readConfigFromFile } from "plans";
+import { ME_REPO_NAME, REPOS_ROOT } from "../../constants";
 import { splitRepo } from "../../util/repoNames";
 
 export const getRepoPath = ({ org, repo }: { org: string; repo: string }) => {
@@ -10,7 +10,7 @@ export const getRepoPath = ({ org, repo }: { org: string; repo: string }) => {
 };
 
 export const addConfigFileToRepoPath = (repoPath: string) =>
-  join(repoPath, CONFIG_FILE_NAME);
+  join(repoPath, constants.CONFIG_FILENAME);
 
 export const getConfigForRepoPath = async (repoPath: string) => {
   try {
