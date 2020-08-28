@@ -39,7 +39,7 @@ export const createNewMyPlan = createAsyncThunk<
 
     const newPlanIndexPath = await writePlanToDisk({
       fs,
-      folderPath: planFolderPath,
+      plansFolderPath: myPlansPath,
       plan: planWithSlug,
     });
 

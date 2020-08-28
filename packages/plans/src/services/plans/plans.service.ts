@@ -165,15 +165,15 @@ export const planToText = ({
 
 export const writePlanToDisk = async ({
   fs,
-  folderPath,
+  plansFolderPath,
   plan,
 }: {
   fs: FS;
-  folderPath: string;
+  plansFolderPath: string;
   plan: Pick<Plan, 'description' | 'name' | 'slug'>;
 }) => {
   const { slug } = plan;
-  const newPlanPath = join(folderPath, slug);
+  const newPlanPath = join(plansFolderPath, slug);
 
   // NOTE: We need to cast `fs` to any here because our FS spec doesn't include
   // the non promised versions, which `mkdirp()` uses.
