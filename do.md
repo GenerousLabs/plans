@@ -1,7 +1,8 @@
 # v1
 
-- [ ] Replace myplans repo url
-- [ ] Simply the plans repo layout
+- [ ] Use the actual site url in MyPlans scene
+- [x] Replace myplans repo url
+- [ ] Simplify the plans repo layout
   - Put plans at the repo root?
 - [x] Load plan + user + repo
 - [x] My own plans
