@@ -8,7 +8,7 @@ import {
   MY_PLANS_FOLDER,
 } from '../../../shared.constants';
 import { GitParams, Plan } from '../../../shared.types';
-import { RootDispatch, RootState } from '../../../store';
+import { RootThunkApi } from '../../../store';
 import { commitAndPushFiles } from '../../git/git.service';
 import { loadPlansFromFolder } from '../../plans/actions/loadPlansFromFolder.action';
 import { writePlanToDisk } from '../../plans/plans.service';
@@ -21,10 +21,7 @@ export const createNewMyPlan = createAsyncThunk<
     rootPath: string;
     plan: Pick<Plan, 'description' | 'name'>;
   },
-  {
-    dispatch: RootDispatch;
-    state: RootState;
-  }
+  RootThunkApi
 >(
   'PLANS/me/createNewMyPlan',
   async ({ fs, http, headers, plan, rootPath }, { dispatch }) => {
