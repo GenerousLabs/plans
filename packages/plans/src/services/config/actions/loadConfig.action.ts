@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FS } from '../../../shared.types';
-import { RootThunkApi } from '../../../store';
+import { getPackageState, RootThunkApi } from '../../../store';
 import { readConfigFromFile } from '../config.service';
-import { setConfig } from '../config.state';
+import { ConfigState, setConfig } from '../config.state';
 
 export const loadConfig = createAsyncThunk<
-  { plans_remote: string },
+  ConfigState,
   { fs: FS; configFilePath: string },
   RootThunkApi
 >(
@@ -15,8 +15,6 @@ export const loadConfig = createAsyncThunk<
 
     await dispatch(setConfig(config));
 
-    const plans_remote = getState().__plans.config.plans_remote;
-
-    return { plans_remote };
+    return getPackageState(getState()).config;
   }
 );

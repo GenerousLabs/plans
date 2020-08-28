@@ -3,7 +3,7 @@ import { Config } from './config.service';
 
 export const REDUCER_KEY = 'config' as const;
 
-type ConfigState = Omit<Config, 'private_token'>;
+export type ConfigState = Omit<Config, 'private_token'>;
 type ConfigStateKey = keyof ConfigState;
 
 const initialState: ConfigState = {

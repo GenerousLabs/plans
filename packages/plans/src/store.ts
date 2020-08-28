@@ -77,4 +77,4 @@ export type RootThunkApi = {
 /**
  * Get the state for this package from a top level redux store
  */
-export const getLocalState = (state: RootState) => state[REDUX_ROOT_KEY];
+export const getPackageState = (state: RootState) => state[REDUX_ROOT_KEY];
