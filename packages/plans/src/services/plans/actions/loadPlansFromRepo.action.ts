@@ -1,6 +1,7 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import Bluebird from 'bluebird';
 import { FS, Repo } from '../../../shared.types';
-import { AppThunk } from '../../../store';
+import { RootThunkApi } from '../../../store';
 import {
   addPlansFolderToPath,
   getChildDirectoriesFromPath,
@@ -8,13 +9,14 @@ import {
 import { addOneUser, noop, upsertOnePlan } from '../plans.state';
 import { loadPlansFromFolder } from './loadPlansFromFolder.action';
 
-export const loadPlansFromRepo = ({
-  fs,
-  repo,
-}: {
-  fs: FS;
-  repo: Pick<Repo, 'id' | 'path'>;
-}): AppThunk => async dispatch => {
+export const loadPlansFromRepo = createAsyncThunk<
+  void,
+  {
+    fs: FS;
+    repo: Pick<Repo, 'id' | 'path'>;
+  },
+  RootThunkApi
+>('PLANS/plans/loadPlansFromRepo', async ({ fs, repo }, { dispatch }) => {
   const { id: repoId, path } = repo;
 
   dispatch(
@@ -66,4 +68,4 @@ export const loadPlansFromRepo = ({
       },
     })
   );
-};
+});
