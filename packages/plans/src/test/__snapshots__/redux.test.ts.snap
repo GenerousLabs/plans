@@ -4,13 +4,46 @@ exports[`redux e2e init Produces a consistent state #uvVYtC 1`] = `
 Object {
   "__plans": Object {
     "config": Object {
-      "plans_remote": "",
-      "sharing_token": "",
+      "my_username": "alice",
+      "plans_remote": "http://user:abc123@localhost:8000/alice/plans.git",
+      "sharing_token": "def456",
     },
     "me": Object {
       "myPlans": Object {
-        "entities": Object {},
-        "ids": Array [],
+        "entities": Object {
+          "/e2e/myplans/plans/alice/example-plan/index.md": Object {
+            "description": "again
+",
+            "id": "/e2e/myplans/plans/alice/example-plan/index.md",
+            "name": "Example Plan",
+            "path": "/e2e/myplans/plans/alice/example-plan",
+            "slug": "example-plan",
+            "userId": "me",
+          },
+          "/e2e/myplans/plans/alice/omg-yes/index.md": Object {
+            "description": "Yet another plan to share.
+",
+            "id": "/e2e/myplans/plans/alice/omg-yes/index.md",
+            "name": "OMG Yes",
+            "path": "/e2e/myplans/plans/alice/omg-yes",
+            "slug": "omg-yes",
+            "userId": "me",
+          },
+          "/e2e/myplans/plans/alice/prime/index.md": Object {
+            "description": "Amazon Prime. Germany only.
+",
+            "id": "/e2e/myplans/plans/alice/prime/index.md",
+            "name": "Prime",
+            "path": "/e2e/myplans/plans/alice/prime",
+            "slug": "prime",
+            "userId": "me",
+          },
+        },
+        "ids": Array [
+          "/e2e/myplans/plans/alice/example-plan/index.md",
+          "/e2e/myplans/plans/alice/omg-yes/index.md",
+          "/e2e/myplans/plans/alice/prime/index.md",
+        ],
       },
       "repos": Object {
         "entities": Object {
@@ -20,7 +53,7 @@ Object {
             "lastFetchTimestampSeconds": 1591281,
             "name": "Bob",
             "path": "/e2e/repos/bob",
-            "remote": "http://localhost:8174/bob.git",
+            "remote": "http://user:abc123@localhost:8000/bob/plans.git",
             "slug": "bob",
           },
           "charlie": Object {
@@ -29,13 +62,23 @@ Object {
             "lastFetchTimestampSeconds": 1591281,
             "name": "Charlie",
             "path": "/e2e/repos/charlie",
-            "remote": "http://localhost:8174/charlie.git",
+            "remote": "http://user:abc123@localhost:8000/charlie/plans.git",
             "slug": "charlie",
+          },
+          "dora": Object {
+            "currentHeadCommitHash": "819914b010508cdc4350bdeb3e9ec9f40c4b8b27",
+            "id": "dora",
+            "lastFetchTimestampSeconds": 1591281,
+            "name": "Dora",
+            "path": "/e2e/repos/dora",
+            "remote": "http://user:def456@cano.local:8000/dora/plans.git",
+            "slug": "dora",
           },
         },
         "ids": Array [
           "bob",
           "charlie",
+          "dora",
         ],
       },
     },
@@ -70,11 +113,21 @@ Object {
             "slug": "pia",
             "userId": "/e2e/repos/charlie/plans/charlie",
           },
+          "/e2e/repos/dora/plans/dora/private-internet-access/index.md": Object {
+            "description": "Just signed up for a trial. Seems ok.
+",
+            "id": "/e2e/repos/dora/plans/dora/private-internet-access/index.md",
+            "name": "Private Internet Access",
+            "path": "/e2e/repos/dora/plans/dora/private-internet-access",
+            "slug": "private-internet-access",
+            "userId": "/e2e/repos/dora/plans/dora",
+          },
         },
         "ids": Array [
           "/e2e/repos/bob/plans/bob/nordvpn/index.md",
           "/e2e/repos/bob/plans/bob/spotify/index.md",
           "/e2e/repos/charlie/plans/charlie/pia/index.md",
+          "/e2e/repos/dora/plans/dora/private-internet-access/index.md",
         ],
       },
       "users": Object {
@@ -95,17 +148,25 @@ Object {
             "repoId": "charlie",
             "slug": "charlie",
           },
+          "/e2e/repos/dora/plans/dora": Object {
+            "description": "Will be loaded soon",
+            "id": "/e2e/repos/dora/plans/dora",
+            "name": "Name Coming Soon",
+            "path": "/e2e/repos/dora/plans/dora",
+            "repoId": "dora",
+            "slug": "dora",
+          },
         },
         "ids": Array [
           "/e2e/repos/bob/plans/bob",
           "/e2e/repos/charlie/plans/charlie",
+          "/e2e/repos/dora/plans/dora",
         ],
       },
     },
     "startup": Object {
       "initCompleted": true,
       "initStarted": true,
-      "myUsername": "alice",
     },
   },
 }
