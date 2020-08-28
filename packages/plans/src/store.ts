@@ -7,6 +7,9 @@ import {
 import devToolsEnhancer, {
   RemoteReduxDevToolsOptions,
 } from 'remote-redux-devtools';
+import config, {
+  REDUCER_KEY as configKey,
+} from './services/config/config.state';
 import me, { REDUCER_KEY as meKey } from './services/me/me.state';
 import plans, { REDUCER_KEY as plansKey } from './services/plans/plans.state';
 import startup, {
@@ -15,6 +18,7 @@ import startup, {
 import { REDUX_ROOT_KEY } from './shared.constants';
 
 export const reducer = combineReducers({
+  [configKey]: config,
   [meKey]: me,
   [plansKey]: plans,
   [startupKey]: startup,
