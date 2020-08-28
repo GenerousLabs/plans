@@ -10,6 +10,7 @@ import { selectAllMyPlans } from "plans";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { AppState } from "../../store";
 
 /**
  * NOTE - We cannot use the Plan component to render my plans, because they do
@@ -20,6 +21,12 @@ import { Link } from "react-router-dom";
 const MyPlans = () => {
   const classes = useStyles();
   const myPlans = useSelector(selectAllMyPlans);
+  const sharing_token = useSelector(
+    (state: AppState) => state.__plans.config.sharing_token
+  );
+  const username = useSelector(
+    (state: AppState) => state.__plans.startup.myUsername
+  );
 
   return (
     <div>
@@ -34,7 +41,7 @@ const MyPlans = () => {
       </Typography>
       <Input
         fullWidth
-        value="https://plans:KEYWILLGOHERE@plans.tld/alice/plans.git"
+        value={`https://plans:${sharing_token}@plans.tld/${username}/plans.git`}
       />
       <Divider className={classes.divider} />
       <Typography variant="h2">Plans</Typography>
