@@ -92,7 +92,6 @@ export const commitAndPushFiles = async ({
   pushed: boolean;
 }> => {
   const changes = await Bluebird.map(relativeFilePaths, async filepath => {
-    debugger;
     const status = await git.status({ fs, dir, filepath });
     return status !== 'unmodified';
   });
