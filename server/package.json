@@ -31,7 +31,7 @@
         "dotenv": "^8.2.0",
         "js-yaml": "^3.14.0",
         "lodash": "^4.17.19",
-        "plans": "^0.2.1",
+        "plans": "0.2.0",
         "winston": "^3.2.1"
     },
     "devDependencies": {
