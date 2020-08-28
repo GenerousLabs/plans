@@ -1,6 +1,8 @@
 # v1
 
 - [ ] Replace myplans repo url
+- [ ] Simply the plans repo layout
+  - Put plans at the repo root?
 - [x] Load plan + user + repo
 - [x] My own plans
 - [x] Parse user's index.md file
