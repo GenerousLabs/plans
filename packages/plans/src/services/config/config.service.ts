@@ -1,13 +1,15 @@
 import * as yaml from 'js-yaml';
 import { FS } from '../../shared.types';
 
-type Config = {
+export type Config = {
+  my_username: string;
   private_token: string;
   sharing_token: string;
   plans_remote: string;
 };
 
 const requiredStringProps = [
+  'my_username',
   'private_token',
   'sharing_token',
   'plans_remote',
