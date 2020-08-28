@@ -29,7 +29,6 @@ export const createNewMyPlan = createAsyncThunk<
     const planWithSlug = { ...plan, slug };
 
     const myPlansPath = rootPathToMyPlansPath({ rootPath });
-    const planFolderPath = join(myPlansPath, slug);
 
     // This is a very cheap, very dirty validation check. It would make sense to
     // greatly improve this.
@@ -62,7 +61,7 @@ export const createNewMyPlan = createAsyncThunk<
     await dispatch(
       loadPlansFromFolder({
         fs,
-        path: planFolderPath,
+        path: myPlansPath,
         userId: ME_REPO_ID,
         upsertPlan: upsertOneMyPlan,
       })
