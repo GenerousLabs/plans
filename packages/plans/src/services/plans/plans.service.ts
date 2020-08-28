@@ -183,4 +183,6 @@ export const writePlanToDisk = async ({
   const newPlanIndexPath = planPathToIndexFilePath({ path: newPlanPath });
 
   await fs.promises.writeFile(newPlanIndexPath, contents, { encoding: 'utf8' });
+
+  return newPlanIndexPath;
 };
