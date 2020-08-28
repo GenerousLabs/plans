@@ -46,7 +46,7 @@ const start = async () => {
         fs,
         http,
         rootConfig: {
-          meRepoRemote: "http://localhost:8174/me.git",
+          meRepoRemote: "http://user:abc123@localhost:8000/alice/me.git",
           path: rootPath,
         },
       })
