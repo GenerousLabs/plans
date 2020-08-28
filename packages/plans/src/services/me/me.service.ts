@@ -2,9 +2,9 @@ import yaml from 'js-yaml';
 import { join } from 'path';
 import {
   ME_REPO_FOLDER,
+  MY_PLANS_FOLDER,
   REPOS_FILENAME,
   REPOS_FOLDER,
-  MY_PLANS_FOLDER,
   PLANS_FOLDER,
 } from '../../shared.constants';
 import { GitParams, isYamlRepo, Repo, YamlRepo } from '../../shared.types';
@@ -16,14 +16,19 @@ export const rootPathToMeRepoPath = (rootPath: string) =>
 export const rootPathToMyPlansRepoPath = (rootPath: string) =>
   join(rootPath, MY_PLANS_FOLDER);
 
-export const rootPathToMyPlansPath = ({ rootPath }: { rootPath: string }) => {
-  // TODO Use the real username here
-  const myPlansPath = join(rootPath, MY_PLANS_FOLDER, PLANS_FOLDER, 'alice');
-  return myPlansPath;
-};
-
 export const rootPathToReposYamlPath = (rootPath: string) =>
   join(rootPathToMeRepoPath(rootPath), REPOS_FILENAME);
+
+export const getPathToMyPlansFolder = ({
+  rootPath,
+  myUsername,
+}: {
+  rootPath: string;
+  myUsername: string;
+}) => {
+  const myPlansRepoPath = rootPathToMyPlansRepoPath(rootPath);
+  return join(myPlansRepoPath, PLANS_FOLDER, myUsername);
+};
 
 export const rootPathToRepoPath = ({
   rootPath,

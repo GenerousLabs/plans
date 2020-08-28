@@ -8,11 +8,11 @@ import {
   MY_PLANS_FOLDER,
 } from '../../../shared.constants';
 import { GitParams, Plan } from '../../../shared.types';
-import { RootThunkApi } from '../../../store';
+import { RootThunkApi, getPackageState } from '../../../store';
 import { commitAndPushFiles } from '../../git/git.service';
 import { loadPlansFromFolder } from '../../plans/actions/loadPlansFromFolder.action';
 import { writePlanToDisk } from '../../plans/plans.service';
-import { rootPathToMyPlansPath } from '../me.service';
+import { getPathToMyPlansFolder } from '../me.service';
 import { upsertOneMyPlan } from '../me.state';
 
 export const createNewMyPlan = createAsyncThunk<
@@ -24,11 +24,16 @@ export const createNewMyPlan = createAsyncThunk<
   RootThunkApi
 >(
   'PLANS/me/createNewMyPlan',
-  async ({ fs, http, headers, plan, rootPath }, { dispatch }) => {
+  async ({ fs, http, headers, plan, rootPath }, { dispatch, getState }) => {
     const slug = slugify(plan.name, { lower: true });
     const planWithSlug = { ...plan, slug };
 
-    const myPlansPath = rootPathToMyPlansPath({ rootPath });
+    const { my_username } = getPackageState(getState()).config;
+
+    const myPlansPath = getPathToMyPlansFolder({
+      rootPath,
+      myUsername: my_username,
+    });
 
     // This is a very cheap, very dirty validation check. It would make sense to
     // greatly improve this.
