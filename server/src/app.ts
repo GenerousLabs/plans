@@ -81,6 +81,6 @@ repos.on("tag", (tag) => {
 });
 */
 
-repos.listen(PORT, () => {
+repos.listen(PORT, { enableCors: true, type: "http" }, () => {
   logger.debug(`Listening on :${PORT}`);
 });

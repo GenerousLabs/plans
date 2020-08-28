@@ -77,6 +77,16 @@ declare module "@chmac/node-git-server" {
     on(event: "tag", callback: (tag: Tag) => void): void;
     list(callback: (err: Error, results: string[]) => void): void;
     listen(port: number, callback?: () => void): void;
+    listen(
+      port: number,
+      options: {
+        enableCors?: boolean;
+        type?: "http" | "https";
+        key?: Buffer | string;
+        cert?: Buffer | string;
+      },
+      callback?: () => void
+    ): void;
   }
   export default Server;
 }

@@ -1132,10 +1132,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@chmac/node-git-server@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@chmac/node-git-server/-/node-git-server-0.6.2.tgz#c39a9e3983f4cddd603fea4e5f318ebd199c7df3"
-  integrity sha512-NwKG6oyl+6RfqQJWTL9P/mqVubYZJFUeSSzGzaosFQoiEOuLQcKjhdbb0Q9mUF4Xz8xSpx3NtsdMN8EaNf56RA==
+"@chmac/node-git-server@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@chmac/node-git-server/-/node-git-server-0.6.3.tgz#0b641287a42c1cf449982d53f46f17b490f3eee5"
+  integrity sha512-XfAwhnxQWrdPDOi2HMcb5EwFsdQhVMGhWjDbhXY9J1rlrRGNCVPVJARASpWp7BT+FhfnF8dMKwfY5WNUyRWigg==
   dependencies:
     through "^2.3.8"
 
