@@ -16,7 +16,10 @@ import {
 const ME_REPO_REMOTE_KEY = "__meRepoRemote" as const;
 const rootPath = "/p" as const;
 
-export const fs = new LightningFS("domd", { wipe: false });
+// NOTE: Wipe the storage on startup in development. Makes things easier.
+const wipe = process.env.NODE_ENV === "development";
+
+export const fs = new LightningFS("domd", { wipe });
 
 export const addPlanConfigs = <T>(input: T) => {
   return { ...input, fs: fs as any, http, rootPath };
