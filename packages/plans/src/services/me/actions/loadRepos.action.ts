@@ -1,5 +1,6 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { GitParams } from '../../../shared.types';
-import { AppThunk } from '../../../store';
+import { RootThunkApi } from '../../../store';
 import {
   getReposFromReposYaml,
   rootPathToReposYamlPath,
@@ -7,12 +8,13 @@ import {
 } from '../me.service';
 import { addManyRepos } from '../me.state';
 
-export const loadRepos = ({
-  fs,
-  rootPath,
-}: Pick<GitParams, 'fs'> & {
-  rootPath: string;
-}): AppThunk => async dispatch => {
+export const loadRepos = createAsyncThunk<
+  void,
+  Pick<GitParams, 'fs'> & {
+    rootPath: string;
+  },
+  RootThunkApi
+>('PLANS/me/loadRepos', async ({ fs, rootPath }, { dispatch }) => {
   const yamlPath = rootPathToReposYamlPath(rootPath);
 
   const yamlRepos = await getReposFromReposYaml({ fs, path: yamlPath });
@@ -20,4 +22,4 @@ export const loadRepos = ({
   const repos = yamlRepos.map(repo => yamlRepoToReduxRepo({ rootPath, repo }));
 
   await dispatch(addManyRepos(repos));
-};
+});

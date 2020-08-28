@@ -1,17 +1,17 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { GitParams, Repo } from '../../../shared.types';
-import { AppThunk } from '../../../store';
+import { RootThunkApi } from '../../../store';
+import { timestampSeconds } from '../../../utils/time.utils';
 import { cloneOrPullRepo, getCurrentCommit } from '../../git/git.service';
 import { updateOneRepo } from '../me.state';
-import { timestampSeconds } from '../../../utils/time.utils';
 
-export const pullRepo = ({
-  fs,
-  http,
-  headers,
-  repo,
-}: Omit<GitParams, 'dir'> & {
-  repo: Pick<Repo, 'id' | 'path' | 'remote'>;
-}): AppThunk => async (dispatch) => {
+export const pullRepo = createAsyncThunk<
+  void,
+  Omit<GitParams, 'dir'> & {
+    repo: Pick<Repo, 'id' | 'path' | 'remote'>;
+  },
+  RootThunkApi
+>('PLANS/me/pullRepo', async ({ fs, http, headers, repo }, { dispatch }) => {
   const { id, path: dir, remote } = repo;
 
   await cloneOrPullRepo({ fs, http, headers, dir, remote });
@@ -27,4 +27,4 @@ export const pullRepo = ({
       },
     })
   );
-};
+});
