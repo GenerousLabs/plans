@@ -26,11 +26,6 @@
     "redux-devtools": "redux-devtools --hostname=localhost --port=8000"
   },
   "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -49,7 +44,6 @@
     "@types/remote-redux-devtools": "^0.5.4",
     "fake-indexeddb": "^3.0.1",
     "git-http-mock-server": "^1.2.1",
-    "husky": "^4.2.5",
     "jest-without-globals": "^0.0.3",
     "memfs": "^3.2.0",
     "mock-fs": "^4.12.0",
