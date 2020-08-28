@@ -23,7 +23,7 @@ export const addPlanConfigs = <T>(input: T) => {
 
 const errorLogger: Middleware = (store) => (next) => (action) => {
   if (action.type.substr(-9) === "/rejected") {
-    console.error("Rejected error #xBPArN", action.error);
+    console.error("Rejected error #xBPArN", action);
   }
   return next(action);
 };
