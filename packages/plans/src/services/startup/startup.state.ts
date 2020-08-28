@@ -13,6 +13,7 @@ type StartupState = {
 const initialState: StartupState = {
   initStarted: false,
   initCompleted: false,
+  // TODO Update the username
   myUsername: 'alice',
 };
 
@@ -20,10 +21,10 @@ const startupSlice = createSlice({
   name: 'PLANS/startup',
   initialState,
   reducers: {
-    initStarted: state => {
+    initStarted: (state) => {
       state.initStarted = true;
     },
-    initFinished: state => {
+    initFinished: (state) => {
       state.initCompleted = true;
     },
     setUsername: (state, action: PayloadAction<string>) => {
