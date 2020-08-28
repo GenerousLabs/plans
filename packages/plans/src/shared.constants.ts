@@ -7,6 +7,7 @@ export const REDUX_ROOT_KEY = '__plans' as const;
 export const ME_REPO_ID = 'me' as const;
 export const ME_REPO_FOLDER = 'me' as const;
 export const REPOS_FILENAME = 'repos.yaml' as const;
+export const CONFIG_FILENAME = 'config.yaml' as const;
 export const PLANS_FOLDER = 'plans' as const;
 export const MY_PLANS_FOLDER = 'myplans' as const;
 

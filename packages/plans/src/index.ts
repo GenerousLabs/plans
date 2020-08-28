@@ -33,3 +33,5 @@ export {
   selectMyPlanById,
   selectMyPlanByIdOrThrow,
 } from './services/me/me.state';
+
+export { readConfigFromFile } from './services/config/config.service';
