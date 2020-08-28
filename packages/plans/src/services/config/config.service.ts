@@ -4,9 +4,14 @@ import { FS } from '../../shared.types';
 type Config = {
   private_token: string;
   sharing_token: string;
+  plans_remote: string;
 };
 
-const requiredStringProps = ['private_token', 'sharing_token'] as const;
+const requiredStringProps = [
+  'private_token',
+  'sharing_token',
+  'plans_remote',
+] as const;
 
 const isConfig = (input: unknown): input is Config => {
   for (const prop of requiredStringProps) {

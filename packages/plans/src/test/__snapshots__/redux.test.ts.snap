@@ -4,8 +4,8 @@ exports[`redux e2e init Produces a consistent state #uvVYtC 1`] = `
 Object {
   "__plans": Object {
     "config": Object {
-      "my_plans_remote": "",
-      "sharing_key": "",
+      "plans_remote": "",
+      "sharing_token": "",
     },
     "me": Object {
       "myPlans": Object {
