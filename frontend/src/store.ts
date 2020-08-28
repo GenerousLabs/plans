@@ -13,7 +13,8 @@ import {
   startup,
 } from "plans";
 
-const rootPath = "/p";
+const ME_REPO_REMOTE_KEY = "__meRepoRemote" as const;
+const rootPath = "/p" as const;
 
 export const fs = new LightningFS("domd", { wipe: false });
 
@@ -37,16 +38,34 @@ export const store = configureStore({
   middleware: getDefaultMiddleware().concat(middlewares),
 });
 
+const getMeRepoRemote = () => {
+  const meRepoRemote =
+    globalThis.localStorage.getItem(ME_REPO_REMOTE_KEY) || "";
+  if (meRepoRemote.length > 0) {
+    return meRepoRemote;
+  }
+  const remote =
+    globalThis.prompt(`Please enter your activation code. #gkR3G9`) || "";
+  if (remote.length === 0) {
+    alert(`Sorry, something went wrong. #fKohL2`);
+    throw new Error("Unknown error. #74jkOP");
+  }
+  globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, remote);
+
+  return remote;
+};
+
 const start = async () => {
   try {
     // await fs.promises.mkdir("/p", { recursive: true });
+    const meRepoRemote = getMeRepoRemote();
 
     store.dispatch(
       startup({
         fs,
         http,
         rootConfig: {
-          meRepoRemote: "http://user:abc123@localhost:8000/alice/me.git",
+          meRepoRemote,
           path: rootPath,
         },
       })
