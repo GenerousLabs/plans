@@ -9,6 +9,8 @@ export const http = httpWeb;
 
 export { startup } from './services/startup/actions/startup.action';
 export { reducer } from './store';
+import * as _constants from './shared.constants';
+export const constants = _constants;
 export { REDUX_ROOT_KEY } from './shared.constants';
 
 export {
