@@ -5,30 +5,8 @@ Object {
   "__plans": Object {
     "me": Object {
       "myPlans": Object {
-        "entities": Object {
-          "/e2e/myplans/plans/alice/example-plan/index.md": Object {
-            "description": "again
-",
-            "id": "/e2e/myplans/plans/alice/example-plan/index.md",
-            "name": "Example Plan",
-            "path": "/e2e/myplans/plans/alice/example-plan",
-            "slug": "example-plan",
-            "userId": "me",
-          },
-          "/e2e/myplans/plans/alice/prime/index.md": Object {
-            "description": "Amazon Prime. Germany only.
-",
-            "id": "/e2e/myplans/plans/alice/prime/index.md",
-            "name": "Prime",
-            "path": "/e2e/myplans/plans/alice/prime",
-            "slug": "prime",
-            "userId": "me",
-          },
-        },
-        "ids": Array [
-          "/e2e/myplans/plans/alice/example-plan/index.md",
-          "/e2e/myplans/plans/alice/prime/index.md",
-        ],
+        "entities": Object {},
+        "ids": Array [],
       },
       "repos": Object {
         "entities": Object {

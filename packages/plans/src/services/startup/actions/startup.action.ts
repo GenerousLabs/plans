@@ -35,14 +35,15 @@ export const startup = createAsyncThunk<
       })
     );
 
+    const myPlansRemote = meRepoRemote.replace('me.git', 'plans.git');
+
     await dispatch(
       pullMyPlansRepo({
         fs,
         http,
         headers,
         rootPath,
-        // TODO Load my plans remote from me repo somewhere
-        remote: 'http://user:abc123@localhost:8000/alice/plans.git',
+        remote: myPlansRemote,
       })
     );
 
@@ -52,7 +53,7 @@ export const startup = createAsyncThunk<
 
     const repos = selectAllRepos(getRootState());
 
-    await Bluebird.each(repos, async repo => {
+    await Bluebird.each(repos, async (repo) => {
       try {
         await dispatch(pullRepo({ fs, http, headers, repo }));
         await dispatch(loadPlansFromRepo({ fs, repo }));
