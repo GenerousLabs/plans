@@ -17,15 +17,12 @@ const Bar = () => {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            component="h1"
-            color="inherit"
-          >
-            Generous Plans v1
-          </Typography>
-          <Button component={Link} to="/">
+          <Link to="/" className={classes.title}>
+            <Typography variant="h6" component="h1" color="inherit">
+              Generous Plans v1
+            </Typography>
+          </Link>
+          <Button component={Link} to="/plans">
             Browse
           </Button>
           <Button component={Link} to="/plans/mine">

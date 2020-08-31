@@ -35,7 +35,7 @@ const Routes = () => {
         {hasLoaded ? (
           <Switch>
             <Route path="/" exact component={Welcome} />
-            <Route path="/plan" exact component={Plans} />
+            <Route path="/plans" exact component={Plans} />
             <Route path="/connections" exact component={Connections} />
             <Route path="/plans/mine" exact component={MyPlans} />
             <Route path="/plans/new" exact component={PlanForm} />
