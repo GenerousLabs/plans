@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! [[ -n "$GIT_DOMAIN" ]]
+then
+  echo "GIT_DOMAIN is not set"
+  exit 1
+fi
+
 if ! [[ -d $REPOS_PATH ]]
 then
   echo "REPOS_PATH is not a directory"
@@ -38,11 +44,13 @@ git init --template "${TEMPLATE_PATH}"
 
 PRIVATE_TOKEN=$(openssl rand -base64 12)
 SHARING_TOKEN=$(openssl rand -base64 12)
+ME_REMOTE="https://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/me.git"
+PLANS_REMOTE="https://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/plans.git"
 
 echo "my_username: ${USERNAME}" >> config.yaml
 echo "private_token: ${USERNAME}" >> config.yaml
 echo "sharing_token: ${USERNAME}" >> config.yaml
-echo "plans_remote: https://user:${PRIVATE_TOKEN}@git.generous.software/${USERNAME}/plans.git" >> config.yaml
+echo "plans_remote: ${PLANS_REMOTE}" >> config.yaml
 
 git add config.yaml
 git commit -m "Initial plans repo for ${USERNAME}."
@@ -59,3 +67,16 @@ touch "plans/${USERNAME}/index.md"
 
 git add plans/
 git commit -m "Initial plans repo for ${USERNAME}."
+
+echo
+echo "Done"
+echo
+
+echo "New remote is:"
+echo "${ME_REMOTE}"
+echo
+
+echo "Token is:"
+echo "${ME_REMOTE}" | base64
+
+echo
