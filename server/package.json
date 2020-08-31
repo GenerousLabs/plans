@@ -9,7 +9,7 @@
     "author": "Generous Labs",
     "license": "AGPL-3.0-or-later",
     "scripts": {
-        "build": "yarn build-ts && yarn lint",
+        "build": "yarn lint && yarn build-ts",
         "build-ts": "tsc",
         "debug": "yarn build && yarn watch-debug",
         "format": "prettier --write src/",
@@ -35,6 +35,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
+        "@testing-library/dom": "^7.23.0",
         "@types/async": "^3.0.2",
         "@types/bluebird": "^3.5.27",
         "@types/chai": "^4.2.3",
