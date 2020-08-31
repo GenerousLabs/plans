@@ -1,5 +1,6 @@
 {
   "name": "generous-plans-frontend",
+  "homepage": "https://plans.generous.software/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
