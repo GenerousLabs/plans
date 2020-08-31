@@ -1,18 +1,29 @@
-FROM node:14
+FROM node:14 as builder
 
 WORKDIR /usr/src/
 
-RUN git clone https://github.com/generouslabs/plans.git .
+COPY frontend frontend
+COPY server server
+COPY packages packages
+COPY package.json package.json
+COPY yarn.lock yarn.lock
 
-COPY packages/plans/dist packages/plans/dist
-COPY server/dist server/dist
+# Seems only installing production dependencies doesn't add much right now
+# RUN yarn install --production
+RUN yarn install
+RUN yarn workspaces run build
+
+# ------------------------------------------------------------------------------
+# From builder to production image
+# ------------------------------------------------------------------------------
+# 
+# FROM node:14
+# 
+# WORKDIR /usr/src/
 
 WORKDIR /usr/src/server/
 
-# Install our dependencies
-RUN yarn install --production
-
-# We expose port 14000 as that's where the app runs by default
-EXPOSE 14000
+# # Expose the port we use
+# EXPOSE 14000
 
 CMD [ "node", "dist/server" ]

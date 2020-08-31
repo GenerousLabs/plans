@@ -3,7 +3,8 @@
 OS=$(uname -s)
 TAG="generous-plans-server"
 
-./build.sh
+# Moved the building inside the docker container for now
+# ./build.sh
 
 if [ "$OS" = "Darwin" ]; then
   docker build -t "$TAG" .
