@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  generous-plans-server:
+    image: "generous-plans-server"
+    container_name: "generous-plans-server"
+    restart: "always"
+    ports:
+      - "14000:14000"
+    environment:
+      - NODE_ENV=production
