@@ -15,4 +15,4 @@ RUN yarn install --production
 # We expose port 14000 as that's where the app runs by default
 EXPOSE 14000
 
-CMD [ "node", "dist/" ]
+CMD [ "node", "dist/server" ]
