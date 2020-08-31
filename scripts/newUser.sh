@@ -83,6 +83,6 @@ echo "${ME_REMOTE}"
 echo
 
 echo "Token is:"
-echo "${ME_REMOTE}" | base64
+echo "${ME_REMOTE}" | base64 --wrap=0
 
 echo
