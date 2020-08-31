@@ -39,6 +39,12 @@ echo "${REPOS_PATH}/${USERNAME}"
 echo "With template from:"
 echo "${TEMPLATE_PATH}"
 
+if [[ -d "${REPOS_PATH}/${USERNAME}" ]]
+then
+  echo "User already exists"
+  exit 1
+fi
+
 read -p "Are you sure? " -n 1 -r
 echo    # (optional) move to a new line
 if ! [[ $REPLY =~ ^[Yy]$ ]]
