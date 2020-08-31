@@ -61,7 +61,7 @@ const PlanForm = () => {
             component={TextField}
             fullWidth
             multiline
-            rows={4}
+            rows={12}
           />
           <Button variant="contained" type="submit">
             Save Plan
