@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ "$GIT_PROTOCOL" != "http" ]] && [[ "$GIT_PROTOCOL" != "https" ]]
+then
+  echo "GIT_PROTOCOL is not set or is invalid"
+  exit 1
+fi
+
 if ! [[ -n "$GIT_DOMAIN" ]]
 then
   echo "GIT_DOMAIN is not set"
@@ -44,8 +50,8 @@ git init --template "${TEMPLATE_PATH}"
 
 PRIVATE_TOKEN=$(openssl rand -base64 12)
 SHARING_TOKEN=$(openssl rand -base64 12)
-ME_REMOTE="https://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/me.git"
-PLANS_REMOTE="https://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/plans.git"
+ME_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/me.git"
+PLANS_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/plans.git"
 
 echo "my_username: ${USERNAME}" >> config.yaml
 echo "private_token: ${USERNAME}" >> config.yaml
