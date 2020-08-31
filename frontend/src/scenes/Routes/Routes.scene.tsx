@@ -10,6 +10,7 @@ import Connections from "../Connections/Connections.scene";
 import MyPlans from "../MyPlans/MyPlans.scene";
 import PlanForm from "../PlanForm/PlanForm.scene";
 import Plans from "../Plans/Plans.scene";
+import Welcome from "../Welcome/Welcome.scene";
 
 export const history = createBrowserHistory();
 
@@ -33,7 +34,8 @@ const Routes = () => {
       <Container>
         {hasLoaded ? (
           <Switch>
-            <Route path="/" exact component={Plans} />
+            <Route path="/" exact component={Welcome} />
+            <Route path="/plan" exact component={Plans} />
             <Route path="/connections" exact component={Connections} />
             <Route path="/plans/mine" exact component={MyPlans} />
             <Route path="/plans/new" exact component={PlanForm} />
