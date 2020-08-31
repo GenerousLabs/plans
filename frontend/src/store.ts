@@ -53,7 +53,8 @@ const getMeRepoRemote = () => {
     alert(`Sorry, something went wrong. #fKohL2`);
     throw new Error("Unknown error. #74jkOP");
   }
-  globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, remote);
+  const decoded = globalThis.atob(remote);
+  globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, decoded);
 
   return remote;
 };

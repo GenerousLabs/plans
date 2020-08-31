@@ -9,7 +9,7 @@ import { addPlanConfigs, AppDispatch } from "../../../../store";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
-  invite: yup.string().url().required(),
+  invite: yup.string().required(),
 });
 
 const initialValues = {
@@ -27,12 +27,13 @@ const RepoForm = () => {
         initialValues={initialValues}
         onSubmit={(values, helpers) => {
           const { name, invite } = values;
+          const remote = globalThis.atob(invite);
           dispatch(
             createNewRepo(
               addPlanConfigs({
                 repo: {
                   name,
-                  remote: invite,
+                  remote,
                 },
               })
             )

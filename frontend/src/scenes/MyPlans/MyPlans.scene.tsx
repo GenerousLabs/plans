@@ -25,7 +25,10 @@ const getSharingKey = ({
 }: {
   token: string;
   username: string;
-}) => `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
+}) => {
+  const url = `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
+  return globalThis.btoa(url);
+};
 
 const MyPlans = () => {
   const classes = useStyles();
