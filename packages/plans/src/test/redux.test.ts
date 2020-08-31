@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'jest-without-globals';
-import * as f from '../fixtures';
+import * as f from '../fixtures.test';
 import { startup } from '../services/startup/actions/startup.action';
 import { ME_MOCK_REMOTE } from '../shared.constants';
 import '../utils/time.utils';

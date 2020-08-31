@@ -4,7 +4,7 @@ import {
   getPlanFilesFromDirectory,
   writePlanToDisk,
 } from './plans.service';
-import * as f from '../../fixtures';
+import * as f from '../../fixtures.test';
 
 describe('plans.service', () => {
   describe('getPlanFilesFromDirectory()', () => {
