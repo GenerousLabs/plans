@@ -9,7 +9,7 @@
     "author": "Generous Labs",
     "license": "AGPL-3.0-or-later",
     "scripts": {
-        "build": "yarn build-ts && yarn lint",
+        "build": "yarn lint && yarn build-ts",
         "build-ts": "tsc",
         "debug": "yarn build && yarn watch-debug",
         "format": "prettier --write src/",
