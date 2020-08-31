@@ -17,11 +17,11 @@ const Bar = () => {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar>
-          <Link to="/" className={classes.title}>
+          <div className={classes.title}>
             <Typography variant="h6" component="h1" color="inherit">
-              Generous Plans v1
+              <Link to="/">Generous Plans v1</Link>
             </Typography>
-          </Link>
+          </div>
           <Button component={Link} to="/plans">
             Browse
           </Button>
