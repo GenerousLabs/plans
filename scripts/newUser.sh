@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -f .env ]]
+then
+  source .env
+fi
+
 if [[ "$GIT_PROTOCOL" != "http" ]] && [[ "$GIT_PROTOCOL" != "https" ]]
 then
   echo "GIT_PROTOCOL is not set or is invalid"
