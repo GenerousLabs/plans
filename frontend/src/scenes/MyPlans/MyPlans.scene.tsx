@@ -11,12 +11,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppState } from "../../store";
+import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
 
 /**
  * NOTE - We cannot use the Plan component to render my plans, because they do
  * not have a "user" or a "repo" in redux, and so the Plan component will crash
  * when trying to find non existent data from redux.
  */
+
+const getSharingKey = ({
+  token,
+  username,
+}: {
+  token: string;
+  username: string;
+}) => `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
 
 const MyPlans = () => {
   const classes = useStyles();
@@ -38,7 +47,10 @@ const MyPlans = () => {
       </Typography>
       <Input
         fullWidth
-        value={`https://plans:${sharing_token}@plans.tld/${my_username}/plans.git`}
+        value={getSharingKey({
+          token: sharing_token,
+          username: my_username,
+        })}
       />
       <Divider className={classes.divider} />
       <Typography variant="h2">Plans</Typography>
