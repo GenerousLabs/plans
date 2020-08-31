@@ -88,6 +88,11 @@ echo "${ME_REMOTE}"
 echo
 
 echo "Token is:"
-echo "${ME_REMOTE}" | base64 --wrap=0
+if [[ $(uname -s) == "Darwin" ]]
+then
+  echo "${ME_REMOTE}" | base64
+else
+  echo "${ME_REMOTE}" | base64 --wrap=0
+fi
 
 echo
