@@ -65,8 +65,8 @@ ME_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/me.
 PLANS_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/plans.git"
 
 echo "my_username: ${USERNAME}" >> config.yaml
-echo "private_token: ${USERNAME}" >> config.yaml
-echo "sharing_token: ${USERNAME}" >> config.yaml
+echo "private_token: ${PRIVATE_TOKEN}" >> config.yaml
+echo "sharing_token: ${SHARING_TOKEN}" >> config.yaml
 echo "plans_remote: ${PLANS_REMOTE}" >> config.yaml
 
 git add config.yaml
