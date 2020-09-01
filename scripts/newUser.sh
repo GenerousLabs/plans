@@ -59,8 +59,8 @@ mkdir "me.git"
 cd "me.git"
 git init --template "${TEMPLATE_PATH}"
 
-PRIVATE_TOKEN=$(openssl rand -base64 12)
-SHARING_TOKEN=$(openssl rand -base64 12)
+PRIVATE_TOKEN=$(openssl rand -hex 12)
+SHARING_TOKEN=$(openssl rand -hex 12)
 ME_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/me.git"
 PLANS_REMOTE="${GIT_PROTOCOL}://user:${PRIVATE_TOKEN}@${GIT_DOMAIN}/${USERNAME}/plans.git"
 
