@@ -46,6 +46,6 @@ export const createNewRepo = createAsyncThunk<
     //   throw error;
     // }
 
-    await dispatch(loadRepos({ fs, rootPath }));
+    await dispatch(loadRepos({ fs, http, headers, rootPath }));
   }
 );
