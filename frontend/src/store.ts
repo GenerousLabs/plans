@@ -56,7 +56,7 @@ const getMeRepoRemote = () => {
   const decoded = globalThis.atob(remote);
   globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, decoded);
 
-  return remote;
+  return decoded;
 };
 
 const start = async () => {
