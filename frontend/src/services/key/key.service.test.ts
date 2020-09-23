@@ -1,4 +1,5 @@
 import {
+  assertIsUrl,
   decodeOrFalse,
   getSharingKey,
   parsePrivateKey,
@@ -7,8 +8,16 @@ import {
 
 const exampleAscii = "http://user:pass@domain.ltd/foo/bar.git";
 const exampleBase64 = "aHR0cDovL3VzZXI6cGFzc0Bkb21haW4ubHRkL2Zvby9iYXIuZ2l0";
+const fooAscii = "foo";
+const fooBase64 = "Zm9v";
 
 describe("boot.service", () => {
+  describe("assertIsUrl()", () => {
+    it("Throws for foo #wNpiOE", () => {
+      expect(() => assertIsUrl("foo")).toThrow();
+    });
+  });
+
   describe("decodeOrFalse", () => {
     it("Returns the string #rxaTxI", () => {
       expect(decodeOrFalse(exampleBase64)).toEqual(exampleAscii);
@@ -34,6 +43,18 @@ describe("boot.service", () => {
 
     it("Throws for FOO_key #LZa1eK", () => {
       expect(() => parsePrivateKey(`FOO_${exampleBase64}`)).toThrow();
+    });
+
+    it("Throws for a key which is not a URL #dUI4O3", () => {
+      expect(() => parsePrivateKey(`PRIVATE_${fooBase64}`)).toThrow();
+    });
+
+    it("Throws for a string which is not a URL #GcZrzN", () => {
+      expect(() => parsePrivateKey(fooAscii)).toThrow();
+    });
+
+    it("Throws for an invalid base64 string which is not a URL #ZlGO7e", () => {
+      expect(() => parsePrivateKey("foo*")).toThrow();
     });
   });
 
@@ -66,6 +87,18 @@ describe("boot.service", () => {
 
     it("Throws for a invalidKey #jOkBKv", () => {
       expect(() => parseRepoSharingKey(exampleAscii)).toThrow();
+    });
+
+    it("Throws for a key which is not a URL #ytzN61", () => {
+      expect(() => parseRepoSharingKey(`SHARING_foo_${fooBase64}`)).toThrow();
+    });
+
+    it("Throws for a naked key which is not a URL #70sDOn", () => {
+      expect(() => parseRepoSharingKey(fooBase64)).toThrow();
+    });
+
+    it("Throws for a naked key which is not base64 decodeable and not a URL #bFSIhC", () => {
+      expect(() => parseRepoSharingKey("foo*")).toThrow();
     });
   });
 });

@@ -1,6 +1,17 @@
+import { parse } from "url";
 import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
 
 const ME_REPO_REMOTE_KEY = "__meRepoRemote" as const;
+
+export const assertIsUrl = (input: string): void => {
+  const pieces = parse(input);
+
+  if (pieces.host === null) {
+    throw new Error("Invalid URL. #LT5zFI");
+  }
+
+  return;
+};
 
 export const decodeOrFalse = (input: string) => {
   try {
@@ -20,14 +31,18 @@ export const parsePrivateKey = (input: string) => {
     if (decodedKey === false) {
       throw new Error("Invalid private key. #6VAP9K");
     }
+    assertIsUrl(decodedKey);
     return decodedKey;
   }
 
   const baseDecoded = decodeOrFalse(input);
 
   if (baseDecoded !== false) {
+    assertIsUrl(baseDecoded);
     return baseDecoded;
   }
+
+  assertIsUrl(input);
 
   return input;
 };
@@ -69,19 +84,29 @@ export const getSharingKey = ({
 export const parseRepoSharingKey = (input: string) => {
   if (input.indexOf("_") !== -1) {
     const [head, , key] = input.split("_");
+
     if (head !== "SHARING") {
       throw new Error("This should be a sharing key. #zPfhut");
     }
+
     const decoded = decodeOrFalse(key);
+
     if (decoded === false) {
       throw new Error("Invalid sharing key. #Llvcc7");
     }
+
+    assertIsUrl(decoded);
+
     return decoded;
   }
 
   const decoded = decodeOrFalse(input);
+
   if (decoded === false) {
     throw new Error("Invalid sharing key. #Q4sekU");
   }
+
+  assertIsUrl(decoded);
+
   return decoded;
 };
