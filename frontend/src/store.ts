@@ -12,8 +12,8 @@ import {
   REDUX_ROOT_KEY as plansKey,
   startup,
 } from "plans";
+import { getMeRepoRemote } from "./services/boot/boot.service";
 
-const ME_REPO_REMOTE_KEY = "__meRepoRemote" as const;
 const rootPath = "/p" as const;
 
 // NOTE: Wipe the storage on startup in development. Makes things easier.
@@ -40,24 +40,6 @@ export const store = configureStore({
   },
   middleware: getDefaultMiddleware().concat(middlewares),
 });
-
-const getMeRepoRemote = () => {
-  const meRepoRemote =
-    globalThis.localStorage.getItem(ME_REPO_REMOTE_KEY) || "";
-  if (meRepoRemote.length > 0) {
-    return meRepoRemote;
-  }
-  const remote =
-    globalThis.prompt(`Please enter your activation code. #gkR3G9`) || "";
-  if (remote.length === 0) {
-    alert(`Sorry, something went wrong. #fKohL2`);
-    throw new Error("Unknown error. #74jkOP");
-  }
-  const decoded = globalThis.atob(remote);
-  globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, decoded);
-
-  return decoded;
-};
 
 const start = async () => {
   try {
