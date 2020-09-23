@@ -1,3 +1,11 @@
+# Dinner feedback
+
+- [ ] Add readable params to tokens
+  - `PRIVATE_`
+  - `SHARING_username_`
+- [ ] Validate and strip readalbe params
+  - Retain support for old formats
+
 # v1
 
 - [ ] Use the actual site url in MyPlans scene
