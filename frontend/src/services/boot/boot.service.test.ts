@@ -1,3 +1,4 @@
+import { parse } from "path";
 import { decodeOrFalse, parsePrivateKey } from "./boot.service";
 
 const exampleAscii = "http://user:pass@domain.ltd/foo/bar.git";
@@ -17,6 +18,18 @@ describe("boot.service", () => {
 
     it("Correctly parses the unencoded URL #IdpjBv", () => {
       expect(parsePrivateKey(exampleAscii)).toEqual(exampleAscii);
+    });
+
+    it("Correctly parses PRIVATE_key #q8WKmK", () => {
+      expect(parsePrivateKey(`PRIVATE_${exampleBase64}`)).toEqual(exampleAscii);
+    });
+
+    it("Throws for PRIVATE_nonsense #EyxK3M", () => {
+      expect(() => parsePrivateKey(`PRIVATE_${exampleAscii}`)).toThrow();
+    });
+
+    it("Throws for FOO_key #LZa1eK", () => {
+      expect(() => parsePrivateKey(`FOO_${exampleBase64}`)).toThrow();
     });
   });
 });

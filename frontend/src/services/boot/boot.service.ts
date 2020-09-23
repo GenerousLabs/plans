@@ -9,6 +9,18 @@ export const decodeOrFalse = (input: string) => {
 };
 
 export const parsePrivateKey = (input: string) => {
+  if (input.indexOf("_") !== -1) {
+    const [head, key] = input.split("_");
+    if (head !== "PRIVATE") {
+      throw new Error("This should be a private key. #34YyAG");
+    }
+    const decodedKey = decodeOrFalse(key);
+    if (decodedKey === false) {
+      throw new Error("Invalid private key. #6VAP9K");
+    }
+    return decodedKey;
+  }
+
   const baseDecoded = decodeOrFalse(input);
 
   if (baseDecoded !== false) {
