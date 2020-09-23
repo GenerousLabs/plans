@@ -1,5 +1,4 @@
-import { parse } from "path";
-import { decodeOrFalse, parsePrivateKey } from "./boot.service";
+import { decodeOrFalse, parsePrivateKey } from "./key.service";
 
 const exampleAscii = "http://user:pass@domain.ltd/foo/bar.git";
 const exampleBase64 = "aHR0cDovL3VzZXI6cGFzc0Bkb21haW4ubHRkL2Zvby9iYXIuZ2l0";

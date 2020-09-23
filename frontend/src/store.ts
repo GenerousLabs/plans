@@ -12,7 +12,7 @@ import {
   REDUX_ROOT_KEY as plansKey,
   startup,
 } from "plans";
-import { getMeRepoRemote } from "./services/boot/boot.service";
+import { getMeRepoRemote } from "./services/key/key.service";
 
 const rootPath = "/p" as const;
 
