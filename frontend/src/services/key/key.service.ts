@@ -63,5 +63,5 @@ export const getSharingKey = ({
   username: string;
 }) => {
   const url = `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
-  return globalThis.btoa(url);
+  return `SHARING_${username}_${globalThis.btoa(url)}`;
 };

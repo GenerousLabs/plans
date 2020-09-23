@@ -1,4 +1,4 @@
-import { decodeOrFalse, parsePrivateKey } from "./key.service";
+import { decodeOrFalse, getSharingKey, parsePrivateKey } from "./key.service";
 
 const exampleAscii = "http://user:pass@domain.ltd/foo/bar.git";
 const exampleBase64 = "aHR0cDovL3VzZXI6cGFzc0Bkb21haW4ubHRkL2Zvby9iYXIuZ2l0";
@@ -29,6 +29,14 @@ describe("boot.service", () => {
 
     it("Throws for FOO_key #LZa1eK", () => {
       expect(() => parsePrivateKey(`FOO_${exampleBase64}`)).toThrow();
+    });
+  });
+
+  describe("getSharingKey", () => {
+    it("Returns the correct key #bGobvl", () => {
+      expect(
+        getSharingKey({ token: "pass", username: "foo" })
+      ).toMatchSnapshot();
     });
   });
 });
