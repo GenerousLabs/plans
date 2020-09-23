@@ -1,3 +1,5 @@
+import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
+
 const ME_REPO_REMOTE_KEY = "__meRepoRemote" as const;
 
 export const decodeOrFalse = (input: string) => {
@@ -51,4 +53,15 @@ export const getMeRepoRemote = () => {
   globalThis.localStorage.setItem(ME_REPO_REMOTE_KEY, key);
 
   return key;
+};
+
+export const getSharingKey = ({
+  token,
+  username,
+}: {
+  token: string;
+  username: string;
+}) => {
+  const url = `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
+  return globalThis.btoa(url);
 };

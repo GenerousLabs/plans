@@ -10,7 +10,7 @@ import { selectAllMyPlans } from "plans";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
+import { getSharingKey } from "../../services/key/key.service";
 import { AppState } from "../../store";
 
 /**
@@ -18,17 +18,6 @@ import { AppState } from "../../store";
  * not have a "user" or a "repo" in redux, and so the Plan component will crash
  * when trying to find non existent data from redux.
  */
-
-const getSharingKey = ({
-  token,
-  username,
-}: {
-  token: string;
-  username: string;
-}) => {
-  const url = `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
-  return globalThis.btoa(url);
-};
 
 const MyPlans = () => {
   const classes = useStyles();
