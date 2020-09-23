@@ -10,8 +10,8 @@ import { selectAllMyPlans } from "plans";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AppState } from "../../store";
 import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
+import { AppState } from "../../store";
 
 /**
  * NOTE - We cannot use the Plan component to render my plans, because they do
