@@ -96,9 +96,10 @@ echo
 echo "Token is:"
 if [[ $(uname -s) == "Darwin" ]]
 then
-  echo "${ME_REMOTE}" | base64
+  TOKEN=$(echo "${ME_REMOTE}" | base64)
 else
-  echo "${ME_REMOTE}" | base64 --wrap=0
+  TOKEN=$(echo "${ME_REMOTE}" | base64 --wrap=0)
 fi
+echo "PRIVATE_$TOKEN"
 
 echo
