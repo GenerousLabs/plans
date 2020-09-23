@@ -65,3 +65,23 @@ export const getSharingKey = ({
   const url = `${GIT_PROTOCOL}://plans:${token}@${GIT_DOMAIN}/${username}/plans.git`;
   return `SHARING_${username}_${globalThis.btoa(url)}`;
 };
+
+export const parseRepoSharingKey = (input: string) => {
+  if (input.indexOf("_") !== -1) {
+    const [head, , key] = input.split("_");
+    if (head !== "SHARING") {
+      throw new Error("This should be a sharing key. #zPfhut");
+    }
+    const decoded = decodeOrFalse(key);
+    if (decoded === false) {
+      throw new Error("Invalid sharing key. #Llvcc7");
+    }
+    return decoded;
+  }
+
+  const decoded = decodeOrFalse(input);
+  if (decoded === false) {
+    throw new Error("Invalid sharing key. #Q4sekU");
+  }
+  return decoded;
+};
