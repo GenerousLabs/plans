@@ -1,3 +1,4 @@
+import { join } from "path";
 import winston from "winston";
 
 const devTransports = [
@@ -20,7 +21,10 @@ const prodTransports = [
       winston.format.simple()
     ),
   }),
-  new winston.transports.File({ filename: "error.log", level: "error" }),
+  new winston.transports.File({
+    filename: join(__dirname, "../data/error.log"),
+    level: "error",
+  }),
 ];
 
 const options: winston.LoggerOptions = {
