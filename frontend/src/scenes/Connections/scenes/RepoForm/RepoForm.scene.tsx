@@ -57,12 +57,14 @@ const RepoForm = () => {
           <Field
             name="name"
             label="Connection name"
+            helperText="This is only shown to you. The name you want to know this connection past."
             component={TextField}
             fullWidth
           />
           <Field
             name="invite"
             label="Invitation code"
+            helperText="The code you were given by a friend that should start SHARING_."
             component={TextField}
             fullWidth
           />
