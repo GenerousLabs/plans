@@ -1,16 +1,31 @@
 import winston from "winston";
 
+const devTransports = [
+  new winston.transports.Console({
+    level: "devug",
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    ),
+  }),
+  new winston.transports.File({ filename: "debug.log", level: "debug" }),
+];
+
+const prodTransports = [
+  new winston.transports.Console({
+    level: "error",
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.colorize(),
+      winston.format.simple()
+    ),
+  }),
+  new winston.transports.File({ filename: "error.log", level: "error" }),
+];
+
 const options: winston.LoggerOptions = {
-  transports: [
-    new winston.transports.Console({
-      level: process.env.NODE_ENV === "production" ? "error" : "debug",
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
-    }),
-    new winston.transports.File({ filename: "debug.log", level: "debug" }),
-  ],
+  transports:
+    process.env.NODE_ENV === "production" ? prodTransports : devTransports,
 };
 
 const logger = winston.createLogger(options);
