@@ -1,3 +1,4 @@
+import { last } from "remeda";
 import { parse } from "url";
 import { GIT_DOMAIN, GIT_PROTOCOL } from "../../config";
 
@@ -83,10 +84,17 @@ export const getSharingKey = ({
 
 export const parseRepoSharingKey = (input: string) => {
   if (input.indexOf("_") !== -1) {
-    const [head, , key] = input.split("_");
+    const pieces = input.split("_");
+    const [head] = pieces;
 
     if (head !== "SHARING") {
       throw new Error("This should be a sharing key. #zPfhut");
+    }
+
+    const key = last(pieces);
+
+    if (typeof key !== "string") {
+      throw new Error("Invalid sharing key. #vcmHEe");
     }
 
     const decoded = decodeOrFalse(key);
