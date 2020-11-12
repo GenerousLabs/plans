@@ -22,11 +22,14 @@ const Bar = () => {
               <Link to="/">Generous Plans v1</Link>
             </Typography>
           </div>
-          <Button component={Link} to="/plans">
-            Browse
-          </Button>
           <Button component={Link} to="/plans/mine">
             My Plans
+          </Button>
+          <Button component={Link} to="/connections">
+            Connections
+          </Button>
+          <Button component={Link} to="/plans">
+            Browse
           </Button>
         </Toolbar>
       </AppBar>
