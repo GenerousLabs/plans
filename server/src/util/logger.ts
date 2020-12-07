@@ -9,7 +9,10 @@ const devTransports = [
       winston.format.simple()
     ),
   }),
-  new winston.transports.File({ filename: "../data/debug.log", level: "debug" }),
+  new winston.transports.File({
+    filename: "../data/debug.log",
+    level: "debug",
+  }),
 ];
 
 const prodTransports = [
