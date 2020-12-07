@@ -3,7 +3,7 @@ import winston from "winston";
 
 const devTransports = [
   new winston.transports.Console({
-    level: "devug",
+    level: "dedug",
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.simple()
