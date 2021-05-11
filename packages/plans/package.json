@@ -60,7 +60,7 @@
     "gray-matter": "^4.0.2",
     "isomorphic-git": "^1.4.0",
     "js-yaml": "^3.14.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "lodash-es": "^4.17.15",
     "memfs": "^3.2.0",
     "mkdirp": "^1.0.4",
